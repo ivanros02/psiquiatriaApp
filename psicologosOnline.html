@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="stylePsico.css">
+    <script src="https://www.mercadopago.com/v2/security.js"></script>
 </head>
 <body>
     
@@ -45,7 +46,7 @@
                         <h5>Lic. en Psicología
                             Terapia Psicoanalitica</h5>
                         <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                         <a href="#" class="btn">contactar</a>
+                        <a href="#" id="botonPago" class="btn">contactar</a>
                     </div>
             </div>
 
@@ -119,7 +120,7 @@
 
 <section class="service" id="service">
 
-    <h1 class="heading"> <i class="fas fa-quote-left"></i> Nuestra terapia psicológica <i class="fas fa-quote-right"></i> </h1>
+    <h1 class="heading"> <i class="fas fa-quote-left"></i> Nuestras terapias <i class="fas fa-quote-right"></i> </h1>
     
     <div class="box-container">
     
@@ -164,7 +165,7 @@
     
         <div class="box">
             <a href="#" class="logo"><i class="fas fa-stethoscope"></i>T.S.O <br>Tu Salud Online</a>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda possimus impedit voluptate fuga id sapiente perspiciatis amet eos esse iure.</p>
+            <p></p>
         </div>
     
         <div class="box">
@@ -194,5 +195,41 @@
     
     <!-- custom js file link  -->
     <script src="script.js"></script>
-    
+    <!--MP-->
+    <script>
+        // Configura la clave pública de Mercado Pago
+        const publicKey = 'APP_USR-bb55286e-0554-4af3-8eee-62e1fd294c6d';
+      
+        // Crea el botón de pago
+        const mercadoPagoCheckout = new window.MercadopagoCheckout({
+          publicKey: publicKey,
+        });
+      
+        // Define las preferencias de pago
+        const preference = {
+          items: [
+            {
+              title: 'Producto Ejemplo',
+              unit_price: 100, // Precio del producto
+              quantity: 1, // Cantidad del producto
+            }
+          ]
+        };
+      
+        // Función para manejar el clic en el botón de contacto
+        function handleButtonClick() {
+          // Crea el botón de pago con las preferencias
+          mercadoPagoCheckout.preference.create(preference, function(err, data) {
+            if (err) {
+              console.error(err);
+            } else {
+              // Abre el flujo de pago de Mercado Pago
+              mercadoPagoCheckout.openCheckout({ preferenceId: data.id });
+            }
+          });
+        }
+      
+        // Asigna la función al botón de contacto
+        document.getElementById('botonPago').addEventListener('click', handleButtonClick);
+    </script>
 </html>
