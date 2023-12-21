@@ -102,11 +102,11 @@ header {
 
 .logo {
     color: var(--green);
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 .logo img {
-    width: 65px;
+    width: 55px;
     /* Ancho de la imagen */
     height: auto;
     /* Altura automática para mantener la proporción */
