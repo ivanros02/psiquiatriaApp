@@ -1,235 +1,244 @@
 <!DOCTYPE html>
-<html lang="sp">
+<html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Salud Online</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Salud Online</title>
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="stylePsico.css">
-    <script src="https://www.mercadopago.com/v2/security.js"></script>
+  <!--icono pestana-->
+  <link rel="icon" href="img/Logo_transparente.png" type="image/x-icon">
+  <link rel="shortcut icon" href="img/Logo_transparente.png" type="image/x-icon">
+
+  <!-- font awesome cdn link  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <!-- custom css file link  -->
+  <link rel="stylesheet" href="stylePsico.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
+
 <body>
-    
-    <!-- header section starts  -->
-    
-    <header>
-    
-        <a href="#" class="logo"><i class="fas fa-stethoscope"></i>T.S.O <br>Tu Salud Online</a>
-    
+
+  <!-- header section starts  -->
+
+  <header>
+
+    <a href="index.html" class="logo">
+      <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
+      Terapia libre
+    </a>
+
     <nav class="navbar">
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="#service">Servicios</a></li>
-    
-        </ul>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="#service">Servicios</a></li>
+
+      </ul>
     </nav>
-    
+
     <div class="fas fa-bars"></div>
-    
-    </header>
 
-    <!--header section ends-->
+  </header>
 
-    <section class="gallery" id="gallery">
+  <!--header section ends-->
 
-        <h1 class="heading"> Psicólogos en línea </h1>
-       
-        <div class="box-container">
-       
-            <div class="box">
-                <img src="img/modelo.jpg" alt="Arquero">
-                    <div class="info">
-                        <h3>Lic. Ana Maria Pinto</h3>
-                        <h5>Lic. en Psicología
-                            Terapia Psicoanalitica</h5>
-                        <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                        <a href="#" id="botonPago" class="btn">contactar</a>
-                    </div>
-            </div>
+  <!--Psicologos start-->
+  <h1 class="heading"><i class="fas fa-quote-left"></i> Psicólogos <i class="fas fa-quote-right"></i></h1>
+  <!-- Agrega la barra de búsqueda debajo del h1 -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Buscar psicólogos...">
+  </div>
 
-            <div class="box">
-                <img src="img/modelo.jpg" alt="Arquero">
-                    <div class="info">
-                        <h3>Lic. Ana Maria Pinto</h3>
-                        <h5>Lic. en Psicología
-                            Terapia Psicoanalitica</h5>
-                        <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                         <a href="#" class="btn">contactar</a>
-                    </div>
-            </div>
-
-            <div class="box">
-                <img src="img/modelo.jpg" alt="Arquero">
-                    <div class="info">
-                        <h3>Lic. Ana Maria Pinto</h3>
-                        <h5>Lic. en Psicología
-                            Terapia Psicoanalitica</h5>
-                        <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                         <a href="#" class="btn">contactar</a>
-                    </div>
-            </div>
-
-            <div class="box">
-                <img src="img/modelo.jpg" alt="Arquero">
-                    <div class="info">
-                        <h3>Lic. Ana Maria Pinto</h3>
-                        <h5>Lic. en Psicología
-                            Terapia Psicoanalitica</h5>
-                        <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                         <a href="#" class="btn">contactar</a>
-                    </div>
-            </div>
-            
-            <div class="box">
-                <img src="img/modelo.jpg" alt="Arquero">
-                    <div class="info">
-                        <h3>Lic. Ana Maria Pinto</h3>
-                        <h5>Lic. en Psicología
-                            Terapia Psicoanalitica</h5>
-                        <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                         <a href="#" class="btn">contactar</a>
-                    </div>
-            </div>
-
-            <div class="box">
-                <img src="img/modelo.jpg" alt="Arquero">
-                    <div class="info">
-                        <h3>Lic. Ana Maria Pinto</h3>
-                        <h5>Lic. en Psicología
-                            Terapia Psicoanalitica</h5>
-                        <p>Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de un ser querido. Problemas de pareja.</p>
-                         <a href="#" class="btn">contactar</a>
-                    </div>
-            </div>
-       
+  <div class="container">
+    <!-- Nuevo contenedor para las tarjetas filtradas -->
+    <div class="row" id="filteredCardContainer"></div>
+    <div class="row" id="cardContainer">
+      <!-- Primera Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Lic. Ana Maria Pinto</h5>
+            <h5 class="card-titleDos">Lic. en Psicología Terapia Psicoanalitica</h5>
+            <p class="card-text">Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de
+              un ser querido. Problemas de pareja.</p>
+            <p class="card-textDos">Desde que comienzo a conectarme con la persona que me consulta, busco conocer su
+              historia, su vida actual, y trato de ver qué le afecta y le trae sufrimiento... (continúa)</p>
+            <a href="presentacion.html" class="btn btn-primary">Más información</a>
+          </div>
         </div>
-       
-       </section>
-       
-       <!-- gallery section ends -->
-        
-        
-    </section>
-        
-    <!-- home section ends -->
+      </div>
 
-    <!-- service section starts  -->
+      <!-- Segunda Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Lic. Walter</h5>
+            <h5 class="card-titleDos">Lic. en Psicología Terapia Psicoanalitica</h5>
+            <p class="card-text">Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de
+              un ser querido. Problemas de pareja.</p>
+            <p class="card-textDos">Desde que comienzo a conectarme con la persona que me consulta, busco conocer su
+              historia, su vida actual, y trato de ver qué le afecta y le trae sufrimiento... (continúa)</p>
+            <a href="#" class="btn btn-primary">Más información</a>
+          </div>
+        </div>
+      </div>
 
-<section class="service" id="service">
+      <!-- Tercera Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Lic. Ivan</h5>
+            <h5 class="card-titleDos">Lic. en Psicología Terapia Psicoanalitica</h5>
+            <p class="card-text">Autoestima baja. Miedos o fobias. Desarraigo familiar. Problemas sexuales. Pérdida de
+              un ser querido. Problemas de pareja.</p>
+            <p class="card-textDos">Desde que comienzo a conectarme con la persona que me consulta, busco conocer su
+              historia, su vida actual, y trato de ver qué le afecta y le trae sufrimiento... (continúa)</p>
+            <a href="#" class="btn btn-primary">Más información</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuarta Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Lic. Ivan</h5>
+            <p class="card-text">Descripción del psicólogo y sus servicios.</p>
+            <a href="#" class="btn btn-primary">Más información</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quinta Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Nombre del Psicólogo</h5>
+            <p class="card-text">GAMA</p>
+            <a href="#" class="btn btn-primary">Más información</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sexta Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Nombre del Psicólogo</h5>
+            <p class="card-text">Descripción del psicólogo y sus servicios.</p>
+            <a href="#" class="btn btn-primary">Más información</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Septima Card -->
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <img src="img/modelo.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Nombre del Psicólogo</h5>
+            <p class="card-text">Descripción del psicólogo y sus servicios.</p>
+            <a href="#" class="btn btn-primary">Más información</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!--Psicologos end-->
+
+  <section class="service" id="service">
 
     <h1 class="heading"> <i class="fas fa-quote-left"></i> Nuestras terapias <i class="fas fa-quote-right"></i> </h1>
-    
-    <div class="box-container">
-    
-        <div class="box">
-            <i class="	fas fa-wifi"></i>
-            <p>
-                Tratamiento psicológico online, sin necesidad de moverte de casa.
-            </p>
-        </div>
-    
-        <div class="box">
-            <i class="fas fa-book-open"></i>
-            <p>
-                Con evaluación previa para analizar tu caso.
-            </p>
-        </div>
-
-        <div class="box">
-            <i class="fas fa-hands-helping"></i>
-            <p>
-                Un gestor te ayudará con las siguientes consultas.
-            </p>
-        </div>
-
-        <div class="box">
-            <i class="	fas fa-id-badge"></i>
-            <p>
-                Con los mejores profesionales en salud mental.
-            </p>
-        </div>
-    
-    </div>
-    
-    </section>
-    
-    <!-- service section ends -->
-    <!-- footer section starts  -->
-
-<section class="footer">
 
     <div class="box-container">
-    
-        <div class="box">
-            <a href="#" class="logo"><i class="fas fa-stethoscope"></i>T.S.O <br>Tu Salud Online</a>
-            <p></p>
-        </div>
-    
-        <div class="box">
-            <h3 class="share">Redes</h3>
-            <a href="#">facebook</a>
-            <a href="#">twitter</a>
-            <a href="#">instagram</a>
-            <a href="#">github</a>
-        </div>
-    
-        <div class="box">
-            <h3 class="letter">Contarte</h3>
-            <form action="">
-                <input type="email" placeholder="enter your email">
-                <button type="submit" class="fas fa-paper-plane"></button>
-            </form>
-        </div>
-    
+
+      <div class="box">
+        <i class="	fas fa-wifi"></i>
+        <p>
+          Tratamiento psicológico online, sin necesidad de moverte de casa.
+        </p>
+      </div>
+
+      <div class="box">
+        <i class="fas fa-book-open"></i>
+        <p>
+          Con evaluación previa para analizar tu caso.
+        </p>
+      </div>
+
+      <div class="box">
+        <i class="fas fa-hands-helping"></i>
+        <p>
+          Un gestor te ayudará con las siguientes consultas.
+        </p>
+      </div>
+
+      <div class="box">
+        <i class="	fas fa-id-badge"></i>
+        <p>
+          Con los mejores profesionales en salud mental.
+        </p>
+      </div>
+
     </div>
-    
+
+  </section>
+
+  <!-- service section ends -->
+
+  <!-- footer section starts  -->
+
+  <section class="footer">
+
+    <div class="box-container">
+
+      <div class="box">
+        <a href="index.html" class="logo">
+          <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
+          Terapia libre
+        </a>
+        <p>
+          Te da la posibilidad de contactar a distancia la salud mental online acercandonos a
+          donde estes y ofreciendote la mejor atencion, con la finalidad de atender tus necesidades
+          con los mejores profesionales.
+        </p>
+      </div>
+
+      <div class="box">
+        <h3 class="share">Redes</h3>
+        <a href="#">facebook</a>
+        <a href="#">twitter</a>
+        <a href="#">instagram</a>
+        <a href="#">github</a>
+      </div>
+
+      <div class="box">
+        <h3 class="letter">Contarte</h3>
+        <form action="">
+          <input type="email" placeholder="enter your email">
+          <button type="submit" class="fas fa-paper-plane"></button>
+        </form>
+      </div>
+
+    </div>
+
     <h1 class="credit">created by <span>WorldSoftSystem</span> | all rights reserved. </h1>
-    
-    </section>
-    
-    <!-- footer section ends -->
-    
-    
-    <!-- custom js file link  -->
-    <script src="script.js"></script>
-    <!--MP-->
-    <script>
-        // Configura la clave pública de Mercado Pago
-        const publicKey = 'APP_USR-bb55286e-0554-4af3-8eee-62e1fd294c6d';
-      
-        // Crea el botón de pago
-        const mercadoPagoCheckout = new window.MercadopagoCheckout({
-          publicKey: publicKey,
-        });
-      
-        // Define las preferencias de pago
-        const preference = {
-          items: [
-            {
-              title: 'Producto Ejemplo',
-              unit_price: 100, // Precio del producto
-              quantity: 1, // Cantidad del producto
-            }
-          ]
-        };
-      
-        // Función para manejar el clic en el botón de contacto
-        function handleButtonClick() {
-          // Crea el botón de pago con las preferencias
-          mercadoPagoCheckout.preference.create(preference, function(err, data) {
-            if (err) {
-              console.error(err);
-            } else {
-              // Abre el flujo de pago de Mercado Pago
-              mercadoPagoCheckout.openCheckout({ preferenceId: data.id });
-            }
-          });
-        }
-      
-        // Asigna la función al botón de contacto
-        document.getElementById('botonPago').addEventListener('click', handleButtonClick);
-    </script>
+
+  </section>
+
+  <!-- footer section ends -->
+
+
+  <!-- custom js file link  -->
+  <script src="scriptPisco.js"></script>
+</body>
+
 </html>

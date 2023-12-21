@@ -50,9 +50,10 @@ header {
     z-index: 1000;
     padding: 1rem 5rem;
     width: 100%;
+
 }
 
-.logo {
+header .logo {
 
     font-size: 3rem;
     color: inherit;
@@ -70,17 +71,6 @@ a.logo:hover {
     /* Mantener el color del texto original */
     text-decoration: none;
     /* Eliminar subrayado al pasar el cursor */
-}
-
-.logo img {
-    width: 40px;
-    /* Ancho de la imagen */
-    height: auto;
-    /* Altura automática para mantener la proporción */
-    margin-right: 10px;
-    /* Espacio a la derecha del logo */
-    vertical-align: middle;
-    /* Alinear verticalmente */
 }
 
 header .navbar ul {
@@ -101,9 +91,24 @@ header .navbar ul li a {
     text-decoration: none;
 }
 
+.logo img {
+    width: 40px;
+    /* Ancho de la imagen */
+    height: auto;
+    /* Altura automática para mantener la proporción */
+    margin-right: 10px;
+    /* Espacio a la derecha del logo */
+    vertical-align: middle;
+    /* Alinear verticalmente */
+}
+
 header .navbar ul li a:hover {
     color: var(--green);
 }
+
+/* Modifica la regla para la clase 'custom-link' y aumenta la especificidad */
+
+
 
 header .fa-bars {
     font-size: 3rem;
@@ -112,25 +117,6 @@ header .fa-bars {
     display: none;
 }
 
-/* Estilos para la barra de búsqueda */
-.search-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    /* Agregamos margen arriba para separar del h1 */
-}
-
-#searchInput {
-    width: 60%;
-    /* Ancho fijo para la barra de búsqueda */
-    padding: 1rem;
-    font-size: 1.6rem;
-    border: 0.2rem solid var(--green);
-    border-radius: 1rem;
-    /* Bordes redondeados */
-    outline: none;
-    box-sizing: border-box;
-}
 
 /* Estilos para las tarjetas */
 .card {
@@ -155,7 +141,50 @@ header .fa-bars {
     /* Efecto de aumento al pasar el ratón */
 }
 
+/* Estilos para la sección de Puntuación y Opinión */
+.card .rating {
+    display: flex;
+    justify-content: flex-end; /* Alinea la puntuación hacia la derecha */
+    margin-bottom: 10px;
+    direction: rtl; /* Dirección de derecha a izquierda para el texto */
+}
 
+.card .rating input[type="radio"] {
+    display: none;
+}
+
+.card .rating label {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.card .rating label:hover,
+.card .rating input[type="radio"]:hover ~ label,
+.card .rating input[type="radio"]:checked ~ label {
+    background-color: #ffcc00;
+}
+
+/* Cuando se pasa el ratón por encima del primer elemento (5ta estrella), cambia las anteriores */
+.card .rating input[type="radio"]:first-child:hover ~ label {
+    background-color: #ffcc00;
+}
+
+.card textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.card .btn {
+    width: 100%;
+}
 .container .row img {
     flex: 1 1 0.5rem;
     padding: 2rem;
@@ -165,6 +194,10 @@ header .fa-bars {
     /* Hace que las imágenes sean circulares */
     object-fit: cover;
     /* Escalado de la imagen para que ocupe todo el contenedor circular */
+}
+
+.container {
+    margin-top: 9.5rem;
 }
 
 .container .row {
@@ -188,15 +221,16 @@ header .fa-bars {
     color: #949e24;
 }
 
-.container .card-body .card-textDos {
-    font-size: 2rem;
-    color: #676d2c;
-}
 
 .container .card-body .btn {
     color: #eee;
     background-color: #c1c700;
     border-color: #c1c700;
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    /* Centra verticalmente */
 }
 
 .card-body .btn.btn-primary:hover {
@@ -206,59 +240,7 @@ header .fa-bars {
     /* Cambiar el color del borde al pasar el mouse */
 }
 
-.service {
-    background: #f0f0f0;
-    min-height: 100vh;
-}
 
-.service .box-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.service .box-container .box {
-    flex: 1 1 25rem;
-    padding: 2rem 1rem;
-    text-align: center;
-    background: #fff;
-    border: .2rem solid var(--green);
-    margin: 2rem;
-    cursor: pointer;
-}
-
-.service .box-container .box i {
-    color: var(--green);
-    font-size: 4rem;
-    padding: 1rem 0;
-}
-
-.service .box-container .box h3 {
-    color: #333;
-    font-size: 2rem;
-}
-
-.service .box-container .box p {
-    color: #666;
-    font-size: 1.5rem;
-    padding: 1rem 0;
-}
-
-.service .box-container .box a {
-    color: #333;
-    font-size: 1.7rem;
-}
-
-.service .box-container .box a:hover {
-    color: var(--green);
-}
-
-.service .box-container .box:hover {
-    box-shadow: 0 .3rem .5rem rgba(0, 0, 0, .3);
-}
 
 .footer {
     background: #333;
@@ -271,17 +253,24 @@ header .fa-bars {
     flex-wrap: wrap;
     width: 95%;
     margin: 0 auto;
+
 }
 
 .footer .box-container .box {
     margin: 2rem;
     flex: 1 1 25rem;
+
+}
+
+.footer .box-container .box .logo {
+    margin: 2rem;
+    flex: 1 1 25rem;
+    text-decoration: none;
 }
 
 .footer .box-container .box .logo {
     font-size: 3rem;
     color: var(--green);
-    text-decoration: none;
 }
 
 .footer .box-container .box p {

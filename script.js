@@ -11,4 +11,16 @@ window.addEventListener('scroll', () =>{
     navbar.classList.remove('nav-toggle');
 });
 
+function toggleText() {
+    var moreText = document.getElementById("moreText");
+    var buttonText = document.querySelector('.btn');
+
+    if (moreText.style.display === "none") {
+        moreText.style.display = "inline";
+        buttonText.innerHTML = "Leer menos";
+    } else {
+        moreText.style.display = "none";
+        buttonText.innerHTML = "Leer más";
+    }
+}
 
