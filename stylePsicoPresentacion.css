@@ -149,28 +149,21 @@ header .fa-bars {
     direction: rtl; /* Dirección de derecha a izquierda para el texto */
 }
 
-.card .rating input[type="radio"] {
+/* Ocultar los radio buttons */
+.rating input {
     display: none;
 }
 
-.card .rating label {
+/* Estilo de las etiquetas de las estrellas */
+.rating label {
+    font-size: 40px; /* Tamaño de la estrella */
+    color: #ccc; /* Color de estrella no seleccionada */
     cursor: pointer;
-    width: 35px;
-    height: 35px;
-    background-color: #ccc;
-    border-radius: 50%;
-    margin: 0 5px;
 }
 
-.card .rating label:hover,
-.card .rating input[type="radio"]:hover ~ label,
-.card .rating input[type="radio"]:checked ~ label {
-    background-color: #ffcc00;
-}
-
-/* Cuando se pasa el ratón por encima del primer elemento (5ta estrella), cambia las anteriores */
-.card .rating input[type="radio"]:first-child:hover ~ label {
-    background-color: #ffcc00;
+/* Estilo de las estrellas cuando están seleccionadas */
+.rating input:checked ~ label {
+    color: #ffc107; /* Cambiar color para las estrellas seleccionadas */
 }
 
 .card textarea {
