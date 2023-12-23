@@ -213,6 +213,16 @@ header .fa-bars {
     margin-top: 10px;
 }
 
+/* Estilo para el número después de las estrellas */
+.rating p {
+    font-size: 18px; /* Tamaño del número */
+    margin-top: 5px; /* Espacio superior */
+    color: #333; /* Color del número */
+    display: inline-block; /* Para alinear correctamente con las estrellas */
+    font-weight: bold; /* Negrita para resaltar */
+    margin-left: 5px;
+}
+
 .card .rating .fa {
     font-size: 20px;
     color: #f8ce0b; /* Color de las estrellas marcadas */
