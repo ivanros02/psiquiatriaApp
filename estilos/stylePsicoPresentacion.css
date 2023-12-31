@@ -144,40 +144,17 @@ header .fa-bars {
 /* Estilos para la sección de Puntuación y Opinión */
 .card .rating {
     display: flex;
-    justify-content: flex-end; /* Alinea la puntuación hacia la derecha */
+    justify-content: flex-end;
+    /* Alinea la puntuación hacia la derecha */
     margin-bottom: 10px;
-    direction: rtl; /* Dirección de derecha a izquierda para el texto */
-}
-
-/* Ocultar los radio buttons */
-.rating input {
-    display: none;
-}
-
-/* Estilo de las etiquetas de las estrellas */
-.rating label {
-    font-size: 40px; /* Tamaño de la estrella */
-    color: #ccc; /* Color de estrella no seleccionada */
-    cursor: pointer;
-}
-
-/* Estilo de las estrellas cuando están seleccionadas */
-.rating input:checked ~ label {
-    color: #ffc107; /* Cambiar color para las estrellas seleccionadas */
-}
-
-.card textarea {
-    width: 100%;
-    height: 100px;
-    resize: none;
-    margin-bottom: 10px;
-    padding: 5px;
-    border-radius: 5px;
+    direction: rtl;
+    /* Dirección de derecha a izquierda para el texto */
 }
 
 .card .btn {
     width: 100%;
 }
+
 .container .row img {
     flex: 1 1 0.5rem;
     padding: 2rem;
@@ -230,6 +207,88 @@ header .fa-bars {
     background-color: #8f8f00;
     /* Cambiar el color de fondo al pasar el mouse */
     border-color: #8f8f00;
+    /* Cambiar el color del borde al pasar el mouse */
+}
+
+/* ventana emergente*/
+.container .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.container .modal-content {
+    background-color: var(--green);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 80%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+.container .modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo con efecto de difuminado */
+    backdrop-filter: blur(5px); /* Aplicación del efecto de difuminado */
+    z-index: -1;
+}
+
+.container .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.container .close:hover, .close:focus {
+    color: #fdfded;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.container .modal-text {
+    /* Centramos el contenido vertical y horizontalmente */
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .modal .btn {
+    color: #fff;
+    background-color: #8f8f00;
+    border-color: #8f8f00;
+    display: flex;
+    justify-content: center;
+    /* Centra horizontalmente */
+    align-items: center;
+    /* Centra verticalmente */
+}
+
+.container .modal .btn.btn-primary:hover {
+    background-color: #818156;
+    /* Cambiar el color de fondo al pasar el mouse */
+    border-color: #818156;
     /* Cambiar el color del borde al pasar el mouse */
 }
 

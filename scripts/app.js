@@ -13,7 +13,7 @@ window.addEventListener('scroll', () => {
 
 function toggleText() {
     var moreText = document.getElementById("moreText");
-    var buttonText = document.querySelector('.btn');
+    var buttonText = document.getElementById('botonLeer');
 
     if (moreText.style.display === "none") {
         moreText.style.display = "inline";
@@ -24,8 +24,31 @@ function toggleText() {
     }
 }
 
+//ventana emergente
+
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.querySelector('.modal');
+    const btnAbrirModal = document.getElementById('checkout-btn');
+    const btnCerrarModal = document.querySelector('.close');
+    modal.style.display = 'none';
+    function abrirModal() {
+        modal.style.display = 'flex';
+    }
+
+    function cerrarModal() {
+        modal.style.display = 'none';
+    }
+
+    btnAbrirModal.addEventListener('click', abrirModal);
+    btnCerrarModal.addEventListener('click', cerrarModal);
 
 
+});
+
+
+
+
+/* 
 const mp = new MercadoPago("TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295", {
     locale: "es-AR"
 });
@@ -75,3 +98,4 @@ const createCheckoutButton = (preferenceId) => {
 
     renderComponent();
 };
+*/

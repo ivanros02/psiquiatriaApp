@@ -148,7 +148,7 @@ header .fa-bars {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url(./img/home.jpg) no-repeat;
+    background: url(../img/home.jpg) no-repeat;
     background-size: cover;
     background-position: center;
 
