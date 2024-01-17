@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Salud Online</title>
+    <title>Terapia Libre</title>
 
     <!--icono pestana-->
     <link rel="icon" href="img/Logo_transparente.png" type="image/x-icon">
@@ -26,7 +26,7 @@
 
         <a href="index.html" class="logo">
             <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
-            Terapia libre
+            Terapia Libre
         </a>
 
         <nav class="navbar">
@@ -52,7 +52,7 @@
 
             <h1>Encuentra la terapia psicológica online que necesitas</h1>
             <p>Sesiones por videollamada, mensajes diarios con tu psicólogo y acompañamiento semanal.</p>
-            <a href="psicologosOnline.html"><button class="btn">Buscar un psicologo</button></a>
+            <a href="psicologosOnline.php"><button class="btn">Buscar un profesional</button></a>
 
         </div>
 
@@ -69,12 +69,12 @@
         <div class="row">
 
             <div class="image">
-                <img src="img/about.jpg" alt="">
+                <img src="img/about.jpg" alt="Paciente con psicologo">
             </div>
 
             <div class="content">
                 <p>
-                    Tu Salud online es una plataforma formada por un equipo de psicólogos expertos en diferentes
+                    Terapia Libre es una plataforma formada por un equipo de psicólogos expertos en diferentes
                     especialidades.
                     Nos tomamos la salud mental en serio, por eso nuestro equipo de psicólogos profesionales cuentan con
                     la experiencia y la acreditación necesarias para establecer un diagnóstico clínico y realizar el
@@ -103,7 +103,7 @@
             <div class="box">
                 <i class="fas fa-donate"></i>
                 <h3>$</h3>
-                <p>mejor precio</p>
+                <p>psicologo online al mejor precio</p>
             </div>
 
         </div>
@@ -166,7 +166,7 @@
         <div class="box-container">
 
             <div class="box">
-                <a href="index.html" class="logo">
+                <a href="index.php" class="logo">
                     <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
                     Terapia libre
                 </a>
@@ -179,7 +179,7 @@
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#">instagram</a>
+                <a href="#">Instagram</a>
             </div>
 
 
