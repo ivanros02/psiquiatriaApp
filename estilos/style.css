@@ -96,17 +96,19 @@ header {
     top: 0;
     left: 0;
     z-index: 1000;
-    padding: 1rem 5rem;
+    padding: 0.2rem 5rem;
     width: 100%;
 }
 
 .logo {
-    color: var(--green);
-    font-size: 3rem;
+    /*color: var(--green);*/
+    color: #FFEF26;
+    font-size: 2.5rem;
+    font-weight: bold;
 }
 
 .logo img {
-    width: 45px;
+    width: 7rem;
     /* Ancho de la imagen */
     height: auto;
     /* Altura automática para mantener la proporción */
@@ -148,7 +150,8 @@ header .fa-bars {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative; /* Añade esta línea */
+    position: relative;
+    /* Añade esta línea */
     background: url(../img/home.jpg) no-repeat;
     background-size: cover;
     background-position: center;
@@ -643,7 +646,7 @@ select {
     }
 
     header .nav-toggle {
-        top: 6rem;
+        top: 7.4rem;
         opacity: 1;
     }
 

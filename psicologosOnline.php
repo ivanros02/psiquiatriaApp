@@ -12,8 +12,11 @@
 
   <!-- font awesome cdn link  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
   <!-- custom css file link  -->
   <link rel="stylesheet" href="estilos/stylePsico.css">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
@@ -66,35 +69,37 @@
 
   <section class="service" id="service">
 
-    <h1 class="heading"> <i class="fas fa-quote-left"></i> Nuestras terapias <i class="fas fa-quote-right"></i> </h1>
+    <h1 class="heading"> <i class="fas fa-quote-left"></i> BENEFICIOS <i class="fas fa-quote-right"></i> </h1>
 
     <div class="box-container">
 
       <div class="box">
-        <i class="	fas fa-wifi"></i>
+        <i class="bi bi-lightbulb"></i>
         <p>
-          Tratamiento psicológico online, sin necesidad de moverte de casa.
+          Tratamiento terapéutico sin necesidad de moverte de tu casa
         </p>
       </div>
 
       <div class="box">
-        <i class="fas fa-book-open"></i>
+        <i class="fa fa-balance-scale" aria-hidden="true"></i>
         <p>
-          Con evaluación previa para analizar tu caso.
+          Sin autorizaciones burocráticas y complejas.
         </p>
       </div>
 
       <div class="box">
         <i class="fas fa-hands-helping"></i>
         <p>
-          Un gestor te ayudará con las siguientes consultas.
+          Fácil y rápido acceso al tratamiento.
+          Turnos a partir de 24 hs, 48 hs y 72 hs.
+
         </p>
       </div>
 
       <div class="box">
         <i class="	fas fa-id-badge"></i>
         <p>
-          Con los mejores profesionales en salud mental.
+          Seleccioná el profesional de la salud mental de acuerdo a tu necesidad.
         </p>
       </div>
 
@@ -116,9 +121,13 @@
           Terapia Libre
         </a>
         <p>
-          Te da la posibilidad de contactar a distancia la salud mental online acercandonos a
-          donde estes y ofreciendote la mejor atencion, con la finalidad de atender tus necesidades
-          con los mejores profesionales.
+          Es una plataforma innovadora que te brinda la libertad de elegir al profesional de salud mental que mejor se
+          adapte a tus
+          necesidades. Con una amplia variedad de expertos y especialistas, la plataforma facilita la búsqueda y
+          selección de tu terapeuta
+          ideal. Priorizamos la salud mental, ofreciéndote un espacio donde puedas acceder a tratamientos personalizados
+          y dedicados a
+          mejorar tu bienestar emocional.
         </p>
       </div>
 
@@ -138,7 +147,7 @@
 
 
   <!-- custom js file link  -->
-  <script src="scripts/scriptPisco.js"></script>
+  <script src="scripts/scriptPsicologos.js"></script>
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 
 </body>

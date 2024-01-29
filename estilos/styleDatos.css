@@ -348,10 +348,6 @@ header .fa-bars {
 
 
 
-
-
-
-
 /* media queries  */
 
 @media (max-width:768px) {
@@ -418,6 +414,27 @@ header .fa-bars {
 
     .service .box-container {
         width: auto;
+    }
+
+    .container .row {
+        flex: 1 1 20rem; /* Reducir el ancho de las tarjetas en pantallas grandes */
+    }
+
+    .container .row img {
+        width: 15rem; /* Reducir el tamaño de las imágenes */
+        height: 15rem;
+    }
+
+    .container .card-body .card-title,
+    .container .card-body .card-titleDos,
+    .container .card-body .card-text,
+    .container .card-body .phone-number {
+        font-size: 1.8rem; /* Reducir el tamaño del texto en pantallas grandes */
+    }
+
+    .contact-icons img {
+        width: 80px; /* Reducir el tamaño de los íconos de contacto */
+        height: 80px;
     }
 
 }

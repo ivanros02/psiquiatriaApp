@@ -12,7 +12,7 @@
 
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="estilos/style.css">
 
@@ -50,9 +50,12 @@
 
         <div class="content">
 
-            <h1>Encuentra la terapia psicológica online que necesitas</h1>
-            <p>Sesiones por videollamada, mensajes diarios con tu psicólogo y acompañamiento semanal.</p>
-            <a href="psicologosOnline.php"><button class="btn">Buscar un profesional</button></a>
+            <h1>ENCUENTRA DE INMEDIATO EL PROFESIONAL PARA INICIAR TU TRATAMIENTO.</h1>
+            <p>Elegí entre más de 1000 especialistas,
+                tu asistencia terapéutica de forma inmediata
+                con turnos a partir de 24 hs.
+            </p>
+            <a href="psicologosOnline.php"><button class="btn">BUSCAR UN PROFESIONAL </button></a>
 
         </div>
 
@@ -91,19 +94,19 @@
             <div class="box">
                 <i class="fas fa-users"></i>
                 <h3>1000+</h3>
-                <p>pacientes</p>
+                <p>Pacientes</p>
             </div>
 
             <div class="box">
                 <i class="fas fa-hand-holding-heart"></i>
                 <h3>200+</h3>
-                <p>profesionales</p>
+                <p>Profesionales</p>
             </div>
 
             <div class="box">
-                <i class="fas fa-donate"></i>
-                <h3>$</h3>
-                <p>psicologo online al mejor precio</p>
+                <i class="bi bi-clock"></i>
+                <h3>24 hs</h3>
+                <p>Profesionales de guardia</p>
             </div>
 
         </div>
@@ -168,12 +171,16 @@
             <div class="box">
                 <a href="index.php" class="logo">
                     <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
-                    Terapia libre
+                    Terapia Libre
                 </a>
                 <p>
-                    Te da la posibilidad de contactar a distancia la salud mental online acercandonos a
-                    donde estes y ofreciendote la mejor atencion, con la finalidad de atender tus necesidades
-                    con los mejores profesionales.
+                    Es una plataforma innovadora que te brinda la libertad de elegir al profesional de salud mental que
+                    mejor se adapte a
+                    tus necesidades. Con una amplia variedad de expertos y especialistas, la plataforma facilita la
+                    búsqueda y selección
+                    de tu terapeuta ideal. Priorizamos la salud mental, ofreciéndote un espacio donde puedas acceder a
+                    tratamientos
+                    personalizados y dedicados a mejorar tu bienestar emocional.
                 </p>
             </div>
 

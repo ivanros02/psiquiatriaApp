@@ -140,7 +140,8 @@ header .fa-bars {
 }
 
 .filtered-card {
-    width: 10%; /* Ajusta el ancho según sea necesario */
+    width: 10%;
+    /* Ajusta el ancho según sea necesario */
     margin: 10px;
 }
 
@@ -148,25 +149,51 @@ header .fa-bars {
 
 /* Estilos para las tarjetas */
 .card {
-    border-radius: 15px;
-    /* Borde redondeado para las tarjetas */
+    width: 40rem;
+    height: 45rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     overflow: hidden;
-    /* Oculta los elementos que se salen de la tarjeta */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* Sombra suave para las tarjetas */
-    transition: transform 0.3s ease;
-    /* Efecto de transición al pasar el ratón */
-    width: auto;
-    display: flex;
-    justify-content: center;
-    /* Centra horizontalmente */
-    align-items: center;
-    /* Centra verticalmente */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    transition: transform 0.3s;
+    justify-content:center;
 }
 
 .card:hover {
     transform: scale(1.05);
     /* Efecto de aumento al pasar el ratón */
+}
+
+
+.card .card-body {
+    padding: 15px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card h5 {
+    margin-top: 0;
+    font-size: 2rem;
+    margin-bottom: 0rem;
+    color: #3D3D3D;
+}
+
+.card p {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #949e24;
+}
+
+.card .card-text-diponibilidad{
+    color: #EF8834;
+}
+
+.card .card-titleDos{
+    color: #b4c403;
+    font-size: 1.5rem;
 }
 
 .container .row img {
@@ -180,37 +207,13 @@ header .fa-bars {
     /* Escalado de la imagen para que ocupe todo el contenedor circular */
 }
 
-.container .row {
-    flex: 1 1 40rem;
-    padding: 2rem;
-}
 
-.container .card-body .card-title {
-    font-size: 2rem;
-    color: #666;
-
-}
-
-.container .card-body .card-titleDos {
-    font-size: 2rem;
-    color: #b4c403;
-}
-
-.container .card-body .card-text {
-    font-size: 1.5rem;
-    color: #949e24;
-}
-
-.container .card-body .card-textDos {
-    font-size: 2rem;
-    color: #676d2c;
-}
 
 .container .card-body .btn {
     color: #eee;
     background-color: #c1c700;
     border-color: #c1c700;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .card-body .btn.btn-primary:hover {
@@ -224,32 +227,43 @@ header .fa-bars {
 .card .rating {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0.1rem;
+}
+
+.rating{
+    margin-top: 0;
 }
 
 /* Estilo para el número después de las estrellas */
 .rating p {
-    font-size: 18px; /* Tamaño del número */
-    margin-top: 5px; /* Espacio superior */
-    color: #333; /* Color del número */
-    display: inline-block; /* Para alinear correctamente con las estrellas */
-    font-weight: bold; /* Negrita para resaltar */
+    font-size: 1.5rem;
+    /* Tamaño del número */
+    margin-top: 5px;
+    /* Espacio superior */
+    color: #333;
+    /* Color del número */
+    display: inline-block;
+    /* Para alinear correctamente con las estrellas */
+    font-weight: bold;
+    /* Negrita para resaltar */
     margin-left: 5px;
 }
 
 .card .rating .fa {
-    font-size: 20px;
-    color: #f8ce0b; /* Color de las estrellas marcadas */
+    font-size: 1.5rem;
 }
 
 .card .rating .fa.checked {
-    color: #f8ce0b; /* Color de las estrellas marcadas */
+    color: #EF8834;
+    font-size: 1.5rem;
+    /* Color de las estrellas marcadas */
 }
 
 /* Estilo para la quinta estrella sin marcar */
 .card .rating .fa.unchecked {
-    font-size: 20px;
-    color: #ddd; /* Color para la estrella no marcada */
+    font-size: 1.5rem;
+    color: #ddd;
+    /* Color para la estrella no marcada */
 }
 
 .service {
@@ -277,7 +291,8 @@ header .fa-bars {
 }
 
 .service .box-container .box i {
-    color: var(--green);
+    /*color: var(--green);*/
+    color: #EF8834;
     font-size: 4rem;
     padding: 1rem 0;
 }

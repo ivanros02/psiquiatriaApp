@@ -134,7 +134,7 @@ header .fa-bars {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   width: auto;
-  display: flex;
+  display: inline-block;
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
@@ -158,6 +158,36 @@ header .fa-bars {
 
 .card .btn {
   width: 100%;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #8f8f00;
+  border: 2px solid #f3f39e;
+  border-radius: 5px;
+  cursor: pointer;
+  animation: borderAnimation 3s infinite;
+}
+
+@keyframes borderAnimation {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+    border-color: #8f8f00;
+    color: #EF8834;
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .container .row img {
@@ -206,14 +236,10 @@ header .fa-bars {
   /* Centra horizontalmente */
   align-items: center;
   /* Centra verticalmente */
+  font-size: 2rem;
 }
 
-.card-body .btn.btn-primary:hover {
-  background-color: #8f8f00;
-  /* Cambiar el color de fondo al pasar el mouse */
-  border-color: #8f8f00;
-  /* Cambiar el color del borde al pasar el mouse */
-}
+
 
 /* ventana emergente*/
 .container .modal {
@@ -274,12 +300,12 @@ header .fa-bars {
 }
 
 .container .modal-text {
-   /* Centramos el contenido vertical y horizontalmente */
-   font-size: 2rem;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
+  /* Centramos el contenido vertical y horizontalmente */
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .container .modal .btn {
@@ -425,6 +451,30 @@ header .fa-bars {
   font-size: 16px;
 }
 
+/* Estilo para la etiqueta del input */
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Estilo para el input de correo electrónico */
+#user-email {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  transition: border-color 0.3s;
+}
+
+#user-email:focus {
+  border-color: #007bff; /* Cambia el color del borde al enfocar el input */
+}
+
 
 .footer {
   background: #333;
@@ -562,13 +612,13 @@ header .fa-bars {
   }
 
   header .navbar ul li a {
-        font-size: 3rem;
-        display: block;
-    }
+    font-size: 3rem;
+    display: block;
+  }
 
-    header .nav-toggle {
-      top: 6rem;
-      opacity: 1;
+  header .nav-toggle {
+    top: 6rem;
+    opacity: 1;
   }
 
   .fa-times {

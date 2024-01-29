@@ -1,0 +1,6 @@
+modifique header 'padding: 0.2rem 5rem;'
+.logo img 'width: 7rem;'
+header .nav-toggle {
+        top: 7.4rem;
+        opacity: 1;
+}

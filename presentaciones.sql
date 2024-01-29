@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-01-2024 a las 01:18:32
+-- Tiempo de generación: 29-01-2024 a las 16:31:46
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -34,16 +34,17 @@ CREATE TABLE `presentaciones` (
   `titulo` varchar(100) NOT NULL,
   `matricula` int(100) NOT NULL,
   `especialidad` varchar(100) NOT NULL,
-  `descripcion` varchar(300) NOT NULL
+  `descripcion` varchar(1000) NOT NULL,
+  `telefono` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `presentaciones`
 --
 
-INSERT INTO `presentaciones` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `especialidad`, `descripcion`) VALUES
-(1, '../img/modelo.jpg', 'Lic. Ana Maria Pinto', 'Lic. en Psicología Terapia Psicoanalitica', 46489, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'No existen recetas ni soluciones mágicas, pero sí un trabajo que juntos podemos recorrer, a través de un acompañamiento respetuoso que'),
-(2, '../img/modeloDos.jpg', 'Lic. Vanesa Pérez', 'Lic. en Psicología Terapia Psicoanalitica', 46489, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'No existen recetas ni soluciones mágicas, pero sí un trabajo que juntos podemos recorrer, a través de un acompañamiento respetuoso que');
+INSERT INTO `presentaciones` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `especialidad`, `descripcion`, `telefono`) VALUES
+(1, '../img/Lic. Ana Maria Pinto.jpg', 'Lic. Ana Maria Pinto', 'Lic. en Psicología Terapia Psicoanalitica', 180, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio ', 1139114579),
+(2, '../img/Lic. Vanesa Pérez.jpg', 'Lic. Vanesa Pérez', 'Lic. en Psicología Terapia Psicoanalitica', 52084, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010);
 
 --
 -- Índices para tablas volcadas

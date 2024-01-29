@@ -24,36 +24,40 @@ document.addEventListener("DOMContentLoaded", function () {
   const psychologistsData = [
     {
       id: 1,
-      imagen: "img/modelo.jpg",
+      imagen: "img/Lic. Ana Maria Pinto.jpg",
       nombre: "Lic. Ana Maria Pinto",
       rating: 4.5,
       titulo: "Lic. en Psicología Terapia Psicoanalítica",
       especialidad: "Ansiedad y estrés. Desarrollo personal. Miedos o fobias. Terapia de pareja. Problemas vinculares. Duelo.",
+      disponibilidad:"24hs",
     },
 
     {
       id: 2,
+      imagen: "img/Lic. Vanesa Pérez.jpg",
+      nombre: "Lic. Vanesa Pérez",
+      rating: 4.5,
+      titulo: "Lic. en Psicología Terapia Psicoanalítica",
+      especialidad: "Ansiedad y estrés.",
+      disponibilidad:"24hs",
+    },
+
+    {
       imagen: "img/modelo.jpg",
       nombre: "Lic. Vanesa Pérez",
       rating: 4.5,
       titulo: "Lic. en Psicología Terapia Psicoanalítica",
       especialidad: "Ansiedad y estrés. Desarrollo personal. Miedos o fobias. Terapia de pareja. Problemas vinculares. Duelo.",
+      disponibilidad:"24hs",
     },
-
-    {
-      imagen: "img/modelo.jpg",
-      nombre: "Lic. Vanesa Pérez",
-      rating: 4.5,
-      titulo: "Lic. en Psicología Terapia Psicoanalítica",
-      especialidad: "Miedos o fobias. Ansiedad y estrés. Terapia de pareja. Pérdida de un ser querido. Separación o desarraigo familiar",
-    },
+    
     // Agrega las demás tarjetas aquí
   ];
 
   // Función para crear una tarjeta
   function createCard(psychologist) {
     const cardHTML = `
-    <div class="col-md-4 mb-3">
+    <div class="col-lg-4 col-md-6 mb-3 d-flex justify-content-center">
         <div class="card">
         <img src="${psychologist.imagen}" class="card-img-top" alt="...">
           <div class="card-body">
@@ -70,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <!-- Fin estrellas para calidad de atención -->
             <h5 class="card-titleDos">${psychologist.titulo}</h5>
             <p class="card-text">${psychologist.especialidad}</p>
+            <p class="card-text-diponibilidad">Disponibilidad en: ${psychologist.disponibilidad}</p>
             <a href="#" class="btn btn-primary" data-id="${psychologist.id}" onclick="mostrarInformacion(this)">Más información</a>
           </div>
         </div>
@@ -96,7 +101,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const filteredPsychologists = psychologistsData.filter(psychologist =>
       psychologist.nombre.toLowerCase().includes(term) ||
       psychologist.titulo.toLowerCase().includes(term) ||
-      psychologist.especialidad.toLowerCase().includes(term)
+      psychologist.especialidad.toLowerCase().includes(term) ||
+      psychologist.disponibilidad.toString().includes(term)
     );
 
     renderCards(filteredPsychologists);

@@ -1,0 +1,97 @@
+// Selección de elementos del DOM
+let menu = document.querySelector('.fa-bars');
+let navbar = document.querySelector('.navbar');
+let modal = document.querySelector('.modal');
+let btnCerrarModal = document.querySelector('.close');
+
+// Evento de clic en el icono de menú
+menu.addEventListener('click', function () {
+    menu.classList.toggle('fa-times');
+    navbar.classList.toggle('nav-toggle');
+});
+
+// Evento de desplazamiento de la ventana
+window.addEventListener('scroll', () => {
+    menu.classList.remove('fa-times');
+    navbar.classList.remove('nav-toggle');
+});
+
+// Evento de carga del DOM
+document.addEventListener("DOMContentLoaded", function () {
+    modal.style.display = 'none';
+
+    // Función para abrir la ventana modal
+    function abrirModal() {
+        modal.style.display = 'flex';
+    }
+
+    // Función para cerrar la ventana modal
+    function cerrarModal() {
+        modal.style.display = 'none';
+        isButtonCreated = false; // Restablecer la variable isButtonCreated
+    }
+
+    // Asignar la función abrirModal al botón Contactar
+    document.getElementById('contact').addEventListener('click', function() {
+        abrirModal();
+    });
+
+    // Asignar la función cerrarModal al botón cerrar
+    btnCerrarModal.addEventListener('click', cerrarModal);
+});
+
+// Configuración de Mercado Pago
+const mp = new MercadoPago("APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304", {
+    locale: "es-AR"
+});
+
+// URL para create_preference
+// const baseURL = 'https://tudominio.com';
+// Colocar esta variable global para controlar si el botón ya fue creado
+let isButtonCreated = false;
+
+// Evento de clic en el botón de pago
+document.getElementById("checkout-btn").addEventListener("click", () => {
+    const orderData = {
+        title: document.querySelector(".card-title").innerText,
+        quantity: 1,
+        price: 2000,
+    };
+
+    // Fetch para obtener la preferencia de Mercado Pago
+    fetch("https://terapialibretest.000webhostapp.com/create_preference", {  // Actualiza la URL
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+    })
+    .then(response => response.json())
+    .then(preference => {
+        // Si el botón aún no ha sido creado, crea el botón
+        if (!isButtonCreated) {
+            createCheckoutButton(preference.id);
+            isButtonCreated = true; // Marca el botón como creado
+        }
+    })
+    .catch(error => {
+        alert("Error:(");
+    });
+});
+
+// Función para crear el botón de pago de Mercado Pago
+const createCheckoutButton = (preferenceId) => {
+    const bricksBuilder = mp.bricks();
+
+    // Función para renderizar el componente del botón de pago
+    const renderComponent = () => {
+        if (window.checkoutButton) window.checkoutButton.unmount();
+        bricksBuilder.create("wallet", "wallet_container", {
+            initialization: {
+                preferenceId: preferenceId,
+            },
+        });
+    };
+
+    renderComponent();
+};

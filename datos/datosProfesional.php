@@ -1,3 +1,36 @@
+<?php
+// Incluir la conexión a la base de datos
+include '../php/conexion.php';
+
+// Iniciar sesión
+session_start();
+
+// Obtener el ID del psicólogo desde la URL
+$psychologistId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Validar el ID del psicólogo
+if ($psychologistId <= 0) {
+    // Mostrar mensaje de error si el ID no es válido
+    echo '<script>alert("ID de psicólogo no válido");</script>';
+    exit();
+}
+
+// Consultar la base de datos para obtener la información del psicólogo con el ID proporcionado
+$query = "SELECT * FROM presentaciones WHERE id = $psychologistId";
+$result = mysqli_query($conexion, $query);
+
+// Validar si se encontraron resultados
+if (!$result || mysqli_num_rows($result) === 0) {
+    // Mostrar mensaje de error si no se encuentra el psicólogo
+    echo '<script>alert("No se encontró el psicólogo con el ID proporcionado");</script>';
+    exit();
+}
+
+// Obtener la información del psicólogo
+$psychologistData = mysqli_fetch_assoc($result);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,15 +59,15 @@
 
     <header>
 
-        <a href="../index.html" class="logo">
+        <a href="../index.php" class="logo">
             <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
             Terapia libre
         </a>
 
         <nav class="navbar">
             <ul>
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="../psicologosOnline.html">Psicologos</a></li>
+                <li><a href="../index.php">Inicio</a></li>
+                <li><a href="../psicologosOnline.php">Psicologos</a></li>
             </ul>
         </nav>
 
@@ -49,24 +82,38 @@
         <div class="row justify-content-center" id="cardContainer">
             <!-- Primera Card -->
 
-            <div class="card mb-3">
-                <img src="../img/modelo.jpg" class="card-img-top" alt="...">
+            <div class="card mb-3"
+                style="background-image: url('../img/fondoPresntacion.jpg'); background-size: cover; background-position: center;">
+
+                <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Lic. Ana Maria Pinto</h5>
-                    <h5 class="card-titleDos">Lic. en Psicología Terapia Psicoanalitica</h5>
-                    <p class="card-text">Matrícula MN 46489 (AR)</p>
+                    <h5 class="card-title">
+                        <?php echo $psychologistData['nombre']; ?>
+                    </h5>
+                    <h5 class="card-titleDos">
+                        <?php echo $psychologistData['titulo']; ?>
+                    </h5>
+                    <p class="card-text">Matrícula:MN
+                        <?php echo $psychologistData['matricula']; ?>(AR)
+                    </p>
                     <div class="contact-icons">
                         <div class="icon-wrapper">
-                            <a href="https://api.whatsapp.com/send?phone=1234567890&text=Hola me contacto desde TerapiaLibre para solicitar una consulta!" target="_blank" rel="noopener noreferrer">
+
+                            <a href="https://api.whatsapp.com/send?phone=<?php echo $psychologistData['telefono']; ?>&text=Hola me contacto desde TerapiaLibre para solicitar una consulta!"
+                                target="_blank" rel="noopener noreferrer">
                                 <img src="../img/whatsapp-line.svg" alt="Icono de WhatsApp">
                             </a>
+
                             <p class="phone-number">Contacto por Whatsapp!</p>
+
                         </div>
                         <div class="icon-wrapper">
                             <a href="">
                                 <img src="../img/Phone.png" alt="Icono de Teléfono">
                             </a>
-                            <p class="phone-number">Tel:+541234567890</p>
+                            <p class="phone-number">Tel:
+                                <?php echo $psychologistData['telefono']; ?>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -112,31 +159,22 @@
         <div class="box-container">
 
             <div class="box">
-                <a href="index.html" class="logo">
+                <a href="datosProfesional.php" class="logo">
                     <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-                    Terapia libre
+                    Terapia Libre
                 </a>
                 <p>
-                    Te da la posibilidad de contactar a distancia la salud mental online acercandonos a
-                    donde estes y ofreciendote la mejor atencion, con la finalidad de atender tus necesidades
-                    con los mejores profesionales.
+                    Es una plataforma innovadora que te brinda la libertad de elegir al profesional de salud mental que
+                    mejor se adapte a tus necesidades. Con una amplia variedad de expertos y especialistas, la
+                    plataforma facilita la búsqueda y selección de tu terapeuta ideal. Priorizamos la salud mental,
+                    ofreciéndote un espacio donde puedas acceder a tratamientos personalizados y dedicados a mejorar tu
+                    bienestar emocional.
                 </p>
             </div>
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#">facebook</a>
-                <a href="#">twitter</a>
                 <a href="#">instagram</a>
-                <a href="#">github</a>
-            </div>
-
-            <div class="box">
-                <h3 class="letter">Contactate</h3>
-                <form action="">
-                    <input type="email" placeholder="enter your email">
-                    <button type="submit" class="fas fa-paper-plane"></button>
-                </form>
             </div>
 
         </div>

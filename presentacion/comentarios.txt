@@ -1,0 +1,59 @@
+<section>
+        <!-- Comentario section-->
+        <?php
+        include '../php/conexion.php';
+
+        $resultado = mysqli_query($conexion, 'SELECT * FROM comentarios');
+        ?>
+
+        <form method="POST" action="../php/enviarcomentario.php" class="comment-form">
+            <section id="contact" class="comment-section">
+                <div class="containerComment">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <h2 class="comment-title">Comentarios</h2>
+                            <div class="comment-input">
+                                <h3 class="input-title">¡Haz un Comentario!</h3>
+                                <div class="form-group">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input class="form-control" name="nombre" type="text" id="nombre"
+                                        placeholder="Escribe tu nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comentario" class="form-label">Comentario:</label>
+                                    <textarea class="form-control" name="comentario" cols="30" rows="5" type="text"
+                                        id="comentario" placeholder="Escribe tu comentario..."></textarea>
+                                </div>
+                                <input type="hidden" name="psychologist_id" value="<?php echo $psychologistId; ?>">
+                                <input class="btn btn-primary" type="submit" value="Enviar Comentario">
+                            </div>
+
+                            <div class="comments-container">
+                                <!-- Aquí se mostrarán los comentarios -->
+                                <?php
+                                while ($comentario = mysqli_fetch_object($commentResult)) {
+                                    ?>
+                                    <div class="comment">
+                                        <b>
+                                            <?php echo ($comentario->nombre); ?>
+                                        </b>
+                                        <span class="comment-date">
+                                            <?php echo ($comentario->fecha); ?>
+                                        </span>
+                                        <p class="comment-text">
+                                            <?php echo ($comentario->comentario); ?>
+                                        </p>
+
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </form>
+
+    </section>
