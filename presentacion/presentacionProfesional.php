@@ -86,10 +86,10 @@ $commentResult = mysqli_query($conexion, $commentQuery);
     <!-- Presentacion section -->
     <section id="presentacion">
         <div class="container">
-            <div class="row justify-content-center" id="cardContainer">
+            <div class="row " id="cardContainer">
                 <!-- Primera Card -->
-                <div class="card mb-3"
-                    style="background-image: url('../img/fondoPresntacion.jpg'); background-size: cover; background-position: center;">
+                <div class="cold-md-6">
+                <div class="card mb-3" id="pruebaPresentacion">
                     <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">
@@ -104,6 +104,7 @@ $commentResult = mysqli_query($conexion, $commentQuery);
                         <button class="btn btn-primary" id="contact" onclick="abrirModal()">Contactar</button>
 
                     </div>
+                </div>
                 </div>
                 <!--ventana emergente-->
 
@@ -129,7 +130,8 @@ $commentResult = mysqli_query($conexion, $commentQuery);
 
                             <!-- Agrega un campo de entrada para el correo electrónico -->
                             <label for="user-email">Correo Electrónico:</label>
-                            <input type="email" id="user-email" name="user-email" placeholder="Ingresar mail..." required>
+                            <input type="email" id="user-email" name="user-email" placeholder="Ingresar mail..."
+                                required>
 
                             <button class="btn btn-primary" id="checkout-btn"
                                 data-psychologist-id="<?php echo $psychologistId; ?>">Contactar Profesional</button>
@@ -139,16 +141,21 @@ $commentResult = mysqli_query($conexion, $commentQuery);
                 </div>
 
                 <!--ventana emergente-->
-                <!-- Especialidad -->
 
+
+                <!-- Especialidad -->
                 <div class="card mb-3">
-                    <div class="card-body">
+                    <div class="card-body text-left">
                         <h5 class="card-title">Especialidades</h5>
                         <p class="card-text">
                             <?php echo $psychologistData['especialidad']; ?>
                         </p>
                     </div>
                 </div>
+
+
+
+
 
                 <!-- Presentacion -->
 

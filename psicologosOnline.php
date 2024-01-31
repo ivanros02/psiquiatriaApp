@@ -35,7 +35,7 @@
     <nav class="navbar">
       <ul>
         <li><a href="index.php">Inicio</a></li>
-        <li><a href="#service">Servicios</a></li>
+        <li><a href="#service">Beneficios</a></li>
 
       </ul>
     </nav>
@@ -48,19 +48,39 @@
 
   <!--Psicologos start-->
   <section id="profesionales">
-    <h1 class="heading"><i class="fas fa-quote-left"></i> Profesionales <i class="fas fa-quote-right"></i></h1>
+    <h1 class="heading"><i class="fas fa-quote-left"></i> PROFESIONALES <i class="fas fa-quote-right"></i></h1>
 
     <div class="container">
-      <!-- search content -->
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Buscar profesional" />
+      <!-- Agrega el nuevo contenedor para el filtro -->
+      <div class="filter-container">
+        <label for="especialidadFilter">Especialidad:</label>
+        <select id="especialidadFilter">
+          <option value="">Todas las especialidades</option>
+          <option value="Ansiedad y estrés">Ansiedad y estrés</option>
+          <option value="Desarrollo personal">Desarrollo personal</option>
+          <!-- Agrega las demás opciones de especialidades aquí -->
+        </select>
+
+        <!-- Agrega un nuevo filtro para la disponibilidad -->
+        <label for="disponibilidadFilter">Disponibilidad:</label>
+        <select id="disponibilidadFilter">
+          <option value="">Todas las disponibilidades</option>
+          <option value="24hs">24hs</option>
+          <option value="48hs">48hs</option>
+          <option value="72hs">72hs</option>
+          <!-- Agrega las demás opciones de disponibilidad aquí -->
+        </select>
+
+        <button id="buscarBtn">Buscar</button>
       </div>
-      <p id="noResults" class="no-results">No se encontraron resultados.</p>
+
 
       <!-- Contenedor para todas las tarjetas -->
       <div class="row" id="cardContainer">
         <!-- Las tarjetas se generarán dinámicamente aquí -->
       </div>
+
+
 
     </div>
   </section>
@@ -69,7 +89,8 @@
 
   <section class="service" id="service">
 
-    <h1 class="heading"> <i class="fas fa-quote-left"></i> BENEFICIOS <i class="fas fa-quote-right"></i> </h1>
+    <h1 class="headingService" id='tesxt'> <i class="fas fa-quote-left"></i> BENEFICIOS <i
+        class="fas fa-quote-right"></i> </h1>
 
     <div class="box-container">
 
@@ -91,8 +112,8 @@
         <i class="fas fa-hands-helping"></i>
         <p>
           Fácil y rápido acceso al tratamiento.
-          Turnos a partir de 24 hs, 48 hs y 72 hs.
-
+          Turnos a partir de 24 hs, 48 hs
+          <br>y 72 hs.
         </p>
       </div>
 

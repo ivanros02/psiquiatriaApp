@@ -49,7 +49,7 @@ header {
   justify-content: space-between;
   background-color: #fff;
   box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
-  padding: 1rem 5rem;
+  padding: 0.2rem 5rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -69,6 +69,7 @@ header .logo {
 
 a.logo {
   color: var(--green);
+  font-size: 2.5rem;
 }
 
 a.logo:hover {
@@ -99,13 +100,12 @@ header .navbar ul li a {
 .logo {
   display: flex;
   align-items: center;
-  text-decoration: none;
-  font-size: 2.5rem;
   color: var(--green);
+  font-weight: bold;
 }
 
 .logo img {
-  width: 40px;
+  width: 7rem;
   height: auto;
   margin-right: 10px;
   vertical-align: middle;
@@ -130,16 +130,22 @@ header .fa-bars {
 /* Estilos para las tarjetas */
 .card {
   border-radius: 15px;
-  overflow: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   width: auto;
   display: inline-block;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  text-align: start;
   margin-bottom: 2rem;
   background-color: #fff;
 }
+
+#pruebaPresentacion{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .card:hover {
   transform: scale(1.05);
@@ -180,13 +186,13 @@ header .fa-bars {
   }
 
   50% {
-    transform: scale(1.2);
+    transform: scale(1.1);
     border-color: #8f8f00;
-    color: #EF8834;
+    color: #eff789;
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(1.1.5);
   }
 }
 
@@ -203,6 +209,7 @@ header .fa-bars {
 
 .container {
   margin-top: 9.5rem;
+  
 }
 
 .container .row {
@@ -213,7 +220,6 @@ header .fa-bars {
 .container .card-body .card-title {
   font-size: 2rem;
   color: #666;
-
 }
 
 .container .card-body .card-titleDos {
@@ -239,6 +245,9 @@ header .fa-bars {
   font-size: 2rem;
 }
 
+.text-left {
+  text-align: left !important;
+}
 
 
 /* ventana emergente*/
@@ -326,15 +335,6 @@ header .fa-bars {
   /* Cambiar el color del borde al pasar el mouse */
 }
 
-.card.mb-3 .card-text {
-  overflow: hidden;
-  /* Hide any content that exceeds the height */
-}
-
-.card.mb-3 .card-text.expanded {
-  max-height: none;
-  /* Display the full content when the 'expanded' class is applied */
-}
 
 /* Estilos para el formulario de comentarios */
 .containerComment {
@@ -626,7 +626,7 @@ label {
   }
 
   header .nav-toggle {
-    top: 6rem;
+    top: 7.4rem;
     opacity: 1;
     display: block;
   }

@@ -11,14 +11,15 @@ window.addEventListener('scroll', () => {
   navbar.classList.remove('nav-toggle');
 });
 
-// Obtener el input de búsqueda
-
 
 //cards:
 document.addEventListener("DOMContentLoaded", function () {
   const cardContainer = document.getElementById("cardContainer");
-  const searchInput = document.getElementById('searchInput');
-  const noResultsMessage = document.getElementById('noResults');
+  const especialidadFilter = document.getElementById("especialidadFilter");
+  // Agrega un event listener al botón de búsqueda
+  document.getElementById("buscarBtn").addEventListener("click", function () {
+    filtrarPsicologos();
+  });
 
   // Información de los psicólogos
   const psychologistsData = [
@@ -29,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rating: 4.5,
       titulo: "Lic. en Psicología Terapia Psicoanalítica",
       especialidad: "Ansiedad y estrés. Desarrollo personal. Miedos o fobias. Terapia de pareja. Problemas vinculares. Duelo.",
-      disponibilidad:"24hs",
+      disponibilidad: "24hs",
     },
 
     {
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
       rating: 4.5,
       titulo: "Lic. en Psicología Terapia Psicoanalítica",
       especialidad: "Ansiedad y estrés.",
-      disponibilidad:"24hs",
+      disponibilidad: "24hs",
     },
 
     {
@@ -47,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
       nombre: "Lic. Vanesa Pérez",
       rating: 4.5,
       titulo: "Lic. en Psicología Terapia Psicoanalítica",
-      especialidad: "Ansiedad y estrés. Desarrollo personal. Miedos o fobias. Terapia de pareja. Problemas vinculares. Duelo.",
-      disponibilidad:"24hs",
+      especialidad: "Desarrollo personal",
+      disponibilidad: "48hs",
     },
     
     // Agrega las demás tarjetas aquí
@@ -84,40 +85,28 @@ document.addEventListener("DOMContentLoaded", function () {
     return cardHTML;
   }
 
-  // Generar las tarjetas dinámicamente
-  function renderCards(psychologists) {
+   function renderCards(psychologists) {
     cardContainer.innerHTML = psychologists.map(createCard).join('');
-
-    // Mostrar u ocultar el mensaje de "No se encontraron resultados"
-    noResultsMessage.style.display = psychologists.length === 0 ? 'block' : 'none';
   }
 
-  // Inicializar con todas las tarjetas
+  function filtrarPsicologos() {
+    const especialidadSeleccionada = especialidadFilter.value.toLowerCase();
+    const disponibilidadSeleccionada = disponibilidadFilter.value.toLowerCase();
+  
+    const psychologosFiltrados = psychologistsData.filter(psychologist => 
+      (especialidadSeleccionada === "" || psychologist.especialidad.toLowerCase().includes(especialidadSeleccionada)) &&
+      (disponibilidadSeleccionada === "" || psychologist.disponibilidad.toLowerCase() === disponibilidadSeleccionada)
+    );
+  
+    renderCards(psychologosFiltrados);
+  }
+  
+
   renderCards(psychologistsData);
 
-  // Función para filtrar las cards
-  function filterCards(searchTerm) {
-    const term = searchTerm.toLowerCase();
-    const filteredPsychologists = psychologistsData.filter(psychologist =>
-      psychologist.nombre.toLowerCase().includes(term) ||
-      psychologist.titulo.toLowerCase().includes(term) ||
-      psychologist.especialidad.toLowerCase().includes(term) ||
-      psychologist.disponibilidad.toString().includes(term)
-    );
-
-    renderCards(filteredPsychologists);
-  }
-
-  // Evento input para el input de búsqueda
-  searchInput.addEventListener('input', (e) => {
-    const searchTerm = e.target.value.trim();
-    filterCards(searchTerm);
-  });
 });
 
 function mostrarInformacion(button) {
   const psychologistId = button.dataset.id;
-  // Aquí puedes redirigir o realizar otras acciones con el ID
-  // Por ejemplo, redirigir a la página de presentación con el ID
   window.location.href = `presentacion/presentacionProfesional.php?id=${psychologistId}`;
 }

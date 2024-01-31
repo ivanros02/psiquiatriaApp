@@ -24,7 +24,7 @@
 
     <header>
 
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
             <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
             Terapia Libre
         </a>
@@ -174,13 +174,9 @@
                     Terapia Libre
                 </a>
                 <p>
-                    Es una plataforma innovadora que te brinda la libertad de elegir al profesional de salud mental que
-                    mejor se adapte a
-                    tus necesidades. Con una amplia variedad de expertos y especialistas, la plataforma facilita la
-                    búsqueda y selección
-                    de tu terapeuta ideal. Priorizamos la salud mental, ofreciéndote un espacio donde puedas acceder a
-                    tratamientos
-                    personalizados y dedicados a mejorar tu bienestar emocional.
+                    Es una plataforma innovadora que te ofrece la libertad de elegir al profesional de salud mental
+                    ideal para ti. Con una amplia variedad de expertos, facilitamos la búsqueda y selección de tu
+                    terapeuta, priorizando tu bienestar emocional con tratamientos personalizados.
                 </p>
             </div>
 
