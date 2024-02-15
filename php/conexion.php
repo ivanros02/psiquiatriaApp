@@ -7,9 +7,9 @@ $database = "comentariosphp";
 
 /*
 $hostname = "localhost";
-$username = "id21770911_ivanross";
-$password = "Wss1593.";
-$database = "id21770911_comentariosphp";
+$username = "c2012063_terapia";
+$password = "guBUgede85";
+$database = "c2012063_terapia";
 */
 
 $conexion = mysqli_connect($hostname, $username, $password, $database);
