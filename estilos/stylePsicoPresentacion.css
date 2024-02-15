@@ -47,15 +47,14 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #fff;
+  background: #fff;
   box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
-  padding: 0.2rem 5rem;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
   z-index: 1000;
-
+  padding: 0.2rem 5rem;
+  width: 100%;
 }
 
 header .logo {
@@ -117,8 +116,6 @@ header .navbar ul li a:hover {
 
 /* Modifica la regla para la clase 'custom-link' y aumenta la especificidad */
 
-
-
 header .fa-bars {
   font-size: 3rem;
   color: #666;
@@ -140,7 +137,7 @@ header .fa-bars {
   background-color: #fff;
 }
 
-#pruebaPresentacion{
+#cardPresentacion {
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -209,7 +206,7 @@ header .fa-bars {
 
 .container {
   margin-top: 9.5rem;
-  
+
 }
 
 .container .row {
@@ -336,148 +333,9 @@ header .fa-bars {
 }
 
 
-/* Estilos para el formulario de comentarios */
-.containerComment {
-  margin-top: 2rem;
-
-}
-
-.containerComment .comment-form {
-  padding-top: 0px;
-  margin-top: 0px;
-}
-
-.containerComment .comment-form,
-.containerComment .comments-container {
-  width: 100%;
-}
-
-.containerComment .comment-section {
-  background-color: #f7f7f7;
-  padding-top: 0px;
-  text-align: center;
-  margin-top: 0px;
-}
-
-.containerComment .comment-title {
-  font-size: 2.5rem;
-  color: var(--green);
-  margin-bottom: 20px;
-  margin-top: 0px;
-  text-align: center;
-  flex-wrap: wrap;
-}
-
-.containerComment .comment-lead {
-  font-size: 1.5rem;
-  color: #666;
-  margin-bottom: 40px;
-}
-
-.containerComment .comment-input {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  text-align: left;
-}
-
-.containerComment .input-title {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.containerComment .form-group {
-  margin-bottom: 20px;
-}
-
-.containerComment .form-label {
-  font-size: 1.4rem;
-  color: #333;
-}
-
-.containerComment .form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1.6rem;
-}
-
-.containerComment textarea.form-control {
-  height: 150px;
-  resize: vertical;
-}
-
-.containerComment .btn-primary {
-  background-color: var(--green);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 12px 24px;
-  font-size: 1.6rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.containerComment .btn-primary:hover {
-  background-color: var(--dark-green);
-}
-
-.comments-container {
-  margin-top: 20px;
-}
-
-.comment {
-
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.comment b {
-  color: #333;
-}
-
-.comment-date {
-  font-size: 14px;
-  color: #888;
-}
-
-.comment-text {
-  margin-top: 8px;
-  font-size: 16px;
-}
-
-/* Estilo para la etiqueta del input */
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Estilo para el input de correo electrónico */
-#user-email {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-  transition: border-color 0.3s;
-}
-
-#user-email:focus {
-  border-color: #007bff; /* Cambia el color del borde al enfocar el input */
-}
-
-
 .footer {
   background: #333;
+  text-decoration: none;
 }
 
 .footer .box-container {
@@ -487,52 +345,58 @@ label {
   flex-wrap: wrap;
   width: 95%;
   margin: 0 auto;
-
-}
-
-.footer .box-container .box {
-  margin: 2rem;
-  flex: 1 1 25rem;
-
-}
-
-.footer .box-container .box .logo {
-  margin: 2rem;
-  flex: 1 1 25rem;
   text-decoration: none;
 }
 
+.footer .box-container .box {
+  margin: 0.5rem;
+  flex: 1 1 25rem;
+
+  text-decoration: none !important;
+}
+
 .footer .box-container .box .logo {
-  font-size: 3rem;
+  font-size: 2rem;
   color: var(--green);
+  text-decoration: none !important;
+}
+
+.footer .box-container .box .logo .img {
+  width: 1rem;
 }
 
 .footer .box-container .box p {
   font-size: 1.7rem;
   color: #ccc;
   padding: 1rem 0;
+  line-height: normal;
+  text-decoration: none;
 }
 
 .footer .box-container .box .share {
   text-align: center;
   font-size: 3rem;
   color: #fff;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .footer .box-container .box:nth-child(2) a {
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 1.4rem;
   color: #eee;
   display: block;
   padding: .5rem 0;
+  text-decoration: none;
 }
 
 .footer .box-container .box:nth-child(2) a:hover {
   text-decoration: underline;
+
 }
 
 .footer .box-container .box .letter {
-  font-size: 3rem;
+  font-size: 2rem;
   color: #fff;
 }
 
@@ -547,31 +411,15 @@ label {
   width: 74%;
 }
 
-.footer .box-container .box form button {
-  outline: none;
-  border: none;
-  background: var(--green);
-  font-size: 1.9rem;
-  color: #fff;
-  height: 4rem;
-  width: 25%;
-  cursor: pointer;
-}
-
-.footer .box-container .box form button:hover {
-  color: var(--green);
-  background: none;
-  border: .1rem solid var(--green);
-}
-
 .footer .credit {
   text-align: center;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.2rem;
   width: 85%;
   margin: 0 auto;
   padding: 2rem 1rem;
   border-top: .1rem solid #ccc;
+  text-decoration: none;
 }
 
 .footer .credit span {
@@ -587,7 +435,7 @@ label {
   }
 
   header .fa-bars {
-    display: block;
+    display: block !important;
   }
 
   header .navbar {
@@ -601,8 +449,13 @@ label {
 
   header .navbar ul {
     flex-flow: column;
+    align-items: center;
     padding: 2rem 0;
     background-color: #fff;
+    width: 100%;
+    /* Ocupar todo el ancho disponible */
+    padding-top: 1rem;
+    /* Espacio adicional en la parte superior */
   }
 
   header .navbar ul li {
@@ -614,21 +467,25 @@ label {
   header .navbar ul li a {
     font-size: 3rem;
     display: block;
-  }
-
-  header .nav-toggle {
-    top: 6rem;
-    opacity: 1;
-  }
-
-  .fa-times {
-    transform: rotate(180deg);
+    width: 100%;
+    /* Ocupar todo el ancho disponible */
+    padding: 1rem 0;
+    /* Espacio adicional en el enlace */
   }
 
   header .nav-toggle {
     top: 7.4rem;
     opacity: 1;
-    display: block;
+  }
+
+  .fa-times {
+    transform: rotate(180deg) !important;
+  }
+
+  header .nav-toggle {
+    top: 6.5rem;
+    opacity: 1;
+    display: block !important;
   }
 
   .home .content h1 {
@@ -645,14 +502,3 @@ label {
 
 }
 
-@media (max-width:500px) {
-
-  .donate .form-container form .inputBox input,
-  select {
-    width: 100%;
-  }
-
-  .donate .form-container form {
-    width: 90%;
-  }
-}

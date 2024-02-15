@@ -9,7 +9,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    text-transform: none;
     text-decoration: none;
     transition: all .5s cubic-bezier(.37, 1.14, .26, 1.24);
 }
@@ -113,38 +112,6 @@ header .fa-bars {
     display: none;
 }
 
-/* Estilos para la barra de búsqueda */
-.search-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-    /* Agregamos margen arriba para separar del h1 */
-}
-
-#searchInput {
-    width: 60%;
-    /* Ancho fijo para la barra de búsqueda */
-    padding: 1rem;
-    font-size: 1.6rem;
-    border: 0.2rem solid var(--green);
-    border-radius: 1rem;
-    /* Bordes redondeados */
-    outline: none;
-    box-sizing: border-box;
-}
-
-#filteredCardContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.filtered-card {
-    width: 10%;
-    /* Ajusta el ancho según sea necesario */
-    margin: 10px;
-}
 
 
 
@@ -210,25 +177,34 @@ header .fa-bars {
 
 .filter-container {
     display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
     align-items: center;
     justify-content: center;
     margin: 20px 0;
+    color: var(--green);
 }
 
 label {
     margin-right: 1rem;
     font-size: 2rem;
     margin-left: 1rem;
+    color: var(--green);
 }
 
 select {
-    padding: 8px;
+    padding: 1rem;
     margin-right: 10px;
-    border: 1px solid #ccc;
+    margin-bottom: 10px; /* Add margin at the bottom for spacing */
+    border: 1px solid var(--green);
     border-radius: 4px;
-    font-size: 2rem;
+    width: 100%; /* Make the select box take 100% width on smaller screens */
+    color: var(--green);
 }
 
+select option{
+    font-size: 1.5rem;
+    color: var(--green);
+}
 
 #buscarBtn {
     background-color: var(--green);
@@ -238,6 +214,28 @@ select {
     border-radius: 4px;
     cursor: pointer;
     margin-left: 2rem;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.no-results-message {
+    text-align: center;
+    font-size: 2rem; /* Adjust the font size as needed */
+    margin: 20px 0; /* Add margin for spacing */
+    color: var(--green); /* Optionally, set the color to your preference */
+}
+
+
+/* Media query for screens with a maximum width of 600px */
+@media only screen and (max-width: 600px) {
+    select {
+        margin-right: 0; /* Remove right margin on smaller screens */
+    }
+
+    #buscarBtn {
+        margin-left: 0; /* Remove left margin on smaller screens */
+        margin-top: 10px; /* Add top margin for spacing */
+    }
 }
 
 
@@ -373,6 +371,7 @@ select {
 
 .footer {
     background: #333;
+    text-decoration: none;
 }
 
 .footer .box-container {
@@ -382,45 +381,57 @@ select {
     flex-wrap: wrap;
     width: 95%;
     margin: 0 auto;
+    text-decoration: none;
 }
 
 .footer .box-container .box {
-    margin: 2rem;
+    margin: 0.5rem;
     flex: 1 1 25rem;
+    
+    text-decoration: none !important;
 }
 
 .footer .box-container .box .logo {
-    font-size: 3rem;
+    font-size: 2rem;
     color: var(--green);
-    text-decoration: none;
+}
+
+.footer .box-container .box .logo .img {
+    width: 1rem;
 }
 
 .footer .box-container .box p {
     font-size: 1.7rem;
     color: #ccc;
     padding: 1rem 0;
+    line-height: normal;
+    text-decoration: none;
 }
 
 .footer .box-container .box .share {
     text-align: center;
     font-size: 3rem;
     color: #fff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .footer .box-container .box:nth-child(2) a {
     text-align: center;
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     color: #eee;
     display: block;
     padding: .5rem 0;
+    text-decoration: none;
 }
 
 .footer .box-container .box:nth-child(2) a:hover {
     text-decoration: underline;
+    
 }
 
 .footer .box-container .box .letter {
-    font-size: 3rem;
+    font-size: 2rem;
     color: #fff;
 }
 
@@ -435,41 +446,20 @@ select {
     width: 74%;
 }
 
-.footer .box-container .box form button {
-    outline: none;
-    border: none;
-    background: var(--green);
-    font-size: 1.9rem;
-    color: #fff;
-    height: 4rem;
-    width: 25%;
-    cursor: pointer;
-}
-
-.footer .box-container .box form button:hover {
-    color: var(--green);
-    background: none;
-    border: .1rem solid var(--green);
-}
-
 .footer .credit {
     text-align: center;
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.2rem;
     width: 85%;
     margin: 0 auto;
     padding: 2rem 1rem;
     border-top: .1rem solid #ccc;
+    text-decoration: none;
 }
 
 .footer .credit span {
     color: var(--green);
 }
-
-
-
-
-
 
 
 /* media queries  */

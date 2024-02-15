@@ -18,6 +18,26 @@
     color: #fff;
 }
 
+.btn-wsp{
+    position:fixed;
+    width:60px;
+    height:60px;
+    line-height: 63px;
+    bottom:25px;
+    right:25px;
+    background:#25d366;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    font-size:35px;
+    box-shadow: 0px 1px 10px rgba(0,0,0,0.3);
+    z-index:100;
+    transition: all 300ms ease;
+}
+.btn-wsp:hover{
+    background: #20ba5a;
+}
+
 html {
     font-size: 62.5%;
     overflow-x: hidden;
@@ -75,9 +95,23 @@ html {
 .heading {
     text-align: center;
     font-size: 2.35rem;
-    color: #555;
+    color: var(--green);
     padding: 1rem;
     padding-top: 7rem;
+    margin-left: 55rem;
+}
+
+.headingService{
+    text-align: center;
+    font-size: 2.35rem;
+    color: var(--green);
+    padding: 1rem;
+    padding-top: 7rem;
+}
+
+.headingService i{
+    color: var(--green);
+    font-size: 2rem; 
 }
 
 .heading i {
@@ -176,7 +210,7 @@ header .fa-bars {
 }
 
 .home .content h1 {
-    font-size: 7rem;
+    font-size: 5.6rem;
     color: var(--green);
 }
 
@@ -220,7 +254,8 @@ header .fa-bars {
 .about .row .content p {
     font-size: 2rem;
     color: #666;
-    padding: 1rem 0;
+    flex: 1 1 50%; /* Establece el tamaño del contenido */
+    padding: 0 1rem;
 }
 
 .about .box-container {
@@ -322,7 +357,7 @@ header .fa-bars {
 }
 
 .footer .box-container .box {
-    margin: 2rem;
+    margin: 0.5rem;
     flex: 1 1 25rem;
 }
 
@@ -336,9 +371,10 @@ header .fa-bars {
 }
 
 .footer .box-container .box p {
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     color: #ccc;
     padding: 1rem 0;
+
 }
 
 .footer .box-container .box .share {
@@ -378,7 +414,7 @@ header .fa-bars {
 .footer .credit {
     text-align: center;
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.2rem;
     width: 85%;
     margin: 0 auto;
     padding: 2rem 1rem;
@@ -398,6 +434,13 @@ header .fa-bars {
 
     html {
         font-size: 55%;
+    }
+
+    .heading{
+        text-align: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: auto;
     }
 
     header .fa-bars {
@@ -440,7 +483,7 @@ header .fa-bars {
     }
 
     .home .content h1 {
-        font-size: 5rem;
+        font-size: 4rem;
     }
 
     .home .content p {
@@ -455,6 +498,13 @@ header .fa-bars {
 
 @media (max-width:500px) {
 
+    .heading{
+        text-align: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: auto;
+    }
+
     .donate .form-container form .inputBox input,
     select {
         width: 100%;
@@ -465,63 +515,18 @@ header .fa-bars {
     }
 }
 
-/*presentacion de psicologos
-/* Estilos para el contenido principal */
-.main-content {
-    padding: 2rem;
-    background-color: #f9f9f9;
+@media only screen and (min-width:320px) and (max-width:768px){
+    .heading{
+        text-align: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: auto;
+    }
+    .btn-wsp{
+        width:63px;
+        height:63px;
+        line-height: 66px;
+	}
 }
 
-/* Estilos para el contenedor principal del perfil del psicólogo */
-.psychologist-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
-/* Estilos para la sección de información del psicólogo */
-.psychologist-info {
-    text-align: center;
-}
-
-.psychologist-info img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 1rem;
-}
-
-.psychologist-info h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.psychologist-info p {
-    color: #888;
-    font-style: italic;
-    margin-bottom: 1.5rem;
-}
-
-/* Estilos para la sección de descripción del psicólogo */
-.psychologist-description {
-    max-width: 600px;
-}
-
-.psychologist-description h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-}
-
-.psychologist-description p {
-    font-size: 1.6rem;
-    color: #333;
-    line-height: 1.6;
-}
-
-/* Otros estilos para detalles adicionales del perfil del psicólogo */
-/* Ajusta estos estilos según tu contenido y diseño específico */

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-01-2024 a las 16:31:12
+-- Tiempo de generación: 09-02-2024 a las 21:06:40
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,7 +38,11 @@ CREATE TABLE `datos_usuario` (
 --
 
 INSERT INTO `datos_usuario` (`id`, `user_email`, `psychologist_id`) VALUES
-(13, 'paginaswebs2002@gmail.com', 2);
+(13, 'paginaswebs2002@gmail.com', 2),
+(14, 'paginaswebs2002@gmail.com', 4),
+(15, 'paginaswebs2002@gmail.com', 3),
+(16, 'paginaswebs2002@gmail.com', 1),
+(17, 'paginaswebs2002@gmail.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -59,7 +63,7 @@ ALTER TABLE `datos_usuario`
 -- AUTO_INCREMENT de la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

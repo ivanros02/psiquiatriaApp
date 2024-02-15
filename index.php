@@ -16,6 +16,9 @@
     <!-- custom css file link  -->
     <link rel="stylesheet" href="estilos/style.css">
 
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+
+    
 </head>
 
 <body>
@@ -55,7 +58,7 @@
                 tu asistencia terapéutica de forma inmediata
                 con turnos a partir de 24 hs.
             </p>
-            <a href="psicologosOnline.php"><button class="btn">BUSCAR UN PROFESIONAL </button></a>
+            <a href="./psicologos/psicologosOnline.php"><button class="btn">BUSCAR UN PROFESIONAL </button></a>
 
         </div>
 
@@ -63,11 +66,17 @@
 
     <!-- home section ends -->
 
+    <!--icono flotante whatsapp 
+    <a href="https://api.whatsapp.com/send?phone=5491161536595" class="btn-wsp" target="_blank">
+	    <i class="fa fa-whatsapp icono"></i>
+	</a>
+    -->
+    
     <!-- about section starts  -->
 
     <section class="about" id="about">
 
-        <h1 class="heading"> <i class="fas fa-quote-left"></i> Sobre nosotros <i class="fas fa-quote-right"></i> </h1>
+        <h1 class="heading"> <i class="fas fa-quote-left"></i> QUIENES SOMOS <i class="fas fa-quote-right"></i> </h1>
 
         <div class="row">
 
@@ -77,12 +86,9 @@
 
             <div class="content">
                 <p>
-                    Terapia Libre es una plataforma formada por un equipo de psicólogos expertos en diferentes
-                    especialidades.
-                    Nos tomamos la salud mental en serio, por eso nuestro equipo de psicólogos profesionales cuentan con
-                    la experiencia y la acreditación necesarias para establecer un diagnóstico clínico y realizar el
-                    tratamiento
-                    o intervención más adecuados a tus necesidades.
+                    Terapia Libre ofrece una amplia gama de profesionales con diferentes especialidades y enfoques
+                    terapéuticos, lo que les permitirá encontrar el terapeuta que los acompañe en el proceso de
+                    restablecer una óptima salud mental.
                 </p>
 
             </div>
@@ -119,7 +125,7 @@
 
     <section class="service" id="service">
 
-        <h1 class="heading">¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?</h1>
+        <h1 class="headingService">¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?</h1>
 
         <div class="box-container">
 

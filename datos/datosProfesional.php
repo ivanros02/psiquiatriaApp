@@ -59,15 +59,15 @@ $psychologistData = mysqli_fetch_assoc($result);
 
     <header>
 
-        <a href="../index.php" class="logo">
+        <a href="#" class="logo">
             <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-            Terapia libre
+            Terapia Libre
         </a>
 
         <nav class="navbar">
             <ul>
                 <li><a href="../index.php">Inicio</a></li>
-                <li><a href="../psicologosOnline.php">Psicologos</a></li>
+                <li><a href="../psicologos/psicologosOnline.php">Psicologos</a></li>
             </ul>
         </nav>
 
@@ -82,8 +82,7 @@ $psychologistData = mysqli_fetch_assoc($result);
         <div class="row justify-content-center" id="cardContainer">
             <!-- Primera Card -->
 
-            <div class="card mb-3"
-                style="background-image: url('../img/fondoPresntacion.jpg'); background-size: cover; background-position: center;">
+            <div class="card mb-3">
 
                 <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -96,58 +95,22 @@ $psychologistData = mysqli_fetch_assoc($result);
                     <p class="card-text">Matrícula:MN
                         <?php echo $psychologistData['matricula']; ?>(AR)
                     </p>
-                    <div class="contact-icons">
-                        <div class="icon-wrapper">
-
-                            <a href="https://api.whatsapp.com/send?phone=<?php echo $psychologistData['telefono']; ?>&text=Hola me contacto desde TerapiaLibre para solicitar una consulta!"
-                                target="_blank" rel="noopener noreferrer">
-                                <img src="../img/whatsapp-line.svg" alt="Icono de WhatsApp">
-                            </a>
-
-                            <p class="phone-number">Contacto por Whatsapp!</p>
-
-                        </div>
-                        <div class="icon-wrapper">
-                            <a href="">
-                                <img src="../img/Phone.png" alt="Icono de Teléfono">
-                            </a>
-                            <p class="phone-number">Tel:
-                                <?php echo $psychologistData['telefono']; ?>
-                            </p>
-                        </div>
+                    <!-- Div para contener los iconos -->
+                    <div class="cajitas">
+                        <a class="iconito icon-whatsapp" href="enlace-de-whatsapp"><i class="fab fa-whatsapp"></i></a>
+                        <a class="iconito icon-instagram" href="enlace-de-instagram"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="iconito icon-gmail" href="enlace-de-gmail"><i class="far fa-envelope"></i></a>
                     </div>
+
                 </div>
             </div>
-            <!-- Nueva sección de Puntuación y Opinión 
-<div class="card mb-3">
-    <div class="card-body">
-        <h5 class="card-title">Puntuación y Opinión</h5>
-        <div class="rating">
-            <input type="radio" id="star5" name="rating" value="5">
-            <label for="star5">&#9733;</label>
-            <input type="radio" id="star4" name="rating" value="4">
-            <label for="star4">&#9733;</label>
-            <input type="radio" id="star3" name="rating" value="3">
-            <label for="star3">&#9733;</label>
-            <input type="radio" id="star2" name="rating" value="2">
-            <label for="star2">&#9733;</label>
-            <input type="radio" id="star1" name="rating" value="1">
-            <label for="star1">&#9733;</label>
-        </div>        
-        <textarea id="opinion" placeholder="Escribe tu opinión"></textarea>
-        <button class="btn btn-primary">Enviar</button>
-    </div>
-</div>
- Fin de la sección de Puntuación y Opinión -->
 
 
         </div>
     </div>
-    </div>
-    </div>
 
     <!-- Presentacion section end -->
-
 
 
 
@@ -159,23 +122,23 @@ $psychologistData = mysqli_fetch_assoc($result);
         <div class="box-container">
 
             <div class="box">
-                <a href="datosProfesional.php" class="logo">
+                <a href="index.php" class="logo">
                     <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
                     Terapia Libre
                 </a>
                 <p>
-                    Es una plataforma innovadora que te brinda la libertad de elegir al profesional de salud mental que
-                    mejor se adapte a tus necesidades. Con una amplia variedad de expertos y especialistas, la
-                    plataforma facilita la búsqueda y selección de tu terapeuta ideal. Priorizamos la salud mental,
-                    ofreciéndote un espacio donde puedas acceder a tratamientos personalizados y dedicados a mejorar tu
-                    bienestar emocional.
+                    Es una plataforma innovadora que te ofrece la libertad de elegir al profesional de salud mental
+                    ideal para ti. Con una amplia variedad de expertos, facilitamos la búsqueda y selección de tu
+                    terapeuta, priorizando tu bienestar emocional con tratamientos personalizados.
                 </p>
             </div>
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#">instagram</a>
+                <a href="#">Instagram</a>
             </div>
+
+
 
         </div>
 
@@ -188,7 +151,7 @@ $psychologistData = mysqli_fetch_assoc($result);
 
     <!-- custom js file link  -->
     <!--<script src="https://sdk.mercadopago.com/js/v2"></script>-->
-    <script src="../scripts/app.js"></script>
+    <script src="../scripts/datos.js"></script>
 
 </body>
 

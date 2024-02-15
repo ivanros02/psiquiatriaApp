@@ -29,10 +29,6 @@ if (!$result || mysqli_num_rows($result) === 0) {
 // Obtener la información del psicólogo
 $psychologistData = mysqli_fetch_assoc($result);
 
-// Consultar comentarios solo para el psicólogo actual
-$commentQuery = "SELECT * FROM comentarios WHERE psychologist_id = $psychologistId";
-$commentResult = mysqli_query($conexion, $commentQuery);
-
 ?>
 
 
@@ -50,12 +46,13 @@ $commentResult = mysqli_query($conexion, $commentQuery);
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="../estilos/stylePsicoPresentacion.css">
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
 </head>
@@ -73,7 +70,7 @@ $commentResult = mysqli_query($conexion, $commentQuery);
         <nav class="navbar">
             <ul>
                 <li><a href="../index.php">Inicio</a></li>
-                <li><a href="../psicologosOnline.php">Psicologos</a></li>
+                <li><a href="../psicologos/psicologosOnline.php">Psicologos</a></li>
             </ul>
         </nav>
 
@@ -89,7 +86,7 @@ $commentResult = mysqli_query($conexion, $commentQuery);
             <div class="row " id="cardContainer">
                 <!-- Primera Card -->
                 <div class="cold-md-6">
-                <div class="card mb-3" id="pruebaPresentacion">
+                <div class="card mb-3" id="cardPresentacion">
                     <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">
@@ -101,6 +98,7 @@ $commentResult = mysqli_query($conexion, $commentQuery);
                         <p class="card-text">Matrícula:MN
                             <?php echo $psychologistData['matricula']; ?>(AR)
                         </p>
+                        
                         <button class="btn btn-primary" id="contact" onclick="abrirModal()">Contactar</button>
 
                     </div>
@@ -192,16 +190,14 @@ $commentResult = mysqli_query($conexion, $commentQuery);
         <div class="box-container">
 
             <div class="box">
-                <a href="#presentacion" class="logo">
+                <a href="index.php" class="logo">
                     <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
                     Terapia Libre
                 </a>
                 <p>
-                    Es una plataforma innovadora que te brinda la libertad de elegir al profesional de salud mental que
-                    mejor se adapte a tus necesidades. Con una amplia variedad de expertos y especialistas, la
-                    plataforma facilita la búsqueda y selección de tu terapeuta ideal. Priorizamos la salud mental,
-                    ofreciéndote un espacio donde puedas acceder a tratamientos personalizados y dedicados a mejorar tu
-                    bienestar emocional.
+                    Es una plataforma innovadora que te ofrece la libertad de elegir al profesional de salud mental
+                    ideal para ti. Con una amplia variedad de expertos, facilitamos la búsqueda y selección de tu
+                    terapeuta, priorizando tu bienestar emocional con tratamientos personalizados.
                 </p>
             </div>
 
@@ -209,6 +205,8 @@ $commentResult = mysqli_query($conexion, $commentQuery);
                 <h3 class="share">Redes</h3>
                 <a href="#">Instagram</a>
             </div>
+
+
 
         </div>
 

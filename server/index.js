@@ -114,12 +114,18 @@ function sendEmailToUser(userEmail, psychologistInfo) {
     const mailOptions = {
         from: 'paginaswebs2002@gmail.com',
         to: userEmail,
-        subject: 'Información del psicólogo',
+        subject: 'Terapia Libre: informacion del profesional solicitado',
         html: `
-            <p>Información del psicólogo:</p>
+            <h2>GRACIAS POR UTILIZAR NUESTRA PLATAFORMA DE SERVICIOS DE SALUD MENTAL “TERAPIA LIBRE”</h2>
+            <p>TU PAGO HA SIDO ACREDITADO </p>
+            <h2>Información del Profesional:</h2>
             <p>Nombre: ${psychologistInfo.nombre}</p>
             <p>telefono: ${psychologistInfo.telefono}</p>
-            <!-- Agrega más información según sea necesario -->
+            <p>Instagram</p>
+            <p>Gmail</p>
+            <p>¡GRACIAS POR SER PARTE DE TERAPIA LIBRE!
+            —-
+            TU OPINIÓN NOS IMPORTA.AGUARDAMOS TUS COMENTARIOS Y RECOMENDACIONES EN EL SIGUIENTE MAIL: QUEREMOSTUOPINION@TERAPIALIBRE.COM.AR </p>
         `,
     };
 

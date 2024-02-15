@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:wght@400;700&display=swap" rel="stylesheet');
 
 :root {
     --green: #c1c700;
 }
 
 * {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -48,14 +48,13 @@ header {
     top: 0;
     left: 0;
     z-index: 1000;
-    padding: 1rem 5rem;
+    padding: 0.2rem 5rem;
     width: 100%;
-
 }
 
 header .logo {
 
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: inherit;
     /* Mantener el color del texto original */
     text-decoration: none;
@@ -91,8 +90,14 @@ header .navbar ul li a {
     text-decoration: none;
 }
 
+.logo {
+    color: var(--green);
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
 .logo img {
-    width: 50px;
+    width: 7rem;
     /* Ancho de la imagen */
     height: auto;
     /* Altura automática para mantener la proporción */
@@ -192,17 +197,6 @@ header .fa-bars {
 }
 
 
-.container .card-body .btn {
-    color: #eee;
-    background-color: #c1c700;
-    border-color: #c1c700;
-    display: flex;
-    justify-content: center;
-    /* Centra horizontalmente */
-    align-items: center;
-    /* Centra verticalmente */
-}
-
 .container .card-body .btn.btn-primary:hover {
     background-color: #8f8f00;
     /* Cambiar el color de fondo al pasar el mouse */
@@ -210,42 +204,150 @@ header .fa-bars {
     /* Cambiar el color del borde al pasar el mouse */
 }
 
-/* Estilos para los íconos de contacto */
-.contact-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; /* Alinea los elementos en columna */
-    margin-top: 10px; /* Espacio superior */
-}
-
-.icon-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.container .contact-icons img {
-    width: 100px; /* Tamaño de los íconos */
-    height: 100px;
-    border-radius: 50%; /* Hace los íconos redondos */
-    background-color: #f0f0f0; /* Color de fondo para íconos */
-    padding: 10px; /* Añade espacio alrededor de los íconos */
-}
-
-.phone-number {
-    font-size: 18px; /* Tamaño del número de teléfono */
-    margin-top: 8px; /* Espacio entre el ícono y el número */
-    font-family: 'Arial', sans-serif; /* Cambia la familia de fuentes */
-    color: #333; /* Cambia el color del texto */
-    font-weight: 600; /* Hace el texto más grueso */
+.cajitas {
+    text-align: center;
+    height: 50%;
 }
 
 
+
+.cajitas::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.iconito {
+    display: inline-block;
+    font-size: 45px;
+    line-height: 90px;
+    height: 90px;
+    width: 90px;
+    margin-top: 0;
+    color: var(--green);
+    border-radius: 100%;
+    position: relative;
+}
+
+.iconito::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 100%;
+    background: #fff;
+    z-index: -1;
+}
+
+.iconito::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+    transform: scale(0);
+    background: var(--green);
+    border-radius: 100%;
+    z-index: -1;
+}
+
+.iconito:hover {
+    animation-name: bubble2;
+    animation-duration: 0.5s;
+    animation-delay: 0.1s;
+    animation-fill-mode: forwards;
+}
+
+.iconito:hover::after {
+    animation-name: bubble;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.icon-whatsapp {
+    color: #1ef05d;
+}
+
+.icon-instagram {
+    color: #8a2e8d;
+}
+
+
+.icon-gmail {
+    color: #dc4e41;
+}
+
+
+.icon-wrapper:hover>.text-wrapper {
+    font-weight: bold;
+    -webkit-transform: translate(0, -42px);
+    -moz-transform: translate(0, -42px);
+    -ms-transform: translate(0, -42px);
+    -o-transform: translate(0, -42px);
+    transform: translate(0, -42px);
+}
+
+@-moz-keyframes bubble {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes bubble {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@-o-keyframes bubble {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bubble {
+    100% {
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes bubble2 {
+    100% {
+        color: #fff;
+    }
+}
+
+@-webkit-keyframes bubble2 {
+    100% {
+        color: #fff;
+    }
+}
+
+@-o-keyframes bubble2 {
+    100% {
+        color: #fff;
+    }
+}
+
+@keyframes bubble2 {
+    100% {
+        color: #fff;
+    }
+}
 
 
 .footer {
     background: #333;
+    text-decoration: none;
+    overflow-x: hidden;
 }
 
 .footer .box-container {
@@ -255,52 +357,59 @@ header .fa-bars {
     flex-wrap: wrap;
     width: 95%;
     margin: 0 auto;
-
-}
-
-.footer .box-container .box {
-    margin: 2rem;
-    flex: 1 1 25rem;
-
-}
-
-.footer .box-container .box .logo {
-    margin: 2rem;
-    flex: 1 1 25rem;
     text-decoration: none;
 }
 
+.footer .box-container .box {
+    margin: 0.5rem;
+    flex: 1 1 25rem;
+
+    text-decoration: none !important;
+}
+
 .footer .box-container .box .logo {
-    font-size: 3rem;
+    font-size: 2rem;
     color: var(--green);
+    text-decoration: none !important;
+    font-weight: bold;
+}
+
+.footer .box-container .box .logo .img {
+    width: 1rem;
 }
 
 .footer .box-container .box p {
     font-size: 1.7rem;
     color: #ccc;
     padding: 1rem 0;
+    line-height: normal;
+    text-decoration: none;
 }
 
 .footer .box-container .box .share {
     text-align: center;
     font-size: 3rem;
     color: #fff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .footer .box-container .box:nth-child(2) a {
     text-align: center;
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     color: #eee;
     display: block;
     padding: .5rem 0;
+    text-decoration: none;
 }
 
 .footer .box-container .box:nth-child(2) a:hover {
     text-decoration: underline;
+
 }
 
 .footer .box-container .box .letter {
-    font-size: 3rem;
+    font-size: 2rem;
     color: #fff;
 }
 
@@ -315,31 +424,15 @@ header .fa-bars {
     width: 74%;
 }
 
-.footer .box-container .box form button {
-    outline: none;
-    border: none;
-    background: var(--green);
-    font-size: 1.9rem;
-    color: #fff;
-    height: 4rem;
-    width: 25%;
-    cursor: pointer;
-}
-
-.footer .box-container .box form button:hover {
-    color: var(--green);
-    background: none;
-    border: .1rem solid var(--green);
-}
-
 .footer .credit {
     text-align: center;
     color: #fff;
-    font-size: 2rem;
+    font-size: 1.2rem;
     width: 85%;
     margin: 0 auto;
     padding: 2rem 1rem;
     border-top: .1rem solid #ccc;
+    text-decoration: none;
 }
 
 .footer .credit span {
@@ -417,11 +510,13 @@ header .fa-bars {
     }
 
     .container .row {
-        flex: 1 1 20rem; /* Reducir el ancho de las tarjetas en pantallas grandes */
+        flex: 1 1 20rem;
+        /* Reducir el ancho de las tarjetas en pantallas grandes */
     }
 
     .container .row img {
-        width: 15rem; /* Reducir el tamaño de las imágenes */
+        width: 15rem;
+        /* Reducir el tamaño de las imágenes */
         height: 15rem;
     }
 
@@ -429,11 +524,13 @@ header .fa-bars {
     .container .card-body .card-titleDos,
     .container .card-body .card-text,
     .container .card-body .phone-number {
-        font-size: 1.8rem; /* Reducir el tamaño del texto en pantallas grandes */
+        font-size: 1.8rem;
+        /* Reducir el tamaño del texto en pantallas grandes */
     }
 
     .contact-icons img {
-        width: 80px; /* Reducir el tamaño de los íconos de contacto */
+        width: 80px;
+        /* Reducir el tamaño de los íconos de contacto */
         height: 80px;
     }
 
