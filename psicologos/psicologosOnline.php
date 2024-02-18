@@ -12,7 +12,7 @@
 
   <!-- font awesome cdn link  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
   <!-- custom css file link  -->
@@ -72,6 +72,14 @@
             <option value="72hs">72hs</option>
           </select>
 
+
+          <label for="ordenar">Valor:</label>
+          <select id="ordenar" name="ordenar">
+          <option value="">Todas las disponibilidades</option>
+            <option value="ASC">Menor a mayor valor</option>
+            <option value="DESC">Mayor a menor valor</option>
+          </select>
+
           <!-- Cambia el tipo de botón a submit para enviar el formulario -->
           <button type="submit" id="buscarBtn">Buscar</button>
         </div>
@@ -98,10 +106,22 @@
           // Modifica la condición de especialidad para usar LIKE
           $sql .= (strpos($sql, 'WHERE') !== false) ? " AND especialidad LIKE '%$especialidadFilter%'" : " WHERE especialidad LIKE '%$especialidadFilter%'";
         }
-        
 
-        // Finaliza la consulta SQL y agrega la ordenación por disponibilidad
-        $sql .= " ORDER BY disponibilidad ASC";
+        // Verifica si se ha enviado el filtro de orden
+        if (isset($_GET['ordenar']) && !empty($_GET['ordenar'])) {
+          $ordenar = $_GET['ordenar'];
+          if ($ordenar == 'ASC') {
+            // Ordenar de menor a mayor valor
+            $sql .= " ORDER BY valor ASC, disponibilidad ASC";
+          } else {
+            // Ordenar de mayor a menor valor
+            $sql .= " ORDER BY valor DESC, disponibilidad ASC";
+          }
+        } else {
+          // Por defecto, ordena por disponibilidad
+          $sql .= " ORDER BY disponibilidad ASC";
+        }
+
 
         $result = $conexion->query($sql);
 
@@ -112,6 +132,7 @@
             echo "
             <div class='col-lg-4 col-md-6 mb-3 d-flex justify-content-center'>
                 <div class='card'>
+                <span class='tooltiptext'>{$row['valor']}</span>
                     <img src='{$row['rutaImagen']}' class='card-img-top' alt='...'>
                     <div class='card-body'>
                         <h5 class='card-title'>{$row['nombre']}</h5>
@@ -134,8 +155,8 @@
           }
         } else {
           echo '<div class="no-results-message">No hay psicólogos disponibles.</div>';
-      }
-      
+        }
+
 
         // Cierra la conexión a la base de datos
         $conexion->close();
@@ -197,32 +218,32 @@
 
   <section class="footer">
 
-        <div class="box-container">
+    <div class="box-container">
 
-            <div class="box">
-                <a href="index.php" class="logo">
-                    <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-                    Terapia Libre
-                </a>
-                <p>
-                    Es una plataforma innovadora que te ofrece la libertad de elegir al profesional de salud mental
-                    ideal para ti. Con una amplia variedad de expertos, facilitamos la búsqueda y selección de tu
-                    terapeuta, priorizando tu bienestar emocional con tratamientos personalizados.
-                </p>
-            </div>
+      <div class="box">
+        <a href="index.php" class="logo">
+          <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
+          Terapia Libre
+        </a>
+        <p>
+          Es una plataforma innovadora que te ofrece la libertad de elegir al profesional de salud mental
+          ideal para ti. Con una amplia variedad de expertos, facilitamos la búsqueda y selección de tu
+          terapeuta, priorizando tu bienestar emocional con tratamientos personalizados.
+        </p>
+      </div>
 
-            <div class="box">
-                <h3 class="share">Redes</h3>
-                <a href="#">Instagram</a>
-            </div>
+      <div class="box">
+        <h3 class="share">Redes</h3>
+        <a href="#">Instagram</a>
+      </div>
 
 
 
-        </div>
+    </div>
 
-        <h1 class="credit">created by <span>WorldSoftSystem</span> | all rights reserved. </h1>
+    <h1 class="credit">created by <span>WorldSoftSystem</span> | all rights reserved. </h1>
 
-    </section>
+  </section>
 
   <!-- footer section ends -->
 

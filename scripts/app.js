@@ -1,3 +1,4 @@
+
 let menu = document.querySelector('.fa-bars');
 let navbar = document.querySelector('.navbar');
 // Obtén el valor del atributo data-psychologist-id
@@ -5,13 +6,13 @@ let psychologistId = document.getElementById("checkout-btn").getAttribute("data-
 
 
 menu.addEventListener('click', function () {
-  menu.classList.toggle('fa-times');
-  navbar.classList.toggle('nav-toggle');
+    menu.classList.toggle('fa-times');
+    navbar.classList.toggle('nav-toggle');
 });
 
 window.addEventListener('scroll', () => {
-  menu.classList.remove('fa-times');
-  navbar.classList.remove('nav-toggle');
+    menu.classList.remove('fa-times');
+    navbar.classList.remove('nav-toggle');
 });
 
 
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Asigna la función abrirModal al botón Contactar
-    document.getElementById('contact').addEventListener('click', function() {
+    document.getElementById('contact').addEventListener('click', function () {
         abrirModal();
 
     });
@@ -54,10 +55,10 @@ const mp = new MercadoPago("TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295", {
 let isButtonCreated = false;
 document.getElementById("checkout-btn").addEventListener("click", async () => {
     try {
-         // Captura el valor del correo electrónico
+        // Captura el valor del correo electrónico
         const userEmail = document.getElementById("user-email").value;
-         // Verifica si el campo de correo electrónico no está vacío
-         if (!userEmail.trim()) {
+        // Verifica si el campo de correo electrónico no está vacío
+        if (!userEmail.trim()) {
             alert("Por favor, ingresa tu correo electrónico.");
             return; // Detén la ejecución si el campo está vacío
         }
@@ -68,16 +69,19 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
             psychologistId: psychologistId,
         };
 
+        const tooltipElement = document.querySelector('.tooltiptext');
+        const precio = tooltipElement.getAttribute('data-valor');
+
         const orderData = {
             title: document.querySelector(".card-title").innerText,
             quantity: 1,
-            price: 2000,
+            price: parseFloat(precio),
             psychologistId: document.getElementById("checkout-btn").getAttribute("data-psychologist-id"),
             userEmail: userEmail, // Agrega el correo electrónico al objeto orderData
-            formData : formData,
+            formData: formData,
         };
 
-        
+
 
         const response = await fetch("http://localhost:3000/create_preference", {
             method: "POST",
@@ -93,7 +97,8 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
             isButtonCreated = true;
         }
     } catch (error) {
-        alert("error:(");
+        console.error("Error:", error);
+        alert("Ocurrió un error. Por favor, consulta la consola para más detalles.");
     }
 });
 

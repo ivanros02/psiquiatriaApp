@@ -81,7 +81,7 @@
         <div class="row">
 
             <div class="image">
-                <img src="img/about.jpg" alt="Paciente con psicologo">
+                <img src="img/modificar.jpeg" alt="Paciente con psicologo">
             </div>
 
             <div class="content">

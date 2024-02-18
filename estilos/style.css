@@ -18,23 +18,24 @@
     color: #fff;
 }
 
-.btn-wsp{
-    position:fixed;
-    width:60px;
-    height:60px;
+.btn-wsp {
+    position: fixed;
+    width: 60px;
+    height: 60px;
     line-height: 63px;
-    bottom:25px;
-    right:25px;
-    background:#25d366;
-    color:#FFF;
-    border-radius:50px;
-    text-align:center;
-    font-size:35px;
-    box-shadow: 0px 1px 10px rgba(0,0,0,0.3);
-    z-index:100;
+    bottom: 25px;
+    right: 25px;
+    background: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 35px;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
     transition: all 300ms ease;
 }
-.btn-wsp:hover{
+
+.btn-wsp:hover {
     background: #20ba5a;
 }
 
@@ -97,11 +98,11 @@ html {
     font-size: 2.35rem;
     color: var(--green);
     padding: 1rem;
-    padding-top: 7rem;
-    margin-left: 55rem;
+    padding-top: 6rem;
+    margin-left: 31.5rem;
 }
 
-.headingService{
+.headingService {
     text-align: center;
     font-size: 2.35rem;
     color: var(--green);
@@ -109,9 +110,9 @@ html {
     padding-top: 7rem;
 }
 
-.headingService i{
+.headingService i {
     color: var(--green);
-    font-size: 2rem; 
+    font-size: 2rem;
 }
 
 .heading i {
@@ -185,7 +186,7 @@ header .fa-bars {
     justify-content: center;
     position: relative;
     /* Añade esta línea */
-    background: url(../img/home.jpg) no-repeat;
+    background: url(../img/principalPrueba.jpeg) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -254,7 +255,8 @@ header .fa-bars {
 .about .row .content p {
     font-size: 2rem;
     color: #666;
-    flex: 1 1 50%; /* Establece el tamaño del contenido */
+    flex: 1 1 50%;
+    /* Establece el tamaño del contenido */
     padding: 0 1rem;
 }
 
@@ -296,7 +298,8 @@ header .fa-bars {
 
 .service .box-container {
     display: flex;
-    align-items: stretch; /* Esto estira las cajas para igualar la altura */
+    align-items: stretch;
+    /* Esto estira las cajas para igualar la altura */
     justify-content: center;
     flex-wrap: wrap;
     width: 78%;
@@ -312,9 +315,12 @@ header .fa-bars {
     margin: 1rem;
     cursor: pointer;
     box-sizing: border-box;
-    display: flex; /* Para alinear verticalmente el contenido */
-    flex-direction: column; /* Para alinear verticalmente el contenido */
-    justify-content: space-between; /* Para alinear verticalmente el contenido */
+    display: flex;
+    /* Para alinear verticalmente el contenido */
+    flex-direction: column;
+    /* Para alinear verticalmente el contenido */
+    justify-content: space-between;
+    /* Para alinear verticalmente el contenido */
 }
 
 .service .box-container .box i {
@@ -436,7 +442,7 @@ header .fa-bars {
         font-size: 55%;
     }
 
-    .heading{
+    .heading {
         text-align: center;
         align-items: center;
         flex-wrap: wrap;
@@ -498,7 +504,7 @@ header .fa-bars {
 
 @media (max-width:500px) {
 
-    .heading{
+    .heading {
         text-align: center;
         align-items: center;
         flex-wrap: wrap;
@@ -515,18 +521,17 @@ header .fa-bars {
     }
 }
 
-@media only screen and (min-width:320px) and (max-width:768px){
-    .heading{
+@media only screen and (min-width:320px) and (max-width:768px) {
+    .heading {
         text-align: center;
         align-items: center;
         flex-wrap: wrap;
         margin: auto;
     }
-    .btn-wsp{
-        width:63px;
-        height:63px;
+
+    .btn-wsp {
+        width: 63px;
+        height: 63px;
         line-height: 66px;
-	}
+    }
 }
-
-

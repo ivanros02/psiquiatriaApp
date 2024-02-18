@@ -46,13 +46,13 @@ $psychologistData = mysqli_fetch_assoc($result);
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="../estilos/stylePsicoPresentacion.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 
 </head>
@@ -86,23 +86,27 @@ $psychologistData = mysqli_fetch_assoc($result);
             <div class="row " id="cardContainer">
                 <!-- Primera Card -->
                 <div class="cold-md-6">
-                <div class="card mb-3" id="cardPresentacion">
-                    <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <?php echo $psychologistData['nombre']; ?>
-                        </h5>
-                        <h5 class="card-titleDos">
-                            <?php echo $psychologistData['titulo']; ?>
-                        </h5>
-                        <p class="card-text">Matrícula:MN
-                            <?php echo $psychologistData['matricula']; ?>(AR)
-                        </p>
-                        
-                        <button class="btn btn-primary" id="contact" onclick="abrirModal()">Contactar</button>
+                    <div class="card mb-3" id="cardPresentacion">
+                        <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <span class='tooltiptext'
+                                data-valor='<?php echo htmlspecialchars($psychologistData['valor']); ?>'></span>
 
+
+                            <h5 class="card-title">
+                                <?php echo $psychologistData['nombre']; ?>
+                            </h5>
+                            <h5 class="card-titleDos">
+                                <?php echo $psychologistData['titulo']; ?>
+                            </h5>
+                            <p class="card-text">Matrícula:MN
+                                <?php echo $psychologistData['matricula']; ?>(AR)
+                            </p>
+
+                            <button class="btn btn-primary" id="contact" onclick="abrirModal()">Contactar</button>
+
+                        </div>
                     </div>
-                </div>
                 </div>
                 <!--ventana emergente-->
 
