@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-const mp = new MercadoPago("TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295", {
+const mp = new MercadoPago("APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304", {
     locale: "es-AR"
 });
 
