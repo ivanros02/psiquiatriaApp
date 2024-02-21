@@ -17,6 +17,8 @@ if ($psychologistId <= 0) {
 
 // Consultar la base de datos para obtener la información del psicólogo con el ID proporcionado
 $query = "SELECT * FROM presentaciones WHERE id = $psychologistId";
+// Establecer el conjunto de caracteres a utf8
+$conexion->set_charset('utf8');
 $result = mysqli_query($conexion, $query);
 
 // Validar si se encontraron resultados
@@ -92,15 +94,24 @@ $psychologistData = mysqli_fetch_assoc($result);
                     <h5 class="card-titleDos">
                         <?php echo $psychologistData['titulo']; ?>
                     </h5>
-                    <p class="card-text">Matrícula:MN
+                    <p class="card-text">
+                        Matrícula:MN
                         <?php echo $psychologistData['matricula']; ?>(AR)
+                        Matrícula:MP
+                        <?php echo $psychologistData['matriculaP']; ?>(AR)
                     </p>
                     <!-- Div para contener los iconos -->
                     <div class="cajitas">
-                        <a class="iconito icon-whatsapp" href="enlace-de-whatsapp"><i class="fab fa-whatsapp"></i></a>
-                        <a class="iconito icon-instagram" href="enlace-de-instagram"><i
+                    <a class="iconito icon-whatsapp" href="https://api.whatsapp.com/send?phone=<?php echo $psychologistData['whatsapp']; ?>&text=Hola%20me%20contacto%20desde%20Terapia%20Libre.%20Quiero%20solicitar%20un%20turno!"><i class="fab fa-whatsapp"></i></a>
+
+
+                        <a class="iconito icon-instagram"
+                            href="https://www.instagram.com/<?php echo $psychologistData['instagram']; ?>"><i
                                 class="fab fa-instagram"></i></a>
-                        <a class="iconito icon-gmail" href="enlace-de-gmail"><i class="far fa-envelope"></i></a>
+
+                        <a class="iconito icon-gmail" href="mailto:<?php echo $psychologistData['mail']; ?>"><i
+                                class="far fa-envelope"></i></a>
+
                     </div>
 
                 </div>

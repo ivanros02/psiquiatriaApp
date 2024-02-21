@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-02-2024 a las 20:05:29
+-- Tiempo de generación: 21-02-2024 a las 21:40:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -33,22 +33,26 @@ CREATE TABLE `presentaciones` (
   `nombre` varchar(100) NOT NULL,
   `titulo` varchar(100) NOT NULL,
   `matricula` int(100) NOT NULL,
+  `matriculaP` int(255) NOT NULL,
   `especialidad` varchar(100) NOT NULL,
   `descripcion` varchar(1000) NOT NULL,
   `telefono` int(50) NOT NULL,
   `disponibilidad` int(11) NOT NULL,
-  `valor` int(255) NOT NULL
+  `valor` int(255) NOT NULL,
+  `mail` varchar(255) NOT NULL,
+  `whatsapp` int(255) NOT NULL,
+  `instagram` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `presentaciones`
 --
 
-INSERT INTO `presentaciones` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `especialidad`, `descripcion`, `telefono`, `disponibilidad`, `valor`) VALUES
-(1, '../img/Lic. Ana Maria Pinto.jpg', 'Lic. Ana Maria Pinto', 'Lic. en Psicología Terapia Psicoanalitica', 180, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio ', 1139114579, 24, 7000),
-(2, '../img/Lic. Vanesa Pérez.jpg', 'Lic. Vanesa Perez', 'Lic. en Psicología Terapia Psicoanalitica', 52084, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010, 48, 5000),
-(3, '../img/Lic. Luciana Ardaiz.jpg\r\n', 'Lic. Luciana Ardaiz', 'Lic. en Psicología\r\nTerapia Psicoanalítica', 52084, 'Desarrollo personal\r\n', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010, 24, 10000),
-(4, '../img/Lic. Patricia Candia.jpg\n', 'Lic. Patricia Candia', 'Lic. en Psicología\r\nTerapia Psicoanalitica', 52084, 'Miedos al COVID-19\n', 'Me gusta escucharlos, contenerlos, pero por sobre todo respetarlos, donde los miedos, ansiedades, angustias y otras dolencias dan paso a los... (continúa)\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010, 24, 8000);
+INSERT INTO `presentaciones` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `matriculaP`, `especialidad`, `descripcion`, `telefono`, `disponibilidad`, `valor`, `mail`, `whatsapp`, `instagram`) VALUES
+(1, '../img/Lic. Ana Maria Pinto.jpg', 'Lic. Ana Maria Pinto', 'Lic. en Psicología Terapia Psicoanalitica', 180, 0, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio ', 1139114579, 24, 7000, 'ivanrosendo1102@gmail.com', 1139114579, 'rosendo_ivann'),
+(2, '../img/Lic. Vanesa Pérez.jpg', 'Lic. Vanesa Perez', 'Lic. en Psicología Terapia Psicoanalitica', 52084, 0, 'Ansiedad y estrés. Separación o desarraigo familiar. Sexualidad. Duelo. Problemas vinculares.', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010, 48, 5000, '', 0, ''),
+(3, '../img/Lic. Luciana Ardaiz.jpg\r\n', 'Lic. Luciana Ardaiz', 'Lic. en Psicología\r\nTerapia Psicoanalítica', 52084, 0, 'Desarrollo personal\r\n', 'Mi nombre es Vanesa Pérez. Tengo una familia compuesta por esposo e hijos. Soy Psicóloga egresada de la Universidad de Buenos Aires, tengo posgrado en psicoanálisis de Adultos y Adolescentes y también soy técnica en Cardiología.\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010, 24, 10000, '', 0, ''),
+(4, '../img/Lic. Patricia Candia.jpg\n', 'Lic. Patricia Candia', 'Lic. en Psicología\r\nTerapia Psicoanalitica', 52084, 0, 'Miedos al COVID-19\n', 'Me gusta escucharlos, contenerlos, pero por sobre todo respetarlos, donde los miedos, ansiedades, angustias y otras dolencias dan paso a los... (continúa)\r\n\r\nDesarrollo mi labor cómo psicóloga desde el año 2015 en consultorio particular. Actualmente me dedico a trabajar solo en consultorio on line, modalidad que a mi parecer le facilita al paciente la posibilidad de acceder a sus sesiones desde la comodidad de su casa o trabajo. Considero que la psicología en los tiempos que corren requieren de una mirada mas integrada y, aunque mi formación esta orientada al psicoanálisis, conformo con mis pacientes un trabajo dinámico que les permite adquirir herramientas basadas en la resolución de las problemáticas o demandas que lo traen a la consulta.\r\n\r\nDesde esta mirada trabajo y acompaño al paciente brindándole un espacio para ser escuchado y para la reflexión.', 1010101010, 24, 8000, '', 0, '');
 
 --
 -- Índices para tablas volcadas
@@ -68,7 +72,7 @@ ALTER TABLE `presentaciones`
 -- AUTO_INCREMENT de la tabla `presentaciones`
 --
 ALTER TABLE `presentaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -18,7 +18,7 @@
 
     <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
 
-    
+
 </head>
 
 <body>
@@ -68,15 +68,15 @@
 
     <!--icono flotante whatsapp 
     <a href="https://api.whatsapp.com/send?phone=5491161536595" class="btn-wsp" target="_blank">
-	    <i class="fa fa-whatsapp icono"></i>
-	</a>
+        <i class="fa fa-whatsapp icono"></i>
+    </a>
     -->
-    
+
     <!-- about section starts  -->
 
     <section class="about" id="about">
 
-        <h1 class="heading"> <i class="fas fa-quote-left"></i> QUIENES SOMOS <i class="fas fa-quote-right"></i> </h1>
+
 
         <div class="row">
 
@@ -85,10 +85,14 @@
             </div>
 
             <div class="content">
+                <h1 class="heading">Quienes <br> Somos</h1>
                 <p>
-                    Terapia Libre ofrece una amplia gama de profesionales con diferentes especialidades y enfoques
-                    terapéuticos, lo que les permitirá encontrar el terapeuta que los acompañe en el proceso de
-                    restablecer una óptima salud mental.
+                    Como plataforma web, ofrecemos la posibilidad de conectar a los usuarios que necesitan atención
+                    terapéutica con profesionales calificados.
+                    Nuestro objetivo es facilitar el acceso a servicios de psicoterapia individual de manera conveniente
+                    y bajo una amplia gama de profesionales con diferentes especialidades y enfoques terapéuticos, lo
+                    que les permitirá encontrar el terapeuta que los acompañe en el proceso de restablecer una óptima
+                    salud mental.
                 </p>
 
             </div>
@@ -188,7 +192,7 @@
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#">Instagram</a>
+                <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
             </div>
 
 

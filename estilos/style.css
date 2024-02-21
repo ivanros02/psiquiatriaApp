@@ -93,13 +93,12 @@ html {
     color: #fff;
 }
 
-.heading {
+ .heading {
     text-align: center;
-    font-size: 2.35rem;
+    font-size: 4rem;
     color: var(--green);
-    padding: 1rem;
-    padding-top: 6rem;
-    margin-left: 31.5rem;
+    margin-bottom: 1rem;
+    text-align: start !important;
 }
 
 .headingService {
@@ -244,7 +243,6 @@ header .fa-bars {
 
 .about .row .content {
     flex: 1 1 40rem;
-    padding: 2rem;
 }
 
 .about .row .content h3 {
@@ -256,8 +254,8 @@ header .fa-bars {
     font-size: 2rem;
     color: #666;
     flex: 1 1 50%;
-    /* Establece el tamaño del contenido */
-    padding: 0 1rem;
+    max-width: 70rem; /* Ancho máximo deseado */
+    overflow-wrap: break-word;
 }
 
 .about .box-container {
@@ -443,8 +441,9 @@ header .fa-bars {
     }
 
     .heading {
-        text-align: center;
-        align-items: center;
+        text-align: center !important;
+        align-items: center !important;
+        padding: 1rem;
         flex-wrap: wrap;
         margin: auto;
     }

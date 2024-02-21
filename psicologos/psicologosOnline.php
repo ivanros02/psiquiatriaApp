@@ -94,7 +94,7 @@
 
         // Inicializa la consulta SQL
         $sql = "SELECT * FROM presentaciones";
-
+        $conexion->set_charset('utf8');
         // Verifica si se han enviado filtros
         if (isset($_GET['disponibilidadFilter']) && !empty($_GET['disponibilidadFilter'])) {
           $disponibilidadFilter = $_GET['disponibilidadFilter'];
@@ -132,7 +132,7 @@
             echo "
             <div class='col-lg-4 col-md-6 mb-3 d-flex justify-content-center'>
                 <div class='card'>
-                <span class='tooltiptext'>{$row['valor']}</span>
+                <span class='tooltiptext'>$ {$row['valor']}</span>
                     <img src='{$row['rutaImagen']}' class='card-img-top' alt='...'>
                     <div class='card-body'>
                         <h5 class='card-title'>{$row['nombre']}</h5>

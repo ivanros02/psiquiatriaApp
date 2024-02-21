@@ -17,6 +17,8 @@ if ($psychologistId <= 0) {
 
 // Consultar la base de datos para obtener la información del psicólogo con el ID proporcionado
 $query = "SELECT * FROM presentaciones WHERE id = $psychologistId";
+// Establecer el conjunto de caracteres a utf8
+$conexion->set_charset('utf8');
 $result = mysqli_query($conexion, $query);
 
 // Validar si se encontraron resultados
@@ -99,8 +101,9 @@ $psychologistData = mysqli_fetch_assoc($result);
                             <h5 class="card-titleDos">
                                 <?php echo $psychologistData['titulo']; ?>
                             </h5>
-                            <p class="card-text">Matrícula:MN
-                                <?php echo $psychologistData['matricula']; ?>(AR)
+                            <p class="card-text">
+                                Matrícula:MN <?php echo $psychologistData['matricula']; ?>(AR)
+                                Matrícula:MP <?php echo $psychologistData['matriculaP']; ?>(AR)
                             </p>
 
                             <button class="btn btn-primary" id="contact" onclick="abrirModal()">Contactar</button>
