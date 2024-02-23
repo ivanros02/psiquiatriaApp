@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304
-const mp = new MercadoPago("TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295", {
+//  TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295
+const mp = new MercadoPago("APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304", {
     locale: "es-AR"
 });
 
@@ -83,7 +83,7 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
 
 
 
-        const response = await fetch("http://localhost:3000/create_preference", {
+        const response = await fetch("https://terapialibre.com.ar/create_preference", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -122,10 +122,10 @@ const createCheckoutButton = (preferenceId) => {
 // Manejo de webhooks
 document.getElementById("register-webhook").addEventListener("click", async () => {
     try {
-        const webhookUrl = "http://tuurl.com/webhook"; // La URL de tu servidor donde se manejarán los webhooks
+        const webhookUrl = "https://terapialibre.com.ar/webhook"; // La URL de tu servidor donde se manejarán los webhooks
         const topic = "payment"; // El tipo de evento para el que deseas recibir notificaciones
 
-        const response = await fetch("http://localhost:3000/register_webhook", {
+        const response = await fetch("https://terapialibre.com.ar/register_webhook", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

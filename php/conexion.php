@@ -1,16 +1,16 @@
 <?php
-
+/*
 $hostname = "localhost";
 $username = "root";
 $password = "";
 $database = "comentariosphp";
+*/
 
-/*
 $hostname = "localhost";
 $username = "terapial_terapia";
 $password = "Wss1593.";
 $database = "terapial_terapia";
-*/
+
 
 /*
 $hostname = "localhost";

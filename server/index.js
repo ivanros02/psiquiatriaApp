@@ -36,9 +36,9 @@ const transporter = nodemailer.createTransport({
 // Configuración de la conexión a la base de datos
 const dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'comentariosphp',
+    user: 'terapial_terapia',
+    password: 'Wss1593.',
+    database: 'terapial_terapia',
 });
 
 dbConnection.connect();
@@ -101,9 +101,9 @@ app.post("/create_preference", async (req, res) => {
                     const body = {
                         items: [{ title, quantity: Number(quantity), unit_price: Number(price), currency_id: "ARS" }],
                         back_urls: {
-                            success: `http://localhost/psiquiatriaapp/datos/datosProfesional.php?id=${psychologistId}`,
-                            failure: "http://localhost/psiquiatriaapp/psicologos/psicologosOnline.php#",
-                            pending: "http://localhost/psiquiatriaapp/psicologos/psicologosOnline.php#",
+                            success: `https://terapialibre.com.ar/datos/datosProfesional.php?id=${psychologistId}`,
+                            failure: "https://terapialibre.com.ar/psicologos/psicologosOnline.php#",
+                            pending: "https://terapialibre.com.ar/psicologos/psicologosOnline.php#",
                         },
                         auto_return: "approved",
                         psychologistInfo: psychologistInfo,
