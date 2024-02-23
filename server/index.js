@@ -130,11 +130,19 @@ app.post("/create_preference", async (req, res) => {
 
 
 // Manejar el webhook de pago exitoso
+// Manejar el webhook de pago exitoso
 app.post("/webhook_pago_exitoso", (req, res) => {
     try {
         const { action, data } = req.body;
 
         if (action === 'payment' && data.status === 'approved') {
+            // Validar la firma del webhook
+            if (!validateWebhookSignature(req, webhookSecret)) {
+                console.error('Invalid webhook signature');
+                res.sendStatus(401);
+                return;
+            }
+
             const userEmail = data.payer.email;
             const psychologistId = data.metadata.psychologistId;
 
@@ -142,22 +150,56 @@ app.post("/webhook_pago_exitoso", (req, res) => {
             dbConnection.query(query, (error, results, fields) => {
                 if (error) {
                     console.error('Error al obtener datos del psicólogo desde la base de datos:', error);
+                    res.sendStatus(500);
                 } else {
                     if (results.length > 0) {
                         const psychologistInfo = results[0];
                         sendEmailToUser(userEmail, psychologistInfo);
                         saveUserEmail(userEmail, psychologistId);
+                        res.sendStatus(200);
                     } else {
                         console.error('No se encontraron datos del psicólogo con el ID proporcionado');
+                        res.sendStatus(404);
                     }
                 }
             });
+        } else {
+            console.log('El pago no ha sido aprobado o no es un evento de pago.');
+            res.sendStatus(200); // Se debe responder con éxito para evitar reintentos
         }
     } catch (error) {
         console.error('Error en el webhook de pago exitoso:', error);
+        res.sendStatus(500);
     }
-    res.sendStatus(200);
 });
+
+// Manejar el registro del webhook en el servidor de Mercado Pago
+// Registra esta URL en el panel de control de Mercado Pago como tu endpoint de webhook
+app.post("/register_webhook", (req, res) => {
+    const webhookUrl = req.body.webhookUrl; // La URL de tu servidor donde se manejarán los webhooks
+    const topic = req.body.topic; // El tipo de evento para el que deseas recibir notificaciones, por ejemplo: "payment"
+    
+    // Registra el webhook en el servidor de Mercado Pago
+    client.webhooks.create({
+        topic: topic,
+        target_url: webhookUrl
+    }).then(() => {
+        console.log('Webhook registrado exitosamente en Mercado Pago');
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.error('Error al registrar el webhook en Mercado Pago:', error);
+        res.sendStatus(500);
+    });
+});
+
+// Función para validar la firma del webhook
+function validateWebhookSignature(req, secret) {
+    const signature = req.headers['x-mp-signature'];
+    const body = JSON.stringify(req.body);
+    const hash = crypto.createHmac('sha256', secret).update(body).digest('hex');
+
+    return signature === hash;
+}
 
 
 

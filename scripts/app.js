@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
-const mp = new MercadoPago("APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304", {
+// APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304
+const mp = new MercadoPago("TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295", {
     locale: "es-AR"
 });
 
@@ -100,6 +100,8 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
         console.error("Error:", error);
         alert("Ocurrió un error. Por favor, consulta la consola para más detalles.");
     }
+
+    
 });
 
 const createCheckoutButton = (preferenceId) => {
@@ -116,3 +118,26 @@ const createCheckoutButton = (preferenceId) => {
 
     renderComponent();
 };
+
+// Manejo de webhooks
+document.getElementById("register-webhook").addEventListener("click", async () => {
+    try {
+        const webhookUrl = "http://tuurl.com/webhook"; // La URL de tu servidor donde se manejarán los webhooks
+        const topic = "payment"; // El tipo de evento para el que deseas recibir notificaciones
+
+        const response = await fetch("http://localhost:3000/register_webhook", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ webhookUrl, topic }),
+        });
+
+        const data = await response.json();
+        console.log(data);
+        alert("Webhook registrado correctamente.");
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Ocurrió un error al registrar el webhook. Consulta la consola para más detalles.");
+    }
+});
