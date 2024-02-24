@@ -140,8 +140,9 @@ header .fa-bars {
     /* Position the tooltip text - see examples below! */
     width: 500px;
     bottom: 100% !important;
-    z-index: 2; /* Asegúrate de que el tooltip tenga un z-index mayor que la tarjeta */
-   
+    z-index: 2;
+    /* Asegúrate de que el tooltip tenga un z-index mayor que la tarjeta */
+
 }
 
 .card:hover .tooltiptext {
@@ -200,6 +201,7 @@ header .fa-bars {
     display: flex;
     margin: 20px 0;
     color: var(--green);
+    flex-direction: column;
 }
 
 label {
