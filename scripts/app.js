@@ -1,4 +1,3 @@
-
 let menu = document.querySelector('.fa-bars');
 let navbar = document.querySelector('.navbar');
 // Obtén el valor del atributo data-psychologist-id
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //  TEST-97eb7f19-9988-4b2b-823c-0f7e0524e295
-const mp = new MercadoPago("APP_USR-e5c83aac-4e1b-41b6-a4aa-d7184f4e2304", {
+const mp = new MercadoPago("APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8", {
     locale: "es-AR"
 });
 
@@ -118,26 +117,3 @@ const createCheckoutButton = (preferenceId) => {
 
     renderComponent();
 };
-
-// Manejo de webhooks
-document.getElementById("register-webhook").addEventListener("click", async () => {
-    try {
-        const webhookUrl = "https://terapialibre.com.ar/webhook"; // La URL de tu servidor donde se manejarán los webhooks
-        const topic = "payment"; // El tipo de evento para el que deseas recibir notificaciones
-
-        const response = await fetch("https://terapialibre.com.ar/register_webhook", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ webhookUrl, topic }),
-        });
-
-        const data = await response.json();
-        console.log(data);
-        alert("Webhook registrado correctamente.");
-    } catch (error) {
-        console.error("Error:", error);
-        alert("Ocurrió un error al registrar el webhook. Consulta la consola para más detalles.");
-    }
-});

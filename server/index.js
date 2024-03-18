@@ -1,39 +1,21 @@
-import express from "express";
-import cors from "cors";
-import { MercadoPagoConfig, Preference } from 'mercadopago';
-import nodemailer from 'nodemailer';
-import mysql from 'mysql';
-import dotenv from 'dotenv';
+const express = require("express");
+const cors = require("cors");
+const { MercadoPagoConfig, Preference } = require('mercadopago');
+const nodemailer = require("nodemailer");
+const mysql = require("mysql");
+const bodyParser = require('body-parser');
 
-dotenv.config();
-
-const accessToken = process.env.ACCESS_TOKEN;
-
-if (!accessToken) {
-    console.error("No se encontró el accessToken en las variables de entorno.");
-    process.exit(1);
-}
-
-const client = new MercadoPagoConfig({ accessToken });
-
+const client = new MercadoPagoConfig({ 
+    accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
+});
 
 const app = express();
-const port = 3000;
+const port = 443;
 
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Configuración de nodemailer
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    auth: {
-        user: 'paginaswebs2002@gmail.com',
-        pass: 'zyus ckyn gfaf ttnt'
-    }
-});
-
-// Configuración de la conexión a la base de datos
 const dbConnection = mysql.createConnection({
     host: 'localhost',
     user: 'terapial_terapia',
@@ -43,10 +25,21 @@ const dbConnection = mysql.createConnection({
 
 dbConnection.connect();
 
-// Función para enviar correo electrónico
 function sendEmailToUser(userEmail, psychologistInfo) {
-    const mailOptions = {
-        from: 'paginaswebs2002@gmail.com',
+    const transporter = nodemailer.createTransport({
+        host: 'localhost',
+        port: 25,
+        auth: {
+            user: 'terapialibre@terapialibre.com.ar',
+            pass: 'Argentina2024'
+        },
+        tls: {
+            rejectUnauthorized: false
+        }
+    });
+
+    const userMailOptions = {
+        from: 'terapialibre@terapialibre.com.ar',
         to: userEmail,
         subject: 'Terapia Libre: información del profesional solicitado',
         html: `
@@ -55,27 +48,47 @@ function sendEmailToUser(userEmail, psychologistInfo) {
             <h2>Información del Profesional:</h2>
             <p>Nombre: ${psychologistInfo.nombre}</p>
             <p>Teléfono: ${psychologistInfo.telefono}</p>
-            <p>Instagram</p>
-            <p>Gmail</p>
+            <p>Instagram: ${psychologistInfo.instagram}</p>
+            <p>Mail: ${psychologistInfo.mail}</p>
             <p>¡GRACIAS POR SER PARTE DE TERAPIA LIBRE!
             —-
             TU OPINIÓN NOS IMPORTA.AGUARDAMOS TUS COMENTARIOS Y RECOMENDACIONES EN EL SIGUIENTE MAIL: QUEREMOSTUOPINION@TERAPIALIBRE.COM.AR </p>
         `,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    // Obtener el correo electrónico del psicólogo desde psychologistInfo
+    const psychologistEmail = psychologistInfo.mail;
+
+    const psychologistMailOptions = {
+        from: 'terapialibre@terapialibre.com.ar',
+        to: psychologistEmail,
+        subject: 'Tienes un nuevo paciente',
+        text: 'Has sido asignado como el psicólogo de un nuevo paciente en Terapia Libre.'
+    };
+
+    transporter.sendMail(userMailOptions, (error, info) => {
         if (error) {
-            console.error('Error al enviar el correo electrónico:', error);
+            console.error('Error al enviar el correo electrónico al usuario:', error);
+            console.log('Error details:', error.stack);
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+            console.log('Correo electrónico enviado al usuario:', info.response);
+        }
+    });
+
+    transporter.sendMail(psychologistMailOptions, (error, info) => {
+        if (error) {
+            console.error('Error al enviar el correo electrónico al psicólogo:', error);
+            console.log('Error details:', error.stack);
+        } else {
+            console.log('Correo electrónico enviado al psicólogo:', info.response);
         }
     });
 }
 
-// Función para guardar el correo electrónico en la base de datos
-function saveUserEmail(userEmail, psychologistId) {
-    const insertQuery = `INSERT INTO datos_usuario (user_email, psychologist_id) VALUES (?, ?)`;
-    dbConnection.query(insertQuery, [userEmail, psychologistId], (error, results, fields) => {
+
+function saveUserEmail(userEmail, psychologistId, paymentId) {
+    const insertQuery = `INSERT INTO datos_usuario (user_email, psychologist_id, payment_id) VALUES (?, ?, ?)`;
+    dbConnection.query(insertQuery, [userEmail, psychologistId, paymentId], (error, results, fields) => {
         if (error) {
             console.error('Error al insertar el correo electrónico en la base de datos:', error);
         } else {
@@ -84,8 +97,6 @@ function saveUserEmail(userEmail, psychologistId) {
     });
 }
 
-// Manejar la creación de preferencias
-// Manejar la creación de preferencias
 app.post("/create_preference", async (req, res) => {
     try {
         const { psychologistId, userEmail, title, quantity, price } = req.body;
@@ -107,11 +118,16 @@ app.post("/create_preference", async (req, res) => {
                         },
                         auto_return: "approved",
                         psychologistInfo: psychologistInfo,
+                        notification_url: 'https://terapialibre.com.ar/webhook',
+                        external_reference: psychologistId,
                     };
 
                     const preference = new Preference(client);
                     preference.create({ body }).then(result => {
-                        res.json({ id: result.id, psychologistInfo });
+                        const paymentId = result.id;
+                        console.log("Payment ID:", paymentId);
+                        saveUserEmail(userEmail, psychologistId, paymentId);
+                        res.json({ id: paymentId, psychologistInfo });
                     }).catch(error => {
                         console.error('Error al crear la preferencia:', error);
                         res.status(500).json({ error: "Error al crear la preferencia :(" });
@@ -128,78 +144,43 @@ app.post("/create_preference", async (req, res) => {
     }
 });
 
-
-// Manejar el webhook de pago exitoso
-// Manejar el webhook de pago exitoso
-app.post("/webhook_pago_exitoso", (req, res) => {
-    try {
-        const { action, data } = req.body;
-
-        if (action === 'payment' && data.status === 'approved') {
-            // Validar la firma del webhook
-            if (!validateWebhookSignature(req, webhookSecret)) {
-                console.error('Invalid webhook signature');
-                res.sendStatus(401);
-                return;
-            }
-
-            const userEmail = data.payer.email;
-            const psychologistId = data.metadata.psychologistId;
-
-            const query = `SELECT * FROM presentaciones WHERE id = ${psychologistId}`;
-            dbConnection.query(query, (error, results, fields) => {
-                if (error) {
-                    console.error('Error al obtener datos del psicólogo desde la base de datos:', error);
-                    res.sendStatus(500);
-                } else {
-                    if (results.length > 0) {
-                        const psychologistInfo = results[0];
-                        sendEmailToUser(userEmail, psychologistInfo);
-                        saveUserEmail(userEmail, psychologistId);
-                        res.sendStatus(200);
-                    } else {
-                        console.error('No se encontraron datos del psicólogo con el ID proporcionado');
-                        res.sendStatus(404);
-                    }
-                }
-            });
-        } else {
-            console.log('El pago no ha sido aprobado o no es un evento de pago.');
-            res.sendStatus(200); // Se debe responder con éxito para evitar reintentos
-        }
-    } catch (error) {
-        console.error('Error en el webhook de pago exitoso:', error);
-        res.sendStatus(500);
-    }
-});
-
-// Manejar el registro del webhook en el servidor de Mercado Pago
-// Registra esta URL en el panel de control de Mercado Pago como tu endpoint de webhook
-app.post("/register_webhook", (req, res) => {
-    const webhookUrl = req.body.webhookUrl; // La URL de tu servidor donde se manejarán los webhooks
-    const topic = req.body.topic; // El tipo de evento para el que deseas recibir notificaciones, por ejemplo: "payment"
-    
-    // Registra el webhook en el servidor de Mercado Pago
-    client.webhooks.create({
-        topic: topic,
-        target_url: webhookUrl
-    }).then(() => {
-        console.log('Webhook registrado exitosamente en Mercado Pago');
-        res.sendStatus(200);
-    }).catch((error) => {
-        console.error('Error al registrar el webhook en Mercado Pago:', error);
-        res.sendStatus(500);
+app.post("/webhook", async function (req, res) {
+  const paymentId = req.query.id;
+  try {
+    const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${client.accessToken}`
+      }
     });
+    if (response.ok) {
+      const paymentData = await response.json();
+      if (paymentData.status === 'approved') {
+        const userEmail = paymentData.payer.email;
+        const psychologistId = paymentData.external_reference;
+        const psychologistQuery = `SELECT * FROM presentaciones WHERE id = ?`;
+        dbConnection.query(psychologistQuery, [psychologistId], (error, results, fields) => {
+          if (error) {
+            console.error('Error al obtener datos del psicólogo desde la base de datos:', error);
+          } else {
+            if (results.length > 0) {
+              const psychologistInfo = results[0];
+              sendEmailToUser(userEmail, psychologistInfo);
+            } else {
+              console.error('No se encontraron datos del psicólogo con el ID proporcionado');
+              console.log(psychologistId);
+            }
+          }
+        });
+      }
+    }
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error:', error);
+    res.sendStatus(500);
+  }
 });
 
-// Función para validar la firma del webhook
-function validateWebhookSignature(req, secret) {
-    const signature = req.headers['x-mp-signature'];
-    const body = JSON.stringify(req.body);
-    const hash = crypto.createHmac('sha256', secret).update(body).digest('hex');
-
-    return signature === hash;
-}
 
 
 

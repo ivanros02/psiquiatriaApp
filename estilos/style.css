@@ -185,7 +185,7 @@ header .fa-bars {
     justify-content: center;
     position: relative;
     /* Añade esta línea */
-    background: url(../img/principalPrueba.jpeg) no-repeat;
+    background: url(../img/main.jpeg) no-repeat;
     background-size: cover;
     background-position: center;
 }
