@@ -59,9 +59,15 @@
           <label for="especialidadFilter">Especialidad:</label>
           <select id="especialidadFilter" name="especialidadFilter">
             <option value="">Todas las disponibilidades</option>
-            <option value="Ansiedad y estrés">Ansiedad y estrés</option>
-            <option value="Desarrollo personal">Desarrollo personal</option>
-            <option value="Miedos al COVID-19">Miedos al COVID-19</option>
+            <option value="PSICOLOGÍA">PSICOLOGÍA</option>
+            <option value="PSIQUIATRÍA">PSIQUIATRÍA</option>
+            <option value="PSICOPEDAGOGÍA">PSICOPEDAGOGÍA</option>
+            <option value="NEUROLOGÍA ">NEUROLOGÍA</option>
+            <option value="TERAPISTA OCUPACIONAL">TERAPISTA OCUPACIONAL</option>
+            <option value="ACOMPAÑANTE TERAPÉUTICO">ACOMPAÑANTE TERAPÉUTICO</option>
+            <option value="MUSICOTERAPEUTA ">MUSICOTERAPEUTA </option>
+            <option value="ASISTENTE SOCIAL">ASISTENTE SOCIAL</option>
+            <option value="RECREOLOGO">RECREOLOGO</option>
           </select>
 
           <label for="disponibilidadFilter">Disponibilidad:</label>
@@ -75,7 +81,7 @@
 
           <label for="ordenar">Valor:</label>
           <select id="ordenar" name="ordenar">
-          <option value="">Todas las disponibilidades</option>
+            <option value="">Todas las disponibilidades</option>
             <option value="ASC">Menor a mayor valor</option>
             <option value="DESC">Mayor a menor valor</option>
           </select>
@@ -179,34 +185,55 @@
     <div class="box-container">
 
       <div class="box">
-        <i class="bi bi-lightbulb"></i>
+        <i class="bi bi-arrow-right-circle"></i>
         <p>
-          Tratamiento terapéutico sin necesidad de moverte de tu casa
+          Facilidad de acceso : Permite encontrar profesionales fácilmente desde la comodidad de tu hogar, sin necesidad
+          de desplazarte básicamente a una consulta.
         </p>
       </div>
 
       <div class="box">
-        <i class="fa fa-balance-scale" aria-hidden="true"></i>
+        <i class="fa fa-search" aria-hidden="true"></i>
         <p>
-          Sin autorizaciones burocráticas y complejas.
+          Amplia variedad de opciones : Al buscar en una plataforma, tendrás acceso a una amplia gama de profesionales
+          de diferentes especialidades y experiencias.
         </p>
       </div>
 
       <div class="box">
-        <i class="fas fa-hands-helping"></i>
+        <i class="fas fa-info-circle"></i>
         <p>
-          Fácil y rápido acceso al tratamiento.
-          Turnos a partir de 24 hs, 48 hs
-          <br>y 72 hs.
+          Información detallada: Las plataformas suelen proporcionar información detallada sobre los profesionales, como
+          su formación, áreas de especialización, opiniones de otros usuarios y tarifas.
         </p>
       </div>
 
       <div class="box">
-        <i class="	fas fa-id-badge"></i>
+        <i class="fas fa-balance-scale"></i>
         <p>
-          Seleccioná el profesional de la salud mental de acuerdo a tu necesidad.
+          Facilidad para comparar: Puedes comparar fácilmente entre varios profesionales en función de sus credenciales,
+          opiniones de otros usuarios y servicios ofrecidos.
         </p>
       </div>
+
+
+      <div class="box">
+        <i class="fas fa-envelope"></i>
+        <p>
+          Posibilidad de contacto directo: Muchas plataformas permiten el contacto directo con el profesional antes de
+          programar una cita, lo que te brinda la oportunidad de plantear tus dudas y conocer mejor al profesional.
+        </p>
+      </div>
+
+
+      <div class="box">
+        <i class="fas fa-lock"></i>
+        <p>
+          Seguridad y confianza: Las plataformas suelen contar con sistemas de verificación y garantías de protección de
+          datos para brindarte mayor seguridad al buscar profesionales.
+        </p>
+      </div>
+
 
     </div>
 

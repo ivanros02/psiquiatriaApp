@@ -16,8 +16,9 @@
     <!-- custom css file link  -->
     <link rel="stylesheet" href="estilos/style.css">
 
-    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
 
 </head>
 
@@ -79,49 +80,81 @@
 
 
         <div class="row">
+            <!--
+           
 
+            <div class="video">
+                <video autoplay loop muted>
+                    <source src="img/quienesSomosVideo.mp4" type="video/mp4">
+                    
+                    Tu navegador no soporta el elemento de video.
+                </video>
+            </div>
+            -->
             <div class="image">
                 <img src="img/modificar.jpeg" alt="Paciente con psicologo">
             </div>
 
             <div class="content">
-                <h1 class="heading">Quienes <br> Somos</h1>
+                <h1 class="heading ">Quienes <br> Somos</h1>
                 <p>
-                    Como plataforma web, ofrecemos la posibilidad de conectar a los usuarios que necesitan atención
-                    terapéutica con profesionales calificados.
-                    Nuestro objetivo es facilitar el acceso a servicios de psicoterapia individual de manera conveniente
-                    y bajo una amplia gama de profesionales con diferentes especialidades y enfoques terapéuticos, lo
-                    que les permitirá encontrar el terapeuta que los acompañe en el proceso de restablecer una óptima
-                    salud mental.
+                    En nuestra plataforma web, nos encargamos de conectar a los usuarios que requieren atención
+                    terapéutica con profesionales altamente competentes. Buscamos facilitar el acceso a servicios de
+                    psicoterapia individual de forma conveniente, contando con una amplia variedad de profesionales que
+                    ofrecen diferentes especialidades y enfoques terapéuticos. De esta manera, los usuarios tienen la
+                    oportunidad de seleccionar al terapeuta que mejor se ajuste a sus necesidades y les acompañe en el
+                    proceso de recuperación.
                 </p>
 
             </div>
 
         </div>
 
-        <div class="box-container">
-
-            <div class="box">
-                <i class="fas fa-users"></i>
-                <h3>1000+</h3>
-                <p>Pacientes</p>
+        <div class="container">
+            <h1 class="comentariosCards">Comentarios</h1>
+            <div class="slider">
+                <div class="item">
+                    <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
+                        sido fundamentales para mi bienestar emocional. ¡Gracias por tanto!</p>
+                    <img class="imgCard" src="./img/Lic. Vanesa Pérez.jpg" alt="logo comentario">
+                    <p class='userComment'>Nombre ejemplo</p>
+                </div>
+                <div class="item">
+                    <p>Quiero agradecer sinceramente por la atención psicológica recibida. Su apoyo ha sido fundamental
+                        para mi bienestar emocional.</p>
+                </div>
+                <div class="item">
+                    <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
+                        sido fundamentales para mi bienestar emocional. Gracias!!</p>
+                </div>
+                <div class="item">
+                    <p>Quería expresar mi más sincero agradecimiento por la atención recibida. Su profesionalismo y
+                        apoyo han sido de gran ayuda para mí."
+                        "Quiero agradecer por el tratamiento recibido. Su ayuda ha sido fundamental para mí. Gracias por
+                        todo! </p>
+                </div>
+                <div class="item">
+                    <p>Quisiera expresar mi agradecimiento por las rápidas evoluciones terapéuticas que experimente.</p>
+                </div>
+                <div class="item">
+                    <p>Su apoyo y orientación han sido fundamentales en mi proceso de sanación y crecimiento personal.
+                        ¡Gracias por hacer posible estos avances tan significativos!</p>
+                </div>
+                <button id="next">></button>
+                <button id="prev"><</button>
             </div>
 
-            <div class="box">
-                <i class="fas fa-hand-holding-heart"></i>
-                <h3>200+</h3>
-                <p>Profesionales</p>
-            </div>
-
-            <div class="box">
-                <i class="bi bi-clock"></i>
-                <h3>24 hs</h3>
-                <p>Profesionales de guardia</p>
-            </div>
-
+            <!-- Puedes agregar más tarjetas aquí -->
         </div>
 
+
+
+
     </section>
+
+
+
+
 
     <!-- about section ends -->
 
@@ -135,33 +168,35 @@
 
             <div class="box">
                 <i class="fas fa-user-clock"></i>
-                <p>Cuando sientas que la tristeza, la apatía y la falta de ilusión empiezan a agobiarte
-                    o pienses que tu vida carece de sentido mismo.
+                <p>Síntomas persistentes: Si experimentas emociones persistentes como tristeza intensa, ansiedad
+                    abrumadora o cambios en el sueño o alimentación, busca ayuda profesional.
                 </p>
             </div>
 
             <div class="box">
                 <i class="	fas fa-user-alt"></i>
-                <p>Cuando te sientes solo, incomprendido o desatendido o piensas que la desgracia se ha
-                    cebado contigo y comienzas a asumir que todo te sale mal y que las cosas no van a cambiar.</p>
+                <p>Estrés y abrumadores: Si te sientes abrumado/a por el estrés o la ansiedad, un terapeuta puede
+                    brindarte herramientas para manejar estas emociones.
+                </p>
             </div>
 
             <div class="box">
                 <i class="fas fa-user-friends"></i>
-                <p>Cuando tengas miedo de salir a la calle, relacionarte, estar en sitios cerrados, viajar…,
-                    y ello te impide desarrollar tus habilidades y disfrutar de lo que te rodea.</p>
+                <p>Eventos traumáticos o pérdidas: Si has sufrido eventos traumáticos o pérdidas significativas,
+                    hablar con un profesional puede ayudarte a superar estas experiencias.</p>
             </div>
 
             <div class="box">
                 <i class="fas fa-lungs"></i>
-                <p>Cuando tengas síntomas como taquicardias, palpitaciones, insomnio, problemas digestivos y
-                    otros, que puedas relacionar con situaciones de estrés.</p>
+                <p>Problemas de autoestima: Si tienes baja autoestima o problemas de autoimagen, un terapeuta puede
+                    ayudarte a mejorar tu confianza y bienestar emocional.</p>
             </div>
 
             <div class="box">
                 <i class="fas fa-head-side-cough"></i>
-                <p>Cuando la obsesión por padecer enfermedades o contagiarte de ellas te lleva a conductas extrañas
-                    y repetitivas, de las que no puedes prescindir sin que su ausencia te genere ansiedad.</p>
+                <p>Trastornos mentales diagnosticados: Si has sido diagnosticado/a con trastornos mentales como
+                    depresión o ansiedad, es importante buscar tratamiento profesional para manejarlos efectivamente.
+                </p>
             </div>
 
 

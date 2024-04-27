@@ -93,7 +93,7 @@ html {
     color: #fff;
 }
 
- .heading {
+.heading {
     text-align: center;
     font-size: 4rem;
     color: var(--green);
@@ -132,6 +132,7 @@ header {
     z-index: 1000;
     padding: 0.2rem 5rem;
     width: 100%;
+    border-radius: 2.5%;
 }
 
 .logo {
@@ -232,6 +233,29 @@ header .fa-bars {
     flex-wrap: wrap;
 }
 
+.video {
+    position: relative;
+    width: 25%;
+    padding-top: 56.25%;
+    margin-left: 6rem;
+    margin-right: 6rem;
+    /* Proporción de aspecto 16:9 para video responsivo */
+}
+
+.video video {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    /* Ajusta la altura automáticamente según el ancho */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
 .about .row .image {
     flex: 1 1 40rem;
     padding: 2rem;
@@ -243,6 +267,7 @@ header .fa-bars {
 
 .about .row .content {
     flex: 1 1 40rem;
+    margin-bottom: 0;
 }
 
 .about .row .content h3 {
@@ -254,39 +279,73 @@ header .fa-bars {
     font-size: 2rem;
     color: #666;
     flex: 1 1 50%;
-    max-width: 70rem; /* Ancho máximo deseado */
+    max-width: 70rem;
+    /* Ancho máximo deseado */
     overflow-wrap: break-word;
 }
 
-.about .box-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.about .box-container .box {
-    padding: 2rem 1rem;
+.comentariosCards{
     text-align: center;
-    border: .2rem solid var(--green);
-    flex: 1 1 20rem;
-    margin: 2rem;
-}
-
-.about .box-container .box i {
+    align-content: center;
     color: var(--green);
     font-size: 4rem;
+    margin-bottom: 1rem;
 }
 
-.about .box-container .box h3 {
-    color: #333;
-    font-size: 2.5rem;
-    padding: 1rem 0;
+.imgCard{
+    width: 5rem;
+    border-radius: 50%;
 }
 
-.about .box-container .box p {
+.item .userComment{
+    font-size: 0.8rem;
     color: #666;
-    font-size: 1.7rem;
+}
+
+
+.slider{
+    position: relative;
+    margin-top: 100px;
+    width: 100%;
+    height: 370px;
+    overflow: hidden;
+}
+.item{
+    position: absolute;
+    width: 200px;
+    height: 320px;
+    text-align: center;
+    background-color: var(--green);
+    border-radius: 10px;
+    padding: 20px;
+    transition:  0.5s;
+    left: calc(50% - 110px);
+    top: 0;
+}
+
+#next{
+    position: absolute;
+    right: 50px;
+    top: 40%;
+}
+#prev{
+    position: absolute;
+    left: 50px;
+    top: 40%;
+}
+#prev, #next{
+    color: black;
+    background: none;
+    border: none;
+    font-size: xxx-large;
+    font-family: monospace;
+    font-weight: bold;
+    opacity: 0.5;
+    transition: opacity 0.5s;
+}
+#prev:hover,
+#next:hover{
+    opacity: 1;
 }
 
 .service {
@@ -498,6 +557,21 @@ header .fa-bars {
     .service .box-container {
         width: auto;
     }
+
+    .about .row .content p {
+        margin-left: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .video {
+        width: 30%;
+    }
+
+    .video video {
+        top: 50%;
+        left: 50%;
+    }
+
 
 }
 
