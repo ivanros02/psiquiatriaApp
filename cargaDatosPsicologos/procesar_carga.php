@@ -49,8 +49,8 @@ if ($conexion->query($sql) === TRUE) {
     $message .= 'Saludos,<br>';
     $message .= 'El equipo de Terapia Libre';
 
-    $headers = "From: terapialibre@terapialibre.com.ar\r\n";
-    $headers .= "Reply-To: terapialibre@terapialibre.com.ar\r\n";
+    $headers = "From: ivanrosendo1102@gmail.com\r\n";
+    $headers .= "Reply-To: ivanrosendo1102@gmail.com\r\n";
     $headers .= "Content-type: text/html\r\n";
 
     // Manejar errores de correo electrónico

@@ -48,6 +48,19 @@ const mp = new MercadoPago("APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8", {
     locale: "es-AR"
 });
 
+const generateIdempotencyKey = () => {
+    const length = 20
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let idempotencyKey = '';
+    for (let i = 0; i < length; i++) {
+      idempotencyKey += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return idempotencyKey;
+  }
+  
+  const idempotencyKey = generateIdempotencyKey();
+
 //url para create_preference
 //const baseURL = 'https://tudominio.com';
 // Coloca esta variable global para controlar si el botón ya fue creado
@@ -86,6 +99,7 @@ document.getElementById("checkout-btn").addEventListener("click", async () => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "X-Idempotency-Key":idempotencyKey,
             },
             body: JSON.stringify(orderData),
         });

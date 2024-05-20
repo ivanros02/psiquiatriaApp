@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");
 const mysql = require("mysql");
 const bodyParser = require('body-parser');
 
-const client = new MercadoPagoConfig({ 
+const client = new MercadoPagoConfig({
     accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
 });
 
@@ -43,16 +43,55 @@ function sendEmailToUser(userEmail, psychologistInfo) {
         to: userEmail,
         subject: 'Terapia Libre: información del profesional solicitado',
         html: `
-            <h2>GRACIAS POR UTILIZAR NUESTRA PLATAFORMA DE SERVICIOS DE SALUD MENTAL “TERAPIA LIBRE”</h2>
-            <p>TU PAGO HA SIDO ACREDITADO </p>
-            <h2>Información del Profesional:</h2>
-            <p>Nombre: ${psychologistInfo.nombre}</p>
-            <p>Teléfono: ${psychologistInfo.telefono}</p>
-            <p>Instagram: ${psychologistInfo.instagram}</p>
-            <p>Mail: ${psychologistInfo.mail}</p>
-            <p>¡GRACIAS POR SER PARTE DE TERAPIA LIBRE!
-            —-
-            TU OPINIÓN NOS IMPORTA.AGUARDAMOS TUS COMENTARIOS Y RECOMENDACIONES EN EL SIGUIENTE MAIL: QUEREMOSTUOPINION@TERAPIALIBRE.COM.AR </p>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    padding: 20px;
+                }
+                .container {
+                    background-color: #fff;
+                    border-radius: 10px;
+                    padding: 20px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+                h2 {
+                    color: #333;
+                }
+                p {
+                    color: #666;
+                }
+                .cta-button {
+                    background-color: #c1c700;
+                    color: #fff;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    display: inline-block;
+                    margin-top: 20px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h2>¡Gracias por utilizar nuestra plataforma de servicios de salud mental “Terapia Libre”!</h2>
+                <p>Tu pago ha sido acreditado.</p>
+                <h2>Información del Profesional:</h2>
+                <p><strong>Nombre:</strong> ${psychologistInfo.nombre}</p>
+                <p><strong>Teléfono:</strong> ${psychologistInfo.telefono}</p>
+                <p><strong>Instagram:</strong> <a href="${psychologistInfo.instagram}" style="color: #333;"><i class="fab fa-instagram"></i> Instagram</a></p>
+                <p><strong>Mail:</strong> ${psychologistInfo.mail}</p>
+                <p>¡Gracias por ser parte de Terapia Libre!</p>
+                <p>Tu opinión nos importa. Agradecemos tus comentarios y recomendaciones <a href="mailto:queremostuopinion@terapialibre.com.ar">aquí</a>.</p>
+                <a href="https://www.terapialibre.com.ar" class="cta-button">Explora más en nuestro sitio web</a>
+            </div>
+        </body>
+        </html>
         `,
     };
 
@@ -100,7 +139,7 @@ function saveUserEmail(userEmail, psychologistId, paymentId) {
 app.post("/create_preference", async (req, res) => {
     try {
         const { psychologistId, userEmail, title, quantity, price } = req.body;
-
+        const idempotencyKey = req.headers['x-idempotency-key'];
         const query = `SELECT * FROM presentaciones WHERE id = ${psychologistId}`;
         dbConnection.query(query, (error, results, fields) => {
             if (error) {
@@ -123,7 +162,7 @@ app.post("/create_preference", async (req, res) => {
                     };
 
                     const preference = new Preference(client);
-                    preference.create({ body }).then(result => {
+                    preference.create({ body, idempotencyKey }).then(result => {
                         const paymentId = result.id;
                         console.log("Payment ID:", paymentId);
                         saveUserEmail(userEmail, psychologistId, paymentId);
@@ -145,40 +184,40 @@ app.post("/create_preference", async (req, res) => {
 });
 
 app.post("/webhook", async function (req, res) {
-  const paymentId = req.query.id;
-  try {
-    const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${client.accessToken}`
-      }
-    });
-    if (response.ok) {
-      const paymentData = await response.json();
-      if (paymentData.status === 'approved') {
-        const userEmail = paymentData.payer.email;
-        const psychologistId = paymentData.external_reference;
-        const psychologistQuery = `SELECT * FROM presentaciones WHERE id = ?`;
-        dbConnection.query(psychologistQuery, [psychologistId], (error, results, fields) => {
-          if (error) {
-            console.error('Error al obtener datos del psicólogo desde la base de datos:', error);
-          } else {
-            if (results.length > 0) {
-              const psychologistInfo = results[0];
-              sendEmailToUser(userEmail, psychologistInfo);
-            } else {
-              console.error('No se encontraron datos del psicólogo con el ID proporcionado');
-              console.log(psychologistId);
+    const paymentId = req.query.id;
+    try {
+        const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${client.accessToken}`
             }
-          }
         });
-      }
+        if (response.ok) {
+            const paymentData = await response.json();
+            if (paymentData.status === 'approved') {
+                const userEmail = paymentData.payer.email;
+                const psychologistId = paymentData.external_reference;
+                const psychologistQuery = `SELECT * FROM presentaciones WHERE id = ?`;
+                dbConnection.query(psychologistQuery, [psychologistId], (error, results, fields) => {
+                    if (error) {
+                        console.error('Error al obtener datos del psicólogo desde la base de datos:', error);
+                    } else {
+                        if (results.length > 0) {
+                            const psychologistInfo = results[0];
+                            sendEmailToUser(userEmail, psychologistInfo);
+                        } else {
+                            console.error('No se encontraron datos del psicólogo con el ID proporcionado');
+                            console.log(psychologistId);
+                        }
+                    }
+                });
+            }
+        }
+        res.sendStatus(200);
+    } catch (error) {
+        console.error('Error:', error);
+        res.sendStatus(500);
     }
-    res.sendStatus(200);
-  } catch (error) {
-    console.error('Error:', error);
-    res.sendStatus(500);
-  }
 });
 
 

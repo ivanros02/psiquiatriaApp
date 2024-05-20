@@ -56,7 +56,7 @@ $psychologistData = mysqli_fetch_assoc($result);
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-
+    <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
 </head>
 
 <body>
@@ -106,7 +106,7 @@ $psychologistData = mysqli_fetch_assoc($result);
                                 Matrícula:MP <?php echo $psychologistData['matriculaP']; ?>(AR)
                             </p>
 
-                            <button class="btn btn-primary" id="contact" onclick="abrirModal()">Contactar</button>
+                            <button class="btn btn-primary" id="contact">Contactar</button>
 
                         </div>
                     </div>

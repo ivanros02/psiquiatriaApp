@@ -49,7 +49,7 @@
 
   <!--Psicologos start-->
   <section id="profesionales">
-    <h1 class="heading"><i class="fas fa-quote-left"></i> PROFESIONALES <i class="fas fa-quote-right"></i></h1>
+    <h1 class="heading"> PROFESIONALES </i></h1>
 
     <div class="container">
       <!-- Agrega el nuevo contenedor para el filtro -->
@@ -179,8 +179,7 @@
 
   <section class="service" id="service">
 
-    <h1 class="headingService" id='tesxt'> <i class="fas fa-quote-left"></i> BENEFICIOS <i
-        class="fas fa-quote-right"></i> </h1>
+    <h1 class="headingService" id='tesxt'> BENEFICIOS </h1>
 
     <div class="box-container">
 

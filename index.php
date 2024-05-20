@@ -15,9 +15,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="estilos/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
+    
     <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
 
 </head>
@@ -38,6 +37,7 @@
                 <li><a href="#home">Inicio</a></li>
                 <li><a href="#about">Nosotros</a></li>
                 <li><a href="#service">¿Cuando acudir a nosotros?</a></li>
+                <li><a href="./cargaDatosPsicologos/carga.php">Soy un profesional</a></li>
 
             </ul>
         </nav>
@@ -80,21 +80,21 @@
 
 
         <div class="row">
-            <!--
+            
            
 
             <div class="video">
                 <video autoplay loop muted>
-                    <source src="img/quienesSomosVideo.mp4" type="video/mp4">
+                    <source src="img/nuevoCerebro.mp4" type="video/mp4">
                     
                     Tu navegador no soporta el elemento de video.
                 </video>
             </div>
-            -->
+            <!--
             <div class="image">
                 <img src="img/modificar.jpeg" alt="Paciente con psicologo">
             </div>
-
+            -->
             <div class="content">
                 <h1 class="heading ">Quienes <br> Somos</h1>
                 <p>
@@ -147,8 +147,8 @@
             <!-- Puedes agregar más tarjetas aquí -->
         </div>
 
-
-
+        
+    
 
     </section>
 
@@ -227,7 +227,7 @@
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#"><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i class="bi bi-instagram"></i> Instagram</a>
             </div>
 
 

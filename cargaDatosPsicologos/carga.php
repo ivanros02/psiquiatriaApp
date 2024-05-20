@@ -12,9 +12,38 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
     <style>
+        :root {
+            --green: #c1c700;
+        }
+
         /* Aplicar la fuente Montserrat a todo el documento */
         body {
             font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Estilos para el scroll */
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Ancho del scroll */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* Color del fondo del scroll */
+            border-radius: 20px;
+            /* Radio del borde del fondo del scroll */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--green);
+            /* Color del scroll */
+            border-radius: 20px;
+            /* Radio del borde del scroll */
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--green);
+            /* Color del scroll al pasar el mouse */
         }
     </style>
 </head>
@@ -33,7 +62,7 @@
 
 
         <h1 class="text-2xl font-bold mb-4 text-center" style="color: #c1c700;">Panel de carga</h1>
-        <?php if (isset ($_GET['status']) && isset ($_GET['message'])): ?>
+        <?php if (isset($_GET['status']) && isset($_GET['message'])): ?>
             <div
                 class="<?php echo $_GET['status'] === 'success' ? 'bg-green-200' : 'bg-red-200'; ?> text-green-700 text-lg p-3 mb-4 rounded-md text-center">
                 <?php echo $_GET['message']; ?>
@@ -47,7 +76,7 @@
                         for="imagen">Seleccionar archivo de imagen:</label>
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="imagen" name="imagen" type="file">
+                        id="imagen" name="imagen" type="file" required>
                 </div>
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -55,7 +84,7 @@
                         for="nombre">Nombre:</label>
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="nombre" name="nombre" type="text" placeholder="Nombre">
+                        id="nombre" name="nombre" type="text" placeholder="Nombre" required>
                 </div>
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -63,7 +92,7 @@
                         for="titulo">Título:</label>
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="titulo" name="titulo" type="text" placeholder="Título">
+                        id="titulo" name="titulo" type="text" placeholder="Título" required>
                 </div>
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -71,7 +100,7 @@
                         for="matricula">Matrícula:</label>
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="matricula" name="matricula" type="number" placeholder="Matrícula">
+                        id="matricula" name="matricula" type="number" placeholder="Matrícula" required>
                 </div>
 
 
@@ -81,7 +110,7 @@
                         for="matricula">Matrícula Provincial:</label>
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="matricula" name="matriculaP" type="number" placeholder="Matrícula">
+                        id="matricula" name="matriculaP" type="number" placeholder="Matrícula" required> 
                 </div>
 
 
@@ -94,10 +123,11 @@
                         // Conexión a la base de datos y consulta de las especialidades
                         include '../php/conexion.php';
                         $query = "SELECT * FROM especialidades";
+                        $conexion->set_charset('utf8');
                         $result = $conexion->query($query);
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                $checked = (isset ($_POST['especialidad']) && in_array($row['id'], $_POST['especialidad'])) ? 'checked' : ''; // Ajuste aquí
+                                $checked = (isset($_POST['especialidad']) && in_array($row['id'], $_POST['especialidad'])) ? 'checked' : ''; // Ajuste aquí
                                 echo '
                 <label class="inline-flex items-center">
                     <input type="checkbox" name="especialidad[]" value="' . $row['id'] . '" ' . $checked . ' class="form-checkbox h-5 w-5 text-gray-600">
@@ -114,7 +144,7 @@
                         for="descripcion">Descripción Personal:</label>
                     <textarea
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="descripcion" name="descripcion" placeholder="Descripción"></textarea>
+                        id="descripcion" name="descripcion" placeholder="Descripción" required></textarea>
                 </div>
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -122,7 +152,7 @@
                         for="matricula">TELÉFONO:</label>
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="matricula" name="telefono" type="number" placeholder="TELÉFONO">
+                        id="matricula" name="telefono" type="number" placeholder="TELÉFONO" required>
                 </div>
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -130,7 +160,7 @@
                         for="disponibilidad">Disponibilidad:</label>
                     <select
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="disponibilidad" name="disponibilidad">
+                        id="disponibilidad" name="disponibilidad" required>
                         <option value="24">24 horas</option>
                         <option value="48">48 horas</option>
                         <option value="72">72 horas</option>
@@ -145,7 +175,7 @@
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         id="valor" name="valor" type="text" placeholder="Valor"
-                        onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;">
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
                 </div>
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -155,7 +185,7 @@
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         id="mail" name="mail" type="text" placeholder="Correo electrónico"
                         pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                        title="Por favor, introduce una dirección de correo electrónico válida">
+                        title="Por favor, introduce una dirección de correo electrónico válida" required>
                 </div>
 
 
@@ -165,11 +195,8 @@
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                         id="whatsapp" name="whatsapp" type="text" placeholder="WhatsApp"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
                 </div>
-
-
-
 
 
                 <div class="w-full px-3 mb-6 md:mb-0">
@@ -187,6 +214,7 @@
                     type="submit" style="background-color: #c1c700;">Enviar</button>
             </div>
         </form>
+        
     </div>
 
 
