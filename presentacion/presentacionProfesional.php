@@ -55,8 +55,14 @@ $psychologistData = mysqli_fetch_assoc($result);
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+    
     <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
+    
+    <!-- Initialize the JS-SDK -->
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=ASuvwaL7zuIKfyr5_OppnnQGrKqyvWDPkSn2BSHYTSR8wHbxOQPZE1JzVQ2Oj8ECpJSJ2XF-0ADkTk4l&currency=USD"></script>
+
+
 </head>
 
 <body>
@@ -141,6 +147,8 @@ $psychologistData = mysqli_fetch_assoc($result);
                             <button class="btn btn-primary" id="checkout-btn"
                                 data-psychologist-id="<?php echo $psychologistId; ?>">Contactar Profesional</button>
                             <div id="wallet_container"></div>
+                            <!-- Agrega el contenedor para los botones de PayPal -->
+                            <div id="paypal-button-container"></div>
                         </div>
                     </div>
                 </div>
@@ -208,10 +216,11 @@ $psychologistData = mysqli_fetch_assoc($result);
                 </p>
             </div>
 
-            <div class="box">
+           <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#">Instagram</a>
+                <a href="https://www.instagram.com/terapia.libre?igsh=MTE3cnBnYXB5OHVwZA=="><i class="bi bi-instagram"></i> Instagram</a>
             </div>
+
 
 
 
@@ -227,7 +236,93 @@ $psychologistData = mysqli_fetch_assoc($result);
     <!-- custom js file link  -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="../scripts/app.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <script>
+        function enviarCorreoElectronicoAComprador(psychologistId, userEmail) {
+            // Realizar una solicitud AJAX para enviar el correo electrónico
+            $.ajax({
+                url: 'https://terapialibre.com.ar/paypal/correo.php',
+                method: 'POST',
+                data: { psychologist_id: psychologistId, user_email: userEmail },
+                success: function (response) {
+                    console.log('Correo electrónico enviado correctamente:', response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al enviar el correo electrónico:', error);
+                }
+            });
+        }
+        // PAYPAL
+        document.getElementById("checkout-btn").addEventListener("click", async () => {
+            // Captura el valor del data-valor del span
+            const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
+            paypal.Buttons({
+                style: {
+                    color: 'blue',
+                    shape: 'pill',
+                    label: 'pay'
+                },
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+
+                            amount: {
+                                value: valorSpan // Asignar el valor obtenido del span
+                            },
+                            reference_id: '<?php echo $psychologistData['id']; ?>'
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    let url = '../paypal/captura.php';
+                    actions.order.capture().then(function (detalles) {
+                        // Obtener la dirección de correo electrónico del usuario
+                        const user_email = detalles.payer.email_address;
+                        return fetch(url, {
+                            method: 'post',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                detalles: detalles
+                            })
+                        }).then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            } else {
+                                return response.text();
+                            }
+                        }).then(bodyText => {
+                            console.log('Received the following instead of valid JSON:', bodyText);
+                            try {
+                                return JSON.parse(bodyText);
+                            } catch (error) {
+                                console.error('Error parsing JSON:', error, bodyText);
+                                throw error;
+                            }
+                        }).then(data => {
+                            if (data.status === 'success') {
+                                console.log('Datos guardados correctamente:', data.message);
+                                //enviar mail
+                                enviarCorreoElectronicoAComprador('<?php echo $psychologistData['id']; ?>', user_email);
+                                // Redireccionar a la URL específica después de que el pago se haya guardado correctamente
+                                window.location.href = '../datos/datosProfesional.php?id=<?php echo $psychologistData['id']; ?>';
+                            } else {
+                                console.error('Error al guardar los datos:', data.message);
+                            }
+                        }).catch(error => console.error('Error en la solicitud:', error));
+                    });
+                },
+                onCancel: function (data) {
+                    alert('Pago cancelado');
+                    console.log(data)
+                }
+            }).render('#paypal-button-container');
+        });
+
+        
+    </script>
 </body>
 
 </html>

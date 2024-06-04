@@ -163,10 +163,8 @@ app.post("/create_preference", async (req, res) => {
 
                     const preference = new Preference(client);
                     preference.create({ body, idempotencyKey }).then(result => {
-                        const paymentId = result.id;
-                        console.log("Payment ID:", paymentId);
-                        saveUserEmail(userEmail, psychologistId, paymentId);
-                        res.json({ id: paymentId, psychologistInfo });
+                        
+                        res.json({ id: result.id, psychologistInfo });
                     }).catch(error => {
                         console.error('Error al crear la preferencia:', error);
                         res.status(500).json({ error: "Error al crear la preferencia :(" });
@@ -204,6 +202,7 @@ app.post("/webhook", async function (req, res) {
                     } else {
                         if (results.length > 0) {
                             const psychologistInfo = results[0];
+                            saveUserEmail(userEmail, psychologistId, paymentId);
                             sendEmailToUser(userEmail, psychologistInfo);
                         } else {
                             console.error('No se encontraron datos del psicólogo con el ID proporcionado');

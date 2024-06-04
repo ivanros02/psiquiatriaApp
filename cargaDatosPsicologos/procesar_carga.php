@@ -44,14 +44,70 @@ if ($conexion->query($sql) === TRUE) {
     // Envío de correo electrónico
     $to = $mail; // Destinatario será el correo ingresado en el formulario
     $subject = 'Registro exitoso en Terapia Libre';
-    $message = 'Estimado/a ' . $nombre . ',<br><br>';
-    $message .= 'Su registro como psicólogo en Terapia Libre ha sido exitoso. Gracias por unirse a nosotros.<br><br>';
-    $message .= 'Saludos,<br>';
-    $message .= 'El equipo de Terapia Libre';
+    
+    // Diseño del correo electrónico
+    $message = '
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                text-align: center;
+                padding: 10px 0;
+            }
+            .header img {
+                max-width: 150px;
+            }
+            .content {
+                text-align: left;
+                padding: 20px;
+            }
+            .footer {
+                text-align: center;
+                padding: 10px;
+                font-size: 12px;
+                color: #888888;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <img src="https://terapialibre.com.ar/img/Logo_transparente.png" alt="Terapia Libre">
+            </div>
+            <div class="content">
+                <h2>Estimado/a ' . $nombre . ',</h2>
+                <p>Su registro como psicólogo en Terapia Libre ha sido exitoso. Gracias por unirse a nosotros.</p>
+                <p>Saludos,<br>El equipo de Terapia Libre</p>
+            </div>
+            <div class="footer">
+                &copy; ' . date("Y") . ' Terapia Libre. Todos los derechos reservados.
+            </div>
+        </div>
+    </body>
+    </html>';
 
-    $headers = "From: ivanrosendo1102@gmail.com\r\n";
-    $headers .= "Reply-To: ivanrosendo1102@gmail.com\r\n";
-    $headers .= "Content-type: text/html\r\n";
+    $headers = "From: Terapia Libre <terapialibre@terapialibre.com.ar>\r\n";
+    $headers .= "Reply-To: terapialibre@terapialibre.com.ar\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
 
     // Manejar errores de correo electrónico
     if (mail($to, $subject, $message, $headers)) {
@@ -65,6 +121,7 @@ if ($conexion->query($sql) === TRUE) {
 } else {
     echo "Error: " . $sql . "<br>" . $conexion->error;
 }
+
 
 // Cerrar conexión
 $conexion->close();
