@@ -46,6 +46,7 @@ $psychologistData = mysqli_fetch_assoc($result);
     <link rel="shortcut icon" href="../img/Logo_transparente.png" type="image/x-icon">
 
     <!-- custom css file link  -->
+    <link rel="stylesheet" href="../estilos/headerYFooter.css">
     <link rel="stylesheet" href="../estilos/styleDatos.css">
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">

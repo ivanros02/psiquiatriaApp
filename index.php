@@ -14,10 +14,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- custom css file link  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="estilos/headerYFooter.css">    
     <link rel="stylesheet" href="estilos/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    
+
     <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+
+
 
 </head>
 
@@ -28,7 +33,7 @@
     <header>
 
         <a href="index.php" class="logo">
-            <img src="img/Logo_transparente.png" alt="Logo de Terapia Libre">
+            <img src="./img/Logo_transparente.png" alt="Logo de Terapia Libre">
             Terapia Libre
         </a>
 
@@ -76,27 +81,15 @@
     <!-- about section starts  -->
 
     <section class="about" id="about">
-
-
-
         <div class="row">
-            
-           
-
             <div class="video">
                 <video autoplay loop muted>
                     <source src="img/nuevoCerebro.mp4" type="video/mp4">
-                    
                     Tu navegador no soporta el elemento de video.
                 </video>
             </div>
-            <!--
-            <div class="image">
-                <img src="img/modificar.jpeg" alt="Paciente con psicologo">
-            </div>
-            -->
             <div class="content">
-                <h1 class="heading ">Quienes <br> Somos</h1>
+                <h1 class="heading" >Quienes <br> Somos</h1>
                 <p>
                     En nuestra plataforma web, nos encargamos de conectar a los usuarios que requieren atención
                     terapéutica con profesionales altamente competentes. Buscamos facilitar el acceso a servicios de
@@ -105,13 +98,11 @@
                     oportunidad de seleccionar al terapeuta que mejor se ajuste a sus necesidades y les acompañe en el
                     proceso de recuperación.
                 </p>
-
             </div>
-
         </div>
 
         <div class="container">
-            <h1 class="comentariosCards">Comentarios</h1>
+            <h1 class="heading">Comentarios</h1>
             <div class="slider">
                 <div class="item">
                     <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
@@ -143,13 +134,7 @@
                 <button id="next">></button>
                 <button id="prev"><</button>
             </div>
-
-            <!-- Puedes agregar más tarjetas aquí -->
         </div>
-
-        
-    
-
     </section>
 
 
@@ -162,7 +147,7 @@
 
     <section class="service" id="service">
 
-        <h1 class="headingService">¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?</h1>
+        <h1 class="heading">¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?</h1>
 
         <div class="box-container">
 
@@ -227,7 +212,8 @@
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i
+                        class="bi bi-instagram"></i> Instagram</a>
             </div>
 
 

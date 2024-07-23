@@ -5,217 +5,263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de carga</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!--icono pestana-->
     <link rel="icon" href="../img/Logo_transparente.png" type="image/x-icon">
     <link rel="shortcut icon" href="../img/Logo_transparente.png" type="image/x-icon">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="../estilos/headerYFooter.css">
     <style>
-        :root {
-            --green: #c1c700;
+        .logo {
+            font-size: 2rem;
+            color: inherit;
+            /* Mantener el color del texto original */
+            text-decoration: none;
+            /* Eliminar subrayado al pasar el cursor */
+            font-weight: bold;
         }
 
-        /* Aplicar la fuente Montserrat a todo el documento */
-        body {
-            font-family: 'Montserrat', sans-serif !important;
+        .logo img {
+            width: 5rem;
+            /* Ancho de la imagen */
+            height: auto;
+            /* Altura automática para mantener la proporción */
+            margin-right: 10px;
+            /* Espacio a la derecha del logo */
+            vertical-align: middle;
+            /* Alinear verticalmente */
         }
 
-        /* Estilos para el scroll */
-        ::-webkit-scrollbar {
-            width: 10px;
-            /* Ancho del scroll */
+        /*FOOTER*/
+        .footer {
+            background: #333;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            /* Color del fondo del scroll */
-            border-radius: 20px;
-            /* Radio del borde del fondo del scroll */
+        .footer .box-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 86%;
+            margin: 0 auto;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--green);
-            /* Color del scroll */
-            border-radius: 20px;
-            /* Radio del borde del scroll */
+        .footer .box-container .box {
+            margin: 0.5rem;
+            flex: 1 1 25rem;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--green);
-            /* Color del scroll al pasar el mouse */
+        .footer .box-container .box .logo {
+            font-size: 1rem;
+            color: var(--green);
+        }
+
+        .footer .box-container .box .logo .img {
+            width: 1rem;
+        }
+
+        .footer .box-container .box p {
+            font-size: 1rem;
+            color: #ccc;
+            padding: 1rem 0;
+            text-decoration: none !important;
+        }
+
+        .footer .box-container .box .share {
+            text-align: center;
+            font-size: 1rem;
+            color: #fff;
+            text-decoration: none !important;
+        }
+
+        .footer .box-container .box:nth-child(2) a {
+            text-align: center;
+            font-size: 1rem;
+            color: #eee;
+            display: block;
+            padding: .5rem 0;
+            text-decoration: none !important;
+        }
+
+        .footer .credit {
+            text-align: center;
+            color: #fff;
+            font-size: 1rem;
+            width: 85%;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            border-top: .1rem solid #ccc;
+        }
+
+        .footer .credit span {
+            color: var(--green);
         }
     </style>
 </head>
 
-<body class="bg-gray-100">
-    <div class="container mx-auto mt-8">
-        <div
-            class="hidden sm:block fixed top-6 left-6 sm:top-8 sm:left-8 md:top-10 md:left-10 lg:top-12 lg:left-12 xl:top-14 xl:left-14 z-50">
-            <!-- Logo -->
-            <img class="w-12 sm:w-16 md:w-20 lg:w-24 xl:w-28 h-auto" src="../img/Logo_transparente.png"
-                alt="Logo de tu página">
-            <!-- Texto -->
-            <p class="text-sm text-gray-600">Terapia Libre</p>
-        </div>
+<body>
+
+    <!-- header section starts  -->
+
+    <header>
+
+        <a href="../index.php" class="logo">
+            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
+            Terapia Libre
+        </a>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="../index.php">Inicio</a></li>
 
 
+            </ul>
+        </nav>
 
-        <h1 class="text-2xl font-bold mb-4 text-center" style="color: #c1c700;">Panel de carga</h1>
+        <div class="fas fa-bars"></div>
+
+    </header>
+
+    <!-- header section ends -->
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4" style="color: #c1c700; margin-top:10rem;">Panel de carga</h1>
         <?php if (isset($_GET['status']) && isset($_GET['message'])): ?>
-            <div
-                class="<?php echo $_GET['status'] === 'success' ? 'bg-green-200' : 'bg-red-200'; ?> text-green-700 text-lg p-3 mb-4 rounded-md text-center">
+            <div class="alert <?php echo $_GET['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?> text-center">
                 <?php echo $_GET['message']; ?>
             </div>
         <?php endif; ?>
-        <form action="procesar_carga.php" method="POST" enctype="multipart/form-data" class="w-full max-w-lg mx-auto">
-            <div class="flex flex-wrap -mx-3 mb-6">
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="imagen">Seleccionar archivo de imagen:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="imagen" name="imagen" type="file" required>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="nombre">Nombre:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="nombre" name="nombre" type="text" placeholder="Nombre" required>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="titulo">Título:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="titulo" name="titulo" type="text" placeholder="Título" required>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="matricula">Matrícula:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="matricula" name="matricula" type="number" placeholder="Matrícula" required>
-                </div>
-
-
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="matricula">Matrícula Provincial:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="matricula" name="matriculaP" type="number" placeholder="Matrícula" required> 
-                </div>
-
-
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="especialidad">Especialidades:</label>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <?php
-                        // Conexión a la base de datos y consulta de las especialidades
-                        include '../php/conexion.php';
-                        $query = "SELECT * FROM especialidades";
-                        $conexion->set_charset('utf8');
-                        $result = $conexion->query($query);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $checked = (isset($_POST['especialidad']) && in_array($row['id'], $_POST['especialidad'])) ? 'checked' : ''; // Ajuste aquí
-                                echo '
-                <label class="inline-flex items-center">
-                    <input type="checkbox" name="especialidad[]" value="' . $row['id'] . '" ' . $checked . ' class="form-checkbox h-5 w-5 text-gray-600">
-                    <span class="ml-2 text-gray-700">' . $row['especi'] . '</span>
-                </label>';
-                            }
-                        }
-                        ?>
-                    </div>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0 mt-4">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="descripcion">Descripción Personal:</label>
-                    <textarea
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="descripcion" name="descripcion" placeholder="Descripción" required></textarea>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="matricula">TELÉFONO:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="matricula" name="telefono" type="number" placeholder="TELÉFONO" required>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="disponibilidad">Disponibilidad:</label>
-                    <select
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="disponibilidad" name="disponibilidad" required>
-                        <option value="24">24 horas</option>
-                        <option value="48">48 horas</option>
-                        <option value="72">72 horas</option>
-                        <option value="96">96 horas</option>
-                    </select>
-                </div>
-
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="valor">Valor:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="valor" name="valor" type="text" placeholder="Valor"
-                        onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
-                </div>
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="mail">Correo
-                        electrónico:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="mail" name="mail" type="text" placeholder="Correo electrónico"
-                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                        title="Por favor, introduce una dirección de correo electrónico válida" required>
-                </div>
-
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="whatsapp">WhatsApp:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="whatsapp" name="whatsapp" type="text" placeholder="WhatsApp"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
-                </div>
-
-
-                <div class="w-full px-3 mb-6 md:mb-0">
-                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                        for="instagram">Instagram:</label>
-                    <input
-                        class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        id="instagram" name="instagram" type="text" placeholder="Instagram">
-                </div>
-
+        <form action="procesar_carga.php" method="POST" enctype="multipart/form-data" class="mx-auto"
+            style="max-width: 600px;">
+            <div class="mb-3">
+                <label for="imagen" class="form-label">Foto de Perfil:</label>
+                <input class="form-control" id="imagen" name="imagen" type="file" required>
             </div>
-            <div class="flex items-center justify-center mt-6">
-                <button
-                    class="hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    type="submit" style="background-color: #c1c700;">Enviar</button>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título:</label>
+                <input class="form-control" id="titulo" name="titulo" type="text" placeholder="Título" required>
+            </div>
+            <div class="mb-3">
+                <label for="matricula" class="form-label">Matrícula:</label>
+                <input class="form-control" id="matricula" name="matricula" type="number" placeholder="Matrícula"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="matriculaP" class="form-label">Matrícula Provincial:</label>
+                <input class="form-control" id="matriculaP" name="matriculaP" type="number"
+                    placeholder="Matrícula Provincial" required>
+            </div>
+            <div class="mb-3">
+                <label for="especialidad" class="form-label">Especialidades:</label>
+                <div class="row">
+                    <?php
+                    // Conexión a la base de datos y consulta de las especialidades
+                    include '../php/conexion.php';
+                    $query = "SELECT * FROM especialidades";
+                    $conexion->set_charset('utf8');
+                    $result = $conexion->query($query);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $checked = (isset($_POST['especialidad']) && in_array($row['id'], $_POST['especialidad'])) ? 'checked' : ''; // Ajuste aquí
+                            echo '
+                    <div class="col-md-6 mb-2">
+                        <div class="form-check">
+                            <input type="checkbox" name="especialidad[]" value="' . $row['id'] . '" ' . $checked . ' class="form-check-input">
+                            <label class="form-check-label">' . $row['especi'] . '</label>
+                        </div>
+                    </div>';
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción Personal:</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripción"
+                    required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="telefono" class="form-label">TELÉFONO:</label>
+                <input class="form-control" id="telefono" name="telefono" type="number" placeholder="TELÉFONO" required>
+            </div>
+            <div class="mb-3">
+                <label for="disponibilidad" class="form-label">Disponibilidad:</label>
+                <select class="form-select" id="disponibilidad" name="disponibilidad" required>
+                    <option value="24">24 horas</option>
+                    <option value="48">48 horas</option>
+                    <option value="72">72 horas</option>
+                    <option value="96">96 horas</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor:</label>
+                <input class="form-control" id="valor" name="valor" type="text" placeholder="Valor"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
+            </div>
+            <div class="mb-3">
+                <label for="mail" class="form-label">Correo electrónico:</label>
+                <input class="form-control" id="mail" name="mail" type="text" placeholder="Correo electrónico"
+                    pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    title="Por favor, introduce una dirección de correo electrónico válida" required>
+            </div>
+            <div class="mb-3">
+                <label for="whatsapp" class="form-label">WhatsApp:</label>
+                <input class="form-control" id="whatsapp" name="whatsapp" type="text" placeholder="WhatsApp"
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+            </div>
+            <div class="mb-3">
+                <label for="instagram" class="form-label">Instagram:</label>
+                <input class="form-control" id="instagram" name="instagram" type="text" placeholder="Instagram">
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-warning text-white" type="submit"
+                    style="background-color: #c1c700; margin-bottom: 1rem;">Enviar</button>
             </div>
         </form>
-        
     </div>
+
+
+    <!-- footer section starts  -->
+
+    <section class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <a href="../index.php" class="logo">
+                    <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
+                    Terapia Libre
+                </a>
+                <p>
+                    Es una plataforma innovadora que te ofrece la libertad de elegir al profesional de salud mental
+                    ideal para ti. Con una amplia variedad de expertos, facilitamos la búsqueda y selección de tu
+                    terapeuta, priorizando tu bienestar emocional con tratamientos personalizados.
+                </p>
+            </div>
+
+            <div class="box">
+                <h3 class="share">Redes</h3>
+                <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i
+                        class="bi bi-instagram"></i> Instagram</a>
+            </div>
+
+
+
+        </div>
+
+        <h1 class="credit">created by <span>WorldSoftSystem</span> | all rights reserved. </h1>
+
+    </section>
+
+    <!-- footer section ends -->
+
 
 
 </body>

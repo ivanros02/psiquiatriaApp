@@ -16,6 +16,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
   <!-- custom css file link  -->
+  <link rel="stylesheet" href="../estilos/headerYFooter.css">
   <link rel="stylesheet" href="../estilos/stylePsico.css">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"

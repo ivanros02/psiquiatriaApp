@@ -60,6 +60,7 @@ const generateIdempotencyKey = () => {
   }
   
   const idempotencyKey = generateIdempotencyKey();
+ 
 
 //url para create_preference
 //const baseURL = 'https://tudominio.com';
