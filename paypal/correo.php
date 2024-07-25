@@ -24,53 +24,95 @@ $subject_user = 'Confirmación de pago';
 $message_user = ' 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: \'Montserrat\', sans-serif;
+            background-color: #e9ecef;
             padding: 20px;
+            margin: 0;
         }
+
         .container {
-            background-color: #fff;
-            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
         }
+
         h2 {
-            color: #333;
+            color: #c1c700;
+            font-size: 24px;
+            margin-top: 0;
         }
+
         p {
-            color: #666;
+            color: #495057;
+            line-height: 1.6;
+            font-size: 16px;
+            margin: 10px 0;
         }
+
         .cta-button {
             background-color: #c1c700;
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 50px;
             display: inline-block;
             margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #c1c700;
+            text-decoration: none;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links a {
+            color: #007bff;
+            margin-right: 10px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h2>¡Gracias por utilizar nuestra plataforma de servicios de salud mental “Terapia Libre”!</h2>
-        <p>Tu pago ha sido acreditado.</p>
+        <p>Nos complace informarte que tu pago ha sido acreditado exitosamente.</p>
         <h2>Información del Profesional:</h2>
         <p><strong>Nombre:</strong> ' . $psychologistInfo['nombre'] . '</p>
-        <p><strong>Teléfono:</strong> ' . $psychologistInfo['telefono'] . '</p>
-        <p><strong>Instagram:</strong> <a href="' . $psychologistInfo['instagram'] . '" style="color: #333;"><i class="fab fa-instagram"></i> Instagram</a></p>
-        <p><strong>Mail:</strong> ' . $psychologistInfo['mail'] . '</p>
+        <p><i class="fas fa-phone" style="color: #a3a000;"></i><strong>Teléfono:</strong> ' .
+            $psychologistInfo['telefono'] . '</p>
+        <p><i class="fab fa-instagram" style="color: #a3a000;"></i><strong>Instagram:</strong> <a
+                href="' . $psychologistInfo['instagram'] . '">Instagram</a></p>
+        <p><strong>Correo Electrónico:</strong> ' . $psychologistInfo['mail'] . '</p>
         <p>¡Gracias por ser parte de Terapia Libre!</p>
-        <p>Tu opinión nos importa. Agradecemos tus comentarios y recomendaciones <a href="mailto:queremostuopinion@terapialibre.com.ar">aquí</a>.</p>
+        <p>Tu opinión es muy importante para nosotros. Agradecemos tus comentarios y recomendaciones <a
+                href="mailto:queremostuopinion@terapialibre.com.ar">aquí</a>.</p>
         <a href="https://www.terapialibre.com.ar" class="cta-button">Explora más en nuestro sitio web</a>
     </div>
 </body>
+
 </html>';
 $headers_user = "From: Terapia Libre <terapialibre@terapialibre.com.ar>\r\n";
 $headers_user .= "Reply-To: terapialibre@terapialibre.com.ar\r\n";
@@ -89,41 +131,79 @@ $message_pro = '
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
+   <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: \'Montserrat\', sans-serif;
+            background-color: #e9ecef;
             padding: 20px;
+            margin: 0;
         }
+
         .container {
-            background-color: #fff;
-            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
         }
+
         h2 {
-            color: #333;
+            color: #c1c700;
+            font-size: 24px;
+            margin-top: 0;
         }
+
         p {
-            color: #666;
+            color: #495057;
+            line-height: 1.6;
+            font-size: 16px;
+            margin: 10px 0;
         }
+
         .cta-button {
             background-color: #c1c700;
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 50px;
             display: inline-block;
             margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #c1c700;
+            text-decoration: none;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links a {
+            color: #007bff;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>¡Has recibido un nuevo cliente en Terapia Libre!</h2>
-        <p>Información del cliente:</p>
-        <p><strong>Email:</strong> ' . $user_email . '</p>
-        <p>Por favor, ponte en contacto con el cliente a la brevedad.</p>
+        <h2>¡Nuevo Paciente Asignado!</h2>
+        <p>Hola '. $psychologistInfo['nombre'] .',</p>
+        <p>Has sido asignado como el psicólogo de un nuevo paciente en Terapia Libre.</p>
+        <h2>Información del Paciente:</h2>
+        <p><strong>Correo Electrónico:</strong> ' . $user_email . '</p>
+        <p>Por favor, revisa los detalles del paciente y prepárate para la primera sesión. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nosotros.</p>
+        <p>¡Gracias por tu colaboración y dedicación!</p>
     </div>
 </body>
 </html>';

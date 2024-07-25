@@ -44,7 +44,7 @@ $psychologistData = mysqli_fetch_assoc($result);
     <!--icono pestana-->
     <link rel="icon" href="../img/Logo_transparente.png" type="image/x-icon">
     <link rel="shortcut icon" href="../img/Logo_transparente.png" type="image/x-icon">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="../estilos/headerYFooter.css">
     <link rel="stylesheet" href="../estilos/styleDatos.css">
@@ -52,7 +52,15 @@ $psychologistData = mysqli_fetch_assoc($result);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        @media (max-width:768px) {
 
+            html {
+                font-size: 54% !important;
+            }
+
+        }
+    </style>
 
 
 </head>
@@ -64,7 +72,7 @@ $psychologistData = mysqli_fetch_assoc($result);
 
         <a href="#" class="logo">
             <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-            Terapia Libre
+            <span>Terapia Libre</span>
         </a>
 
         <nav class="navbar">
@@ -103,7 +111,9 @@ $psychologistData = mysqli_fetch_assoc($result);
                     </p>
                     <!-- Div para contener los iconos -->
                     <div class="cajitas">
-                    <a class="iconito icon-whatsapp" href="https://api.whatsapp.com/send?phone=<?php echo $psychologistData['whatsapp']; ?>&text=Hola%20me%20contacto%20desde%20Terapia%20Libre.%20Quiero%20solicitar%20un%20turno!"><i class="fab fa-whatsapp"></i></a>
+                        <a class="iconito icon-whatsapp"
+                            href="https://api.whatsapp.com/send?phone=<?php echo $psychologistData['whatsapp']; ?>&text=Hola%20me%20contacto%20desde%20Terapia%20Libre.%20Quiero%20solicitar%20un%20turno!"><i
+                                class="fab fa-whatsapp"></i></a>
 
 
                         <a class="iconito icon-instagram"
@@ -147,7 +157,8 @@ $psychologistData = mysqli_fetch_assoc($result);
 
             <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="#">Instagram</a>
+                <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i
+                        class="bi bi-instagram"></i> Instagram</a>
             </div>
 
 
@@ -162,7 +173,6 @@ $psychologistData = mysqli_fetch_assoc($result);
 
 
     <!-- custom js file link  -->
-    <!--<script src="https://sdk.mercadopago.com/js/v2"></script>-->
     <script src="../scripts/datos.js"></script>
 
 </body>

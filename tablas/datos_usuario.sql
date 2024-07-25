@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 03-06-2024 a las 17:36:04
--- Versión del servidor: 10.6.17-MariaDB-cll-lve-log
--- Versión de PHP: 8.1.28
+-- Tiempo de generación: 23-07-2024 a las 17:01:12
+-- Versión del servidor: 10.6.18-MariaDB-cll-lve-log
+-- Versión de PHP: 8.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,13 +35,6 @@ CREATE TABLE `datos_usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Volcado de datos para la tabla `datos_usuario`
---
-
-INSERT INTO `datos_usuario` (`id`, `user_email`, `psychologist_id`, `payment_id`) VALUES
-(235, 'ivanrosendo1102@gmail.com', 3, 1004358627);
-
---
 -- Índices para tablas volcadas
 --
 
@@ -60,7 +53,7 @@ ALTER TABLE `datos_usuario`
 -- AUTO_INCREMENT de la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=236;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

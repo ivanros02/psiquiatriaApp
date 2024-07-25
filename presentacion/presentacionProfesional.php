@@ -56,14 +56,22 @@ $psychologistData = mysqli_fetch_assoc($result);
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    
+
     <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
-    
+
     <!-- Initialize the JS-SDK -->
     <script
         src="https://www.paypal.com/sdk/js?client-id=ASuvwaL7zuIKfyr5_OppnnQGrKqyvWDPkSn2BSHYTSR8wHbxOQPZE1JzVQ2Oj8ECpJSJ2XF-0ADkTk4l&currency=USD"></script>
 
+    <style>
+        @media (max-width:768px) {
 
+            html {
+                font-size: 54% !important;
+            }
+
+        }
+    </style>
 </head>
 
 <body>
@@ -73,7 +81,7 @@ $psychologistData = mysqli_fetch_assoc($result);
 
         <a href="../index.php" class="logo">
             <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-            Terapia Libre
+            <span>Terapia Libre</span>
         </a>
 
         <nav class="navbar">
@@ -217,9 +225,10 @@ $psychologistData = mysqli_fetch_assoc($result);
                 </p>
             </div>
 
-           <div class="box">
+            <div class="box">
                 <h3 class="share">Redes</h3>
-                <a href="https://www.instagram.com/terapia.libre?igsh=MTE3cnBnYXB5OHVwZA=="><i class="bi bi-instagram"></i> Instagram</a>
+                <a href="https://www.instagram.com/terapia.libre?igsh=MTE3cnBnYXB5OHVwZA=="><i
+                        class="bi bi-instagram"></i> Instagram</a>
             </div>
 
 
@@ -237,7 +246,7 @@ $psychologistData = mysqli_fetch_assoc($result);
     <!-- custom js file link  -->
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="../scripts/app.js"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
         function enviarCorreoElectronicoAComprador(psychologistId, userEmail) {
@@ -322,7 +331,7 @@ $psychologistData = mysqli_fetch_assoc($result);
             }).render('#paypal-button-container');
         });
 
-        
+
     </script>
 </body>
 

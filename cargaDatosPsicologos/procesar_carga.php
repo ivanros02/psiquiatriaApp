@@ -19,7 +19,7 @@ $instagram = $_POST['instagram'];
 // Procesar la imagen (agregar validación si es necesario)
 $imagen_nombre = $_FILES['imagen']['name'];
 $imagen_temp = $_FILES['imagen']['tmp_name'];
-$rutaImagen = "../img/" . $imagen_nombre;
+$rutaImagen = "../img/perfiles/" . $imagen_nombre;
 move_uploaded_file($imagen_temp, $rutaImagen);
 
 // Consulta para obtener los nombres de las especialidades (añadir validación)
@@ -48,61 +48,92 @@ if ($conexion->query($sql) === TRUE) {
     // Diseño del correo electrónico
     $message = '
     <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-            }
-            .container {
-                width: 100%;
-                max-width: 600px;
-                margin: 0 auto;
-                background-color: #ffffff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            .header {
-                text-align: center;
-                padding: 10px 0;
-            }
-            .header img {
-                max-width: 150px;
-            }
-            .content {
-                text-align: left;
-                padding: 20px;
-            }
-            .footer {
-                text-align: center;
-                padding: 10px;
-                font-size: 12px;
-                color: #888888;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <img src="https://terapialibre.com.ar/img/Logo_transparente.png" alt="Terapia Libre">
-            </div>
-            <div class="content">
-                <h2>Estimado/a ' . $nombre . ',</h2>
-                <p>Su registro como psicólogo en Terapia Libre ha sido exitoso. Gracias por unirse a nosotros.</p>
-                <p>Saludos,<br>El equipo de Terapia Libre</p>
-            </div>
-            <div class="footer">
-                &copy; ' . date("Y") . ' Terapia Libre. Todos los derechos reservados.
-            </div>
-        </div>
-    </body>
-    </html>';
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: \'Montserrat\', sans-serif;
+            background-color: #e9ecef;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+
+        h2 {
+            color: #c1c700;
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        p {
+            color: #495057;
+            line-height: 1.6;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .cta-button {
+            background-color: #c1c700;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #c1c700;
+            text-decoration: none;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links a {
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+
+        
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Estimado/a ' . $nombre . ',</h2>
+        <p>Nos complace informarte que tu registro como psicólogo en Terapia Libre ha sido exitoso.</p>
+        <p>¡Gracias por unirte a nosotros y formar parte de nuestro equipo!</p>
+        <p class="signature">Saludos,<br>El equipo de Terapia Libre</p>
+    </div>
+</body>
+
+</html>';
 
     $headers = "From: Terapia Libre <terapialibre@terapialibre.com.ar>\r\n";
     $headers .= "Reply-To: terapialibre@terapialibre.com.ar\r\n";

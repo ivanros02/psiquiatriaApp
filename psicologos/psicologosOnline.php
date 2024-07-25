@@ -1,3 +1,14 @@
+<?php
+// Incluir la conexión a la base de datos
+include '../php/conexion.php';
+
+// Consulta para obtener las especialidades
+$sql = "SELECT DISTINCT especi FROM especialidades ORDER BY especi";
+
+$especialidades = $conexion->query($sql);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,16 +70,17 @@
         <div class="filter-container">
           <label for="especialidadFilter">Especialidad:</label>
           <select id="especialidadFilter" name="especialidadFilter">
-            <option value="">Todas las disponibilidades</option>
-            <option value="PSICOLOGÍA">PSICOLOGÍA</option>
-            <option value="PSIQUIATRÍA">PSIQUIATRÍA</option>
-            <option value="PSICOPEDAGOGÍA">PSICOPEDAGOGÍA</option>
-            <option value="NEUROLOGÍA ">NEUROLOGÍA</option>
-            <option value="TERAPISTA OCUPACIONAL">TERAPISTA OCUPACIONAL</option>
-            <option value="ACOMPAÑANTE TERAPÉUTICO">ACOMPAÑANTE TERAPÉUTICO</option>
-            <option value="MUSICOTERAPEUTA ">MUSICOTERAPEUTA </option>
-            <option value="ASISTENTE SOCIAL">ASISTENTE SOCIAL</option>
-            <option value="RECREOLOGO">RECREOLOGO</option>
+            <option value="">Todos</option>
+            <?php
+            if ($especialidades->num_rows > 0) {
+              // Salida de cada fila
+              while ($row = $especialidades->fetch_assoc()) {
+                echo '<option value="' . htmlspecialchars($row['especi']) . '">' . htmlspecialchars($row['especi']) . '</option>';
+              }
+            } else {
+              echo '<option value="">No hay especialidades disponibles</option>';
+            }
+            ?>
           </select>
 
           <label for="disponibilidadFilter">Disponibilidad:</label>
@@ -108,7 +120,8 @@
           $sql .= " WHERE disponibilidad = '$disponibilidadFilter'";
         }
 
-        if (isset($_GET['especialidadFilter']) && !empty($_GET['especialidadFilter'])) {
+        // Manejo del filtro de especialidad
+        if (isset($_GET['especialidadFilter']) && $_GET['especialidadFilter'] !== '') {
           $especialidadFilter = $_GET['especialidadFilter'];
           // Modifica la condición de especialidad para usar LIKE
           $sql .= (strpos($sql, 'WHERE') !== false) ? " AND especialidad LIKE '%$especialidadFilter%'" : " WHERE especialidad LIKE '%$especialidadFilter%'";
@@ -261,7 +274,8 @@
 
       <div class="box">
         <h3 class="share">Redes</h3>
-        <a href="#">Instagram</a>
+        <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i
+                        class="bi bi-instagram"></i> Instagram</a>
       </div>
 
 
