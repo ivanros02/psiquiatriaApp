@@ -25,6 +25,18 @@ const dbConnection = mysql.createConnection({
 
 dbConnection.connect();
 
+function generateUniqueId() {
+    // Utiliza la fecha actual en milisegundos y un número aleatorio para crear un ID único
+    const timestamp = Date.now().toString(36); // Convierte el tiempo actual en una cadena base-36
+    const randomNumber = Math.floor(Math.random() * 1000000).toString(36); // Genera un número aleatorio y lo convierte en una cadena base-36
+    return `${timestamp}-${randomNumber}`; // Combina ambas partes para crear un ID único
+}
+
+function generateVideoCallLink() {
+    const sessionId = generateUniqueId(); // Genera un ID único
+    return `https://meet.jit.si/${sessionId}`; // Crea el enlace de videollamada usando el ID generado
+}
+
 function sendEmailToUser(userEmail, psychologistInfo) {
     const transporter = nodemailer.createTransport({
         host: 'localhost',
@@ -37,6 +49,9 @@ function sendEmailToUser(userEmail, psychologistInfo) {
             rejectUnauthorized: false
         }
     });
+
+    // Genera el enlace para la videollamada
+    const videoCallLink = generateVideoCallLink();
 
     const userMailOptions = {
         from: 'terapialibre@terapialibre.com.ar',
@@ -126,6 +141,9 @@ function sendEmailToUser(userEmail, psychologistInfo) {
                         <p><i class="fas fa-phone" style="color: #a3a000;"></i><strong>Teléfono:</strong> ${psychologistInfo.telefono}</p>
                         <p><i class="fab fa-instagram" style="color: #a3a000;"></i><strong>Instagram:</strong> <a href="${psychologistInfo.instagram}">Instagram</a></p>
                         <p><strong>Correo Electrónico:</strong> ${psychologistInfo.mail}</p>
+
+                        <h2>Enlace para la Videollamada:</h2>
+                        <p>Tu enlace para la videollamada es: <a href="${videoCallLink}" target="_blank">${videoCallLink}</a></p>
 
                         <p>¡Gracias por ser parte de Terapia Libre!</p>
                         <p>Tu opinión es muy importante para nosotros. Agradecemos tus comentarios y recomendaciones <a href="mailto:queremostuopinion@terapialibre.com.ar">aquí</a>.</p>
@@ -227,6 +245,9 @@ function sendEmailToUser(userEmail, psychologistInfo) {
 
         <h2>Información del Paciente:</h2>
         <p><strong>Correo Electrónico:</strong> ${userEmail}</p>
+
+        <h2>Enlace para la Videollamada:</h2>
+        <p>Tu enlace para la videollamada es: <a href="${videoCallLink}" target="_blank">${videoCallLink}</a></p>
 
         <p>Por favor, revisa los detalles del paciente y prepárate para la primera sesión. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nosotros.</p>
 

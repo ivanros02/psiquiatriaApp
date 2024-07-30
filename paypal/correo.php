@@ -20,6 +20,10 @@ if (!$psychologistInfo) {
 }
 
 // Configuración del correo para el usuario
+// Generar un ID único para la videollamada
+$uniqueId = uniqid('session-', true);
+$videoCallLink = 'https://meet.jit.si/' . $uniqueId;
+
 $subject_user = 'Confirmación de pago';
 $message_user = ' 
 <!DOCTYPE html>
@@ -106,6 +110,7 @@ $message_user = '
         <p><i class="fab fa-instagram" style="color: #a3a000;"></i><strong>Instagram:</strong> <a
                 href="' . $psychologistInfo['instagram'] . '">Instagram</a></p>
         <p><strong>Correo Electrónico:</strong> ' . $psychologistInfo['mail'] . '</p>
+        <p>Tu enlace para la videollamada es: <a href="' . $videoCallLink . '">' . $videoCallLink . '</a></p>
         <p>¡Gracias por ser parte de Terapia Libre!</p>
         <p>Tu opinión es muy importante para nosotros. Agradecemos tus comentarios y recomendaciones <a
                 href="mailto:queremostuopinion@terapialibre.com.ar">aquí</a>.</p>
@@ -202,6 +207,7 @@ $message_pro = '
         <p>Has sido asignado como el psicólogo de un nuevo paciente en Terapia Libre.</p>
         <h2>Información del Paciente:</h2>
         <p><strong>Correo Electrónico:</strong> ' . $user_email . '</p>
+        <p>Tu enlace para la videollamada es: <a href="' . $videoCallLink . '">' . $videoCallLink . '</a></p>
         <p>Por favor, revisa los detalles del paciente y prepárate para la primera sesión. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nosotros.</p>
         <p>¡Gracias por tu colaboración y dedicación!</p>
     </div>
