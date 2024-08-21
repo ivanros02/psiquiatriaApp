@@ -13,6 +13,10 @@
     transition: all .5s cubic-bezier(.37, 1.14, .26, 1.24);
 }
 
+body{
+    overflow-x: hidden !important;
+}
+
 *::selection {
     background: var(--green);
     color: #fff;

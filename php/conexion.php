@@ -25,4 +25,6 @@ if (!$conexion) {
     die("Error de conexión a la base de datos: " . mysqli_connect_error());
 }
 
+$conexion->set_charset('utf8mb4');
+
 ?>

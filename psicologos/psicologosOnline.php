@@ -32,6 +32,19 @@ $especialidades = $conexion->query($sql);
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+  <style>
+    .form-select {
+      font-size: 1.8rem !important;
+      color: #c1c700;
+    }
+
+    /* Estilo personalizado para aumentar el tamaño de fuente en el select */
+    select.form-select option{
+      font-size: 1.8rem !important;
+      /* Puedes ajustar este valor según lo que necesites */
+    }
+  </style>
 </head>
 
 <body>
@@ -63,17 +76,16 @@ $especialidades = $conexion->query($sql);
   <section id="profesionales">
     <h1 class="heading"> PROFESIONALES </i></h1>
 
-    <div class="container">
-      <!-- Agrega el nuevo contenedor para el filtro -->
-      <!-- Agrega este formulario que envía los datos mediante el método GET -->
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-        <div class="filter-container">
-          <label for="especialidadFilter">Especialidad:</label>
-          <select id="especialidadFilter" name="especialidadFilter">
+    <div class="container my-4">
+      <!-- Formulario de filtros con Bootstrap -->
+      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" class="row g-3">
+        <!-- Filtro de especialidad -->
+        <div class="col-md-4">
+          <label for="especialidadFilter" class="form-label fs-5">Especialidad:</label>
+          <select id="especialidadFilter" name="especialidadFilter" class="form-select form-select-xl">
             <option value="">Todos</option>
             <?php
             if ($especialidades->num_rows > 0) {
-              // Salida de cada fila
               while ($row = $especialidades->fetch_assoc()) {
                 echo '<option value="' . htmlspecialchars($row['especi']) . '">' . htmlspecialchars($row['especi']) . '</option>';
               }
@@ -82,25 +94,32 @@ $especialidades = $conexion->query($sql);
             }
             ?>
           </select>
+        </div>
 
-          <label for="disponibilidadFilter">Disponibilidad:</label>
-          <select id="disponibilidadFilter" name="disponibilidadFilter">
+        <!-- Filtro de disponibilidad -->
+        <div class="col-md-4">
+          <label for="disponibilidadFilter" class="form-label fs-5">Disponibilidad:</label>
+          <select id="disponibilidadFilter" name="disponibilidadFilter" class="form-select form-select-xl">
             <option value="">Todas las disponibilidades</option>
             <option value="24hs">24hs</option>
             <option value="48hs">48hs</option>
             <option value="72hs">72hs</option>
           </select>
+        </div>
 
-
-          <label for="ordenar">Valor:</label>
-          <select id="ordenar" name="ordenar">
-            <option value="">Todas las disponibilidades</option>
+        <!-- Filtro de ordenación por valor -->
+        <div class="col-md-4">
+          <label for="ordenar" class="form-label fs-5">Ordenar por:</label>
+          <select id="ordenar" name="ordenar" class="form-select form-select-xl">
+            <option value="">Sin orden</option>
             <option value="ASC">Menor a mayor valor</option>
             <option value="DESC">Mayor a menor valor</option>
           </select>
+        </div>
 
-          <!-- Cambia el tipo de botón a submit para enviar el formulario -->
-          <button type="submit" id="buscarBtn">Buscar</button>
+        <!-- Botón de búsqueda -->
+        <div class="col-12 d-flex justify-content-center">
+          <button type="submit" id="buscarBtn" class="btn btn-primary w-10">Buscar</button>
         </div>
       </form>
 
@@ -274,8 +293,8 @@ $especialidades = $conexion->query($sql);
 
       <div class="box">
         <h3 class="share">Redes</h3>
-        <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i
-                        class="bi bi-instagram"></i> Instagram</a>
+        <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i class="bi bi-instagram"></i>
+          Instagram</a>
       </div>
 
 

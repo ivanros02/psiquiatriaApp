@@ -1,3 +1,5 @@
+new WOW().init();
+
 let menu = document.querySelector('.fa-bars');
 let navbar = document.querySelector('.navbar');
 

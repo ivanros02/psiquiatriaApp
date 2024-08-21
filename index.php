@@ -16,13 +16,18 @@
     <!-- custom css file link  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="estilos/headerYFooter.css">    
+
+    <link rel="stylesheet" href="estilos/headerYFooter.css">
     <link rel="stylesheet" href="estilos/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
-    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
 
 
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- WOW.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 
 </head>
 
@@ -32,7 +37,7 @@
 
     <header>
 
-        <a href="index.php" class="logo">
+        <a href="index.php" class="logo wow animate__animated animate__zoomIn">
             <img src="./img/Logo_transparente.png" alt="Logo de Terapia Libre">
             Terapia Libre
         </a>
@@ -47,7 +52,7 @@
             </ul>
         </nav>
 
-        <div class="fas fa-bars"></div>
+        <div class="fas fa-bars wow animate__animated animate__zoomIn"></div>
 
     </header>
 
@@ -59,12 +64,15 @@
 
         <div class="content">
 
-            <h1>ENCUENTRA DE INMEDIATO EL PROFESIONAL PARA INICIAR TU TRATAMIENTO.</h1>
-            <p>Elegí entre más de 1000 especialistas,
+            <h1 class="wow animate__animated animate__zoomIn">ENCUENTRA DE INMEDIATO EL PROFESIONAL PARA INICIAR TU
+                TRATAMIENTO.</h1>
+            <p class="wow animate__animated animate__zoomIn">Elegí entre más de 1000 especialistas,
                 tu asistencia terapéutica de forma inmediata
                 con turnos a partir de 24 hs.
             </p>
-            <a href="./psicologos/psicologosOnline.php"><button class="btn">BUSCAR UN PROFESIONAL </button></a>
+            <a href="./psicologos/psicologosOnline.php"><button
+                    class="btn wow animate__animated animate__zoomIn">BUSCAR UN PROFESIONAL
+                </button></a>
 
         </div>
 
@@ -89,8 +97,8 @@
                 </video>
             </div>
             <div class="content">
-                <h1 class="heading" >Quienes <br> Somos</h1>
-                <p>
+                <h1 class="heading wow animate__animated animate__backInLeft">Quienes <br> Somos</h1>
+                <p class="wow animate__animated animate__backInLeft">
                     En nuestra plataforma web, nos encargamos de conectar a los usuarios que requieren atención
                     terapéutica con profesionales altamente competentes. Buscamos facilitar el acceso a servicios de
                     psicoterapia individual de forma conveniente, contando con una amplia variedad de profesionales que
@@ -102,13 +110,12 @@
         </div>
 
         <div class="container">
-            <h1 class="heading">Comentarios</h1>
+            <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h1>
             <div class="slider">
                 <div class="item">
                     <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
                         sido fundamentales para mi bienestar emocional. ¡Gracias por tanto!</p>
-                    <img class="imgCard" src="./img/Lic. Vanesa Pérez.jpg" alt="logo comentario">
-                    <p class='userComment'>Nombre ejemplo</p>
+
                 </div>
                 <div class="item">
                     <p>Quiero agradecer sinceramente por la atención psicológica recibida. Su apoyo ha sido fundamental
@@ -147,7 +154,8 @@
 
     <section class="service" id="service">
 
-        <h1 class="heading">¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?</h1>
+        <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">¿En qué situaciones deberías
+            acudir a nuestros profesionales de salud mental?</h1>
 
         <div class="box-container">
 
