@@ -55,8 +55,6 @@ $psychologistData = mysqli_fetch_assoc($result);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
     <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
 
     <!-- Initialize the JS-SDK -->
@@ -264,9 +262,16 @@ $psychologistData = mysqli_fetch_assoc($result);
             });
         }
         // PAYPAL
+        let paypalButtonRendered = false;
+
         document.getElementById("checkout-btn").addEventListener("click", async () => {
+            if (paypalButtonRendered) {
+                return; // Evita que se renderice el botón de PayPal nuevamente
+            }
+
             // Captura el valor del data-valor del span
             const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
+
             paypal.Buttons({
                 style: {
                     color: 'blue',
@@ -276,7 +281,6 @@ $psychologistData = mysqli_fetch_assoc($result);
                 createOrder: function (data, actions) {
                     return actions.order.create({
                         purchase_units: [{
-
                             amount: {
                                 value: valorSpan // Asignar el valor obtenido del span
                             },
@@ -326,10 +330,13 @@ $psychologistData = mysqli_fetch_assoc($result);
                 },
                 onCancel: function (data) {
                     alert('Pago cancelado');
-                    console.log(data)
+                    console.log(data);
                 }
             }).render('#paypal-button-container');
+
+            paypalButtonRendered = true; // Marca el botón como renderizado
         });
+
 
 
     </script>
