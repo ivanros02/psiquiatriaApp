@@ -32,32 +32,77 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+
+    <!-- Agrega los scripts de Bootstrap y jQuery justo antes de cerrar la etiqueta </body> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
     <!-- header section starts  -->
 
-    <header>
-
-        <a href="index.php" class="logo wow animate__animated animate__zoomIn">
-            <img src="./img/Logo_transparente.png" alt="Logo de Terapia Libre">
-            Terapia Libre
+    <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
+        <a href="index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
+            <img src="./img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
+            <span>Terapia Libre</span>
         </a>
 
-        <nav class="navbar">
-            <ul>
-                <li><a href="#home">Inicio</a></li>
-                <li><a href="#about">Nosotros</a></li>
-                <li><a href="#service">¿Cuando acudir a nosotros?</a></li>
-                <li><a href="./cargaDatosPsicologos/carga.php">Soy un profesional</a></li>
-
+        <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">Nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#service">¿Cuándo acudir a nosotros?</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./cargaDatosPsicologos/carga.php">Soy un profesional</a>
+                </li>
             </ul>
         </nav>
 
-        <div class="fas fa-bars wow animate__animated animate__zoomIn"></div>
-
+        <!-- Menú tipo TikTok solo visible en móviles -->
+        <nav class="mobile-navbar d-lg-none fixed-bottom bg-white p-2 shadow">
+            <ul class="d-flex justify-content-between w-100 text-center">
+                <li>
+                    <a href="#home">
+                        <i class="fas fa-home"></i>
+                        <p>Inicio</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#about">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Nosotros</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#service">
+                        <i class="fas fa-hands-helping"></i>
+                        <p>¿Cuándo acudir?</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="./cargaDatosPsicologos/carga.php">
+                        <i class="fas fa-user-md"></i>
+                        <p>Profesional</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </header>
+
+    <!-- header section ends -->
+
 
     <!-- header section ends -->
 

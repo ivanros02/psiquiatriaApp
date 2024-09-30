@@ -46,7 +46,7 @@
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* Cambiado a center */
     background: #fff;
     box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
     position: fixed;
@@ -59,19 +59,20 @@ header {
 
 .logo {
     font-size: 2.5rem;
-    color: inherit;
-    /* Mantener el color del texto original */
-    text-decoration: none;
-    /* Eliminar subrayado al pasar el cursor */
+    color: var(--green) !important;
     font-weight: bold;
+    text-align: center; /* Alineación centrada */
+    display: flex; /* Para centrar imagen y texto */
+    align-items: center; /* Centra verticalmente */
 }
 
+
 a.logo {
-    color: var(--green);
+    color: var(--green) !important;
 }
 
 a.logo:hover {
-    color: var(--green);
+    color: var(--green) !important;
     /* Mantener el color del texto original */
     text-decoration: none;
     /* Eliminar subrayado al pasar el cursor */
@@ -110,16 +111,73 @@ header .navbar ul li a:hover {
     color: var(--green);
 }
 
-header .fa-bars {
-    font-size: 3rem;
-    color: #666;
-    cursor: pointer;
-    display: none;
+/* Barra de navegación en pantallas grandes */
+@media (min-width: 992px) {
+    header .navbar {
+        display: flex;
+    }
 }
+
+/* Estilos para la barra de navegación tipo TikTok en móviles */
+.mobile-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: #fff;
+    border-top: 1px solid #ccc;
+}
+
+.mobile-navbar ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.mobile-navbar ul li {
+    flex: 1;
+}
+
+.mobile-navbar ul li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+}
+
+.mobile-navbar ul li a i {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+}
+
+.mobile-navbar ul li a p {
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.mobile-navbar ul li a:hover {
+    color: var(--green);
+}
+
+/* Logo y texto centrados en móviles */
+@media (max-width: 991px) {
+    .logo {
+        justify-content: center;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+
 
 /*FOOTER*/
 .footer {
     background: #333;
+    text-decoration: none !important;
 }
 
 .footer .box-container {
@@ -140,6 +198,7 @@ header .fa-bars {
 .footer .box-container .box .logo {
     font-size: 2rem;
     color: var(--green);
+    text-decoration: none !important;
 }
 
 .footer .box-container .box .logo .img {
@@ -192,54 +251,7 @@ header .fa-bars {
         font-size: 55%;
     }
 
-    header .fa-bars {
-        display: block;
-    }
-
-    header .navbar {
-        position: fixed;
-        top: -100rem;
-        left: 0;
-        width: 100%;
-        border-top: .1rem solid #ccc;
-        opacity: 0;
-    }
-
-    header .navbar ul {
-        flex-flow: column;
-        align-items: center;
-        padding: 2rem 0;
-        background-color: #fff;
-        width: 100%;
-        /* Ocupar todo el ancho disponible */
-        padding-top: 1rem;
-        /* Espacio adicional en la parte superior */
-    }
-
-    header .navbar ul li {
-        width: 100%;
-        text-align: center;
-        margin: 1rem 0;
-    }
-
-    header .navbar ul li a {
-        font-size: 3rem;
-        display: block;
-        width: 100%;
-        /* Ocupar todo el ancho disponible */
-        padding: 1rem 0;
-        /* Espacio adicional en el enlace */
-    }
-
-    .fa-times {
-        transform: rotate(180deg);
-    }
-
-    header .nav-toggle {
-        top: 6.9rem;
-        opacity: 1;
-    }
-
+    
     .home .content h1 {
         font-size: 5rem;
     }
@@ -257,12 +269,6 @@ header .fa-bars {
 
 @media (max-width:500px) {
 
-    .heading {
-        text-align: center;
-        align-items: center;
-        flex-wrap: wrap;
-        margin: auto;
-    }
 
     .donate .form-container form .inputBox input,
     select {
@@ -275,13 +281,7 @@ header .fa-bars {
 }
 
 @media only screen and (min-width:320px) and (max-width:768px) {
-    .heading {
-        text-align: center;
-        align-items: center;
-        flex-wrap: wrap;
-        margin: auto;
-    }
-
+    
     .btn-wsp {
         width: 63px;
         height: 63px;
