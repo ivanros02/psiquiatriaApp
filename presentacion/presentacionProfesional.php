@@ -52,6 +52,7 @@ $psychologistData = mysqli_fetch_assoc($result);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
@@ -75,21 +76,38 @@ $psychologistData = mysqli_fetch_assoc($result);
 <body>
     <!-- header section starts  -->
 
-    <header>
+    <!-- header section starts  -->
 
-        <a href="../index.php" class="logo">
-            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
+    <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
+        <a href="../index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
+            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
             <span>Terapia Libre</span>
         </a>
 
-        <nav class="navbar">
-            <ul>
+        <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
+            <ul class="navbar-nav ml-auto">
                 <li><a href="../index.php">Inicio</a></li>
                 <li><a href="../psicologos/psicologosOnline.php">Psicologos</a></li>
             </ul>
         </nav>
 
-        <div class="fas fa-bars"></div>
+        <!-- Menú tipo TikTok solo visible en móviles -->
+        <nav class="mobile-navbar d-lg-none fixed-bottom bg-white p-2 shadow">
+            <ul class="d-flex justify-content-between w-100 text-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php">
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../psicologos/psicologosOnline.php">
+                        <i class="fas fa-users"></i>
+                        <span>Psicologos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
     </header>
     <!-- header section end  -->
@@ -191,12 +209,6 @@ $psychologistData = mysqli_fetch_assoc($result);
 
 
 
-
-    <!-- Nueva sección de Puntuación y Opinión -->
-    <!--
-        */*/
-     -->
-    <!--Fin de la sección de Puntuación y Opinión -->
 
 
     </div>

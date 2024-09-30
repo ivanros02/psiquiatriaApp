@@ -30,8 +30,16 @@ $especialidades = $conexion->query($sql);
   <link rel="stylesheet" href="../estilos/headerYFooter.css">
   <link rel="stylesheet" href="../estilos/stylePsico.css">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Agrega los scripts de Bootstrap y jQuery justo antes de cerrar la etiqueta </body> -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
   <style>
     .form-select {
@@ -40,7 +48,7 @@ $especialidades = $conexion->query($sql);
     }
 
     /* Estilo personalizado para aumentar el tamaño de fuente en el select */
-    select.form-select option{
+    select.form-select option {
       font-size: 1.8rem !important;
       /* Puedes ajustar este valor según lo que necesites */
     }
@@ -51,22 +59,36 @@ $especialidades = $conexion->query($sql);
 
   <!-- header section starts  -->
 
-  <header>
-
-    <a href="../index.php" class="logo">
-      <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-      Terapia Libre
+  <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
+    <a href="../index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
+      <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
+      <span>Terapia Libre</span>
     </a>
 
-    <nav class="navbar">
-      <ul>
+    <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
+      <ul class="navbar-nav ml-auto">
         <li><a href="../index.php">Inicio</a></li>
         <li><a href="#service">Beneficios</a></li>
-
       </ul>
     </nav>
 
-    <div class="fas fa-bars"></div>
+    <!-- Menú tipo TikTok solo visible en móviles -->
+    <nav class="mobile-navbar d-lg-none fixed-bottom bg-white p-2 shadow">
+      <ul class="d-flex justify-content-between w-100 text-center">
+        <li class="nav-item">
+          <a class="nav-link" href="../index.php">
+            <i class="fas fa-home"></i>
+            <span>Inicio</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#service">
+            <i class="fas fa-heart"></i>
+            <span>Beneficios</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 
   </header>
 

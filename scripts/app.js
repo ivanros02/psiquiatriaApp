@@ -1,23 +1,7 @@
-let menu = document.querySelector('.fa-bars');
-let navbar = document.querySelector('.navbar');
 // Obtén el valor del atributo data-psychologist-id
 let psychologistId = document.getElementById("checkout-btn").getAttribute("data-psychologist-id");
 
-
-menu.addEventListener('click', function () {
-    menu.classList.toggle('fa-times');
-    navbar.classList.toggle('nav-toggle');
-});
-
-window.addEventListener('scroll', () => {
-    menu.classList.remove('fa-times');
-    navbar.classList.remove('nav-toggle');
-});
-
-
-
 //ventana emergente
-
 document.addEventListener("DOMContentLoaded", function () {
     const modal = document.querySelector('.modal');
     const btnCerrarModal = document.querySelector('.close');
