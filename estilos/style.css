@@ -116,6 +116,13 @@ html {
     padding-top: 11rem;
 }
 
+.quienesSomos {
+    font-size: 4rem;
+    color: var(--green);
+    padding: 1rem;
+    padding-top: 11rem;
+}
+
 .heading i {
     color: var(--green);
     font-size: 2rem;
@@ -150,6 +157,7 @@ html {
     text-align: center;
     padding: 1rem;
     z-index: 1;
+     max-width: 90%;
 }
 
 .home .content h1 {
@@ -168,53 +176,7 @@ html {
     /* Esto asegurará que el texto esté centrado */
 }
 
-.about {
-    text-align: center;
-    padding: 4rem 0;
-}
 
-.about .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center !important;
-    align-items: flex-start !important; /* Cambio de center a flex-start */
-    gap: 2rem;
-}
-
-.video {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.video video {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.about .row .content {
-    flex: 1 1 100%;
-    max-width: 800px;
-    text-align: left;
-    padding: 0 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centra verticalmente el contenido */
-}
-
-.about .content .heading{
-    text-align: start !important;
-    margin-left: -1.3rem;
-}
-
-
-.about .content p {
-    font-size: 1.8rem;
-    color: #666;
-    line-height: 1.6;
-}
 
 .container {
     max-width: 1200px;
@@ -233,6 +195,7 @@ html {
 .imgCard {
     width: 5rem;
     border-radius: 50%;
+    
 }
 
 .item .userComment {
@@ -384,12 +347,7 @@ html {
     }
 
     .video {
-        width: 50%;
-    }
-
-    .video video {
-        top: 50%;
-        left: 50%;
+        display: none; /* Oculta el contenedor del video */
     }
 
 

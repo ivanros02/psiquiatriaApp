@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <!-- custom css file link  -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <link rel="stylesheet" href="estilos/headerYFooter.css">
     <link rel="stylesheet" href="estilos/style.css">
@@ -28,7 +28,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <!-- WOW.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-
+    <!-- bootrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -70,8 +73,8 @@
                 tu asistencia terapéutica de forma inmediata
                 con turnos a partir de 24 hs.
             </p>
-            <a href="./psicologos/psicologosOnline.php"><button
-                    class="btn wow animate__animated animate__zoomIn">BUSCAR UN PROFESIONAL
+            <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR
+                    UN PROFESIONAL
                 </button></a>
 
         </div>
@@ -89,26 +92,38 @@
     <!-- about section starts  -->
 
     <section class="about" id="about">
-        <div class="row">
-            <div class="video">
-                <video autoplay loop muted>
-                    <source src="img/nuevoCerebro.mp4" type="video/mp4">
-                    Tu navegador no soporta el elemento de video.
-                </video>
-            </div>
-            <div class="content">
-                <h1 class="heading wow animate__animated animate__backInLeft">Quienes <br> Somos</h1>
-                <p class="wow animate__animated animate__backInLeft">
-                    En nuestra plataforma web, nos encargamos de conectar a los usuarios que requieren atención
-                    terapéutica con profesionales altamente competentes. Buscamos facilitar el acceso a servicios de
-                    psicoterapia individual de forma conveniente, contando con una amplia variedad de profesionales que
-                    ofrecen diferentes especialidades y enfoques terapéuticos. De esta manera, los usuarios tienen la
-                    oportunidad de seleccionar al terapeuta que mejor se ajuste a sus necesidades y les acompañe en el
-                    proceso de recuperación.
-                </p>
+        <div class="container py-5">
+            <div class="container py-5">
+                <div class="row align-items-center">
+                    <!-- Video a la izquierda con un margen superior y un pequeño margen a la derecha, oculto en móviles -->
+                    <div class="col-lg-5 col-md-12 mb-4 mb-lg-0 d-none d-md-block" style="margin-top: 16rem;">
+                        <video class="w-75 ms-lg-3" autoplay loop muted>
+                            <source src="img/nuevoCerebro.mp4" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+                    <!-- Contenido a la derecha -->
+                    <div class="col-lg-7 col-md-12">
+                        <h1 class="quienesSomos wow animate__animated animate__backInLeft"
+                            style="font-size: 3rem; margin-bottom: 20px;">
+                            Quienes Somos
+                        </h1>
+                        <p class="wow animate__animated animate__backInLeft" style="font-size: 2rem;">
+                            En nuestra plataforma web, nos encargamos de conectar a los usuarios que requieren atención
+                            terapéutica con profesionales altamente competentes. Buscamos facilitar el acceso a
+                            servicios de
+                            psicoterapia individual de forma conveniente, contando con una amplia variedad de
+                            profesionales
+                            que ofrecen diferentes especialidades y enfoques terapéuticos. De esta manera, los usuarios
+                            tienen
+                            la oportunidad de seleccionar al terapeuta que mejor se ajuste a sus necesidades y les
+                            acompañe en
+                            el proceso de recuperación.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-
         <div class="container">
             <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h1>
             <div class="slider">
