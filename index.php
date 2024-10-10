@@ -117,7 +117,8 @@
                 tu asistencia terapéutica de forma inmediata
                 con turnos a partir de 24 hs.
             </p>
-            <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR UN PROFESIONAL</button></a>
+            <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR
+                    UN PROFESIONAL</button></a>
 
         </div>
 
@@ -196,7 +197,8 @@
                         ¡Gracias por hacer posible estos avances tan significativos!</p>
                 </div>
                 <button id="next">></button>
-                <button id="prev"><</button>
+                <button id="prev">
+                    << /button>
             </div>
         </div>
     </section>
@@ -279,7 +281,13 @@
                 <h3 class="share">Redes</h3>
                 <a href="https://www.instagram.com/terapia.libre/?igsh=MTE3cnBnYXB5OHVwZA%3D%3D"><i
                         class="bi bi-instagram"></i> Instagram</a>
+
+                <h3 class="share">Administradores</>
+                <!-- Añadir el enlace de administradores aquí -->
+                <a href="./administracionPresentaciones/inicioAdmin.php"><i class="bi bi-person-circle"></i> Acceder
+                    como administrador</a>
             </div>
+
 
 
 
