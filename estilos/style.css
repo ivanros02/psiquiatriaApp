@@ -278,6 +278,7 @@ html {
     margin: 1rem;
     cursor: pointer;
     box-sizing: border-box;
+    border-radius: 30px !important;
     display: flex;
     /* Para alinear verticalmente el contenido */
     flex-direction: column;

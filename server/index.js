@@ -164,99 +164,99 @@ function sendEmailToUser(userEmail, psychologistInfo) {
         to: psychologistEmail,
         subject: 'Tienes un nuevo paciente',
         html: `
-<!DOCTYPE html>
-<html lang="es">
+        <!DOCTYPE html>
+        <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
-    <style>
-        body {
-            font-family: \'Montserrat\', sans-serif;
-            background-color: #e9ecef;
-            padding: 20px;
-            margin: 0;
-        }
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap">
+            <style>
+                body {
+                    font-family: \'Montserrat\', sans-serif;
+                    background-color: #e9ecef;
+                    padding: 20px;
+                    margin: 0;
+                }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            border: 1px solid #ddd;
-        }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #ffffff;
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                    border: 1px solid #ddd;
+                }
 
-        h2 {
-            color: #c1c700;
-            font-size: 24px;
-            margin-top: 0;
-        }
+                h2 {
+                    color: #c1c700;
+                    font-size: 24px;
+                    margin-top: 0;
+                }
 
-        p {
-            color: #495057;
-            line-height: 1.6;
-            font-size: 16px;
-            margin: 10px 0;
-        }
+                p {
+                    color: #495057;
+                    line-height: 1.6;
+                    font-size: 16px;
+                    margin: 10px 0;
+                }
 
-        .cta-button {
-            background-color: #c1c700;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-top: 20px;
-            font-weight: 600;
-            text-align: center;
-            transition: background-color 0.3s ease;
-        }
+                .cta-button {
+                    background-color: #c1c700;
+                    color: #ffffff;
+                    text-decoration: none;
+                    padding: 12px 24px;
+                    border-radius: 50px;
+                    display: inline-block;
+                    margin-top: 20px;
+                    font-weight: 600;
+                    text-align: center;
+                    transition: background-color 0.3s ease;
+                }
 
-        .cta-button:hover {
-            background-color: #c1c700;
-            text-decoration: none;
-        }
+                .cta-button:hover {
+                    background-color: #c1c700;
+                    text-decoration: none;
+                }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
+                a {
+                    color: #007bff;
+                    text-decoration: none;
+                }
 
-        a:hover {
-            text-decoration: underline;
-        }
+                a:hover {
+                    text-decoration: underline;
+                }
 
-        .social-links a {
-            color: #007bff;
-            margin-right: 10px;
-        }
-    </style>
-</head>
+                .social-links a {
+                    color: #007bff;
+                    margin-right: 10px;
+                }
+            </style>
+        </head>
 
-<body>
-    <div class="container">
-        <h2>¡Nuevo Paciente Asignado!</h2>
-        <p>Hola ${psychologistInfo.nombre},</p>
-        <p>Has sido asignado como el psicólogo de un nuevo paciente en Terapia Libre.</p>
+        <body>
+            <div class="container">
+                <h2>¡Nuevo Paciente Asignado!</h2>
+                <p>Hola ${psychologistInfo.nombre},</p>
+                <p>Has sido asignado como el psicólogo de un nuevo paciente en Terapia Libre.</p>
 
-        <h2>Información del Paciente:</h2>
-        <p><strong>Correo Electrónico:</strong> ${userEmail}</p>
+                <h2>Información del Paciente:</h2>
+                <p><strong>Correo Electrónico:</strong> ${userEmail}</p>
 
-        <h2>Enlace para la Videollamada:</h2>
-        <p>Tu enlace para la videollamada es: <a href="${videoCallLink}" target="_blank">${videoCallLink}</a></p>
+                <h2>Enlace para la Videollamada:</h2>
+                <p>Tu enlace para la videollamada es: <a href="${videoCallLink}" target="_blank">${videoCallLink}</a></p>
 
-        <p>Por favor, revisa los detalles del paciente y prepárate para la primera sesión. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nosotros.</p>
+                <p>Por favor, revisa los detalles del paciente y prepárate para la primera sesión. Si tienes alguna pregunta o necesitas más información, no dudes en ponerte en contacto con nosotros.</p>
 
-        <p>¡Gracias por tu colaboración y dedicación!</p>
-        
-    </div>
-</body>
+                <p>¡Gracias por tu colaboración y dedicación!</p>
+                
+            </div>
+        </body>
 
-</html>`
+        </html>`
     };
 
     transporter.sendMail(userMailOptions, (error, info) => {

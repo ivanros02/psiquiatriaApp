@@ -1,38 +1,3 @@
-<?php
-// Incluir la conexión a la base de datos
-include '../php/conexion.php';
-
-// Iniciar sesión
-session_start();
-
-// Obtener el ID del psicólogo desde la URL
-$psychologistId = isset($_GET['id']) ? intval($_GET['id']) : 0;
-
-// Validar el ID del psicólogo
-if ($psychologistId <= 0) {
-    // Mostrar mensaje de error si el ID no es válido
-    echo '<script>alert("ID de psicólogo no válido");</script>';
-    exit();
-}
-
-// Consultar la base de datos para obtener la información del psicólogo con el ID proporcionado
-$query = "SELECT * FROM presentaciones WHERE id = $psychologistId";
-// Establecer el conjunto de caracteres a utf8
-$conexion->set_charset('utf8');
-$result = mysqli_query($conexion, $query);
-
-// Validar si se encontraron resultados
-if (!$result || mysqli_num_rows($result) === 0) {
-    // Mostrar mensaje de error si no se encuentra el psicólogo
-    echo '<script>alert("No se encontró el psicólogo con el ID proporcionado");</script>';
-    exit();
-}
-
-// Obtener la información del psicólogo
-$psychologistData = mysqli_fetch_assoc($result);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,93 +13,70 @@ $psychologistData = mysqli_fetch_assoc($result);
     <!-- custom css file link  -->
     <link rel="stylesheet" href="../estilos/headerYFooter.css">
     <link rel="stylesheet" href="../estilos/styleDatos.css">
+
     <!-- font awesome cdn link  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <style>
-        @media (max-width:768px) {
 
-            html {
-                font-size: 54% !important;
-            }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="./js/datos.js"></script>
 
 </head>
 
 <body>
     <!-- header section starts  -->
 
-    <header>
-
-        <a href="#" class="logo">
-            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
+    <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
+        <a href="../index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
+            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
             <span>Terapia Libre</span>
         </a>
 
-        <nav class="navbar">
-            <ul>
+        <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
+            <ul class="navbar-nav ml-auto">
                 <li><a href="../index.php">Inicio</a></li>
                 <li><a href="../psicologos/psicologosOnline.php">Psicologos</a></li>
             </ul>
         </nav>
 
-        <div class="fas fa-bars"></div>
+        <!-- Menú tipo TikTok solo visible en móviles -->
+        <nav class="mobile-navbar d-lg-none fixed-bottom bg-white p-2 shadow">
+            <ul class="d-flex justify-content-between w-100 text-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php">
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../psicologos/psicologosOnline.php">
+                        <i class="fas fa-heart"></i>
+                        <span>Psicologos</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
     </header>
     <!-- header section end  -->
 
 
     <!-- Presentacion section -->
-    <div class="container">
+    <main class="container mt-7 pt-5">
         <div class="row justify-content-center" id="cardContainer">
-            <!-- Primera Card -->
-
-            <div class="card mb-3">
-
-                <img src="<?php echo $psychologistData['rutaImagen']; ?>" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <?php echo $psychologistData['nombre']; ?>
-                    </h5>
-                    <h5 class="card-titleDos">
-                        <?php echo $psychologistData['titulo']; ?>
-                    </h5>
-                    <p class="card-text">
-                        Matrícula:MN
-                        <?php echo $psychologistData['matricula']; ?>(AR)
-                        Matrícula:MP
-                        <?php echo $psychologistData['matriculaP']; ?>(AR)
-                    </p>
-                    <!-- Div para contener los iconos -->
-                    <div class="cajitas">
-                        <a class="iconito icon-whatsapp"
-                            href="https://api.whatsapp.com/send?phone=<?php echo $psychologistData['whatsapp']; ?>&text=Hola%20me%20contacto%20desde%20Terapia%20Libre.%20Quiero%20solicitar%20un%20turno!"><i
-                                class="fab fa-whatsapp"></i></a>
-
-
-                        <a class="iconito icon-instagram"
-                            href="https://www.instagram.com/<?php echo $psychologistData['instagram']; ?>"><i
-                                class="fab fa-instagram"></i></a>
-
-                        <a class="iconito icon-gmail" href="mailto:<?php echo $psychologistData['mail']; ?>"><i
-                                class="far fa-envelope"></i></a>
-
-                    </div>
-
-                </div>
-            </div>
-
-
+            <!-- Tarjetas se generarán aquí -->
         </div>
-    </div>
+    </main>
+
 
     <!-- Presentacion section end -->
-
-
 
 
     <!-- footer section starts  -->
@@ -170,10 +112,6 @@ $psychologistData = mysqli_fetch_assoc($result);
     </section>
 
     <!-- footer section ends -->
-
-
-    <!-- custom js file link  -->
-    <script src="../scripts/datos.js"></script>
 
 </body>
 

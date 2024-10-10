@@ -117,9 +117,7 @@
                 tu asistencia terapéutica de forma inmediata
                 con turnos a partir de 24 hs.
             </p>
-            <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR
-                    UN PROFESIONAL
-                </button></a>
+            <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR UN PROFESIONAL</button></a>
 
         </div>
 

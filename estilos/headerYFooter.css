@@ -178,6 +178,7 @@ header .navbar ul li a:hover {
 .footer {
     background: #333;
     text-decoration: none !important;
+    padding-bottom: 5rem;
 }
 
 .footer .box-container {

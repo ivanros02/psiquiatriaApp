@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 18-03-2024 a las 10:58:23
--- Versión del servidor: 10.6.17-MariaDB-cll-lve-log
--- Versión de PHP: 8.1.27
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 10-10-2024 a las 02:40:39
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,16 +18,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `terapial_terapia`
+-- Base de datos: `terapia`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `presentacionesCheck`
+-- Estructura de tabla para la tabla `presentacionescheck`
 --
 
-CREATE TABLE `presentacionesCheck` (
+CREATE TABLE `presentacionescheck` (
   `id` int(11) NOT NULL,
   `rutaImagen` varchar(200) NOT NULL,
   `nombre` varchar(100) NOT NULL,
@@ -45,13 +45,20 @@ CREATE TABLE `presentacionesCheck` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Volcado de datos para la tabla `presentacionescheck`
+--
+
+INSERT INTO `presentacionescheck` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `matriculaP`, `especialidad`, `descripcion`, `telefono`, `disponibilidad`, `valor`, `mail`, `whatsapp`, `instagram`) VALUES
+(47, '../img/perfiles/messiPerfil.jfif', 'Ivan', 'Lic. en Psicología Terapia Psicoanalitica', 123, 345, 'Psicología Organizacional,Psicología Forense', 'hola soy el tilin', 1139114579, 24, 5600, 'ivanrosendo1102@gmail.com', 1139114579, 'rosendo_ivann');
+
+--
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `presentacionesCheck`
+-- Indices de la tabla `presentacionescheck`
 --
-ALTER TABLE `presentacionesCheck`
+ALTER TABLE `presentacionescheck`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -59,10 +66,10 @@ ALTER TABLE `presentacionesCheck`
 --
 
 --
--- AUTO_INCREMENT de la tabla `presentacionesCheck`
+-- AUTO_INCREMENT de la tabla `presentacionescheck`
 --
-ALTER TABLE `presentacionesCheck`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+ALTER TABLE `presentacionescheck`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

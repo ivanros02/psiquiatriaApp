@@ -63,86 +63,98 @@ html {
 
 
 /* Estilos para las tarjetas */
-.card {
-    width: 40rem;
-    height: 45rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    transition: transform 0.3s;
-    justify-content: center;
-    align-items: center;
+.card{
+    border-radius: 30px !important;
 }
 
-.card .tooltiptext {
-    visibility: hidden;
-    background-color: var(--green);
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    font-size: 2rem;
-    /* Position the tooltip text - see examples below! */
-    width: 500px;
-    bottom: 100% !important;
-    z-index: 2;
-    /* Asegúrate de que el tooltip tenga un z-index mayor que la tarjeta */
-
-}
-
-.card:hover .tooltiptext {
-    visibility: visible;
+.custom{
+    border-radius: 30px !important;
 }
 
 .card:hover {
-    transform: scale(1.05);
-    /* Efecto de aumento al pasar el ratón */
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    /* Más fuerte al pasar el mouse */
+}
+
+.card img {
+    border-radius: 30px 30px 0 0 !important; /* Bordes redondeados en la parte superior */
+}
+
+.custom-img {
+    width: 100%; /* Ajustar la imagen al 100% del ancho de la tarjeta */
+    height: auto; /* Mantener la proporción de la imagen */
+    max-height: 300px; /* Ajustar la altura máxima si es necesario */
+    object-fit: cover; /* Recortar la imagen para que ajuste al contenedor */
 }
 
 
-.card .card-body {
-    padding: 15px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
-.card h5 {
-    margin-top: 0;
+
+.card-title {
     font-size: 2rem;
-    margin-bottom: 0rem;
-    color: #3D3D3D;
+    /* Aumenta el tamaño de la fuente */
+    font-weight: bold;
+    /* Añade negrita para mayor impacto */
+    color: #333;
+    /* Color de texto */
+    margin-bottom: 0.5rem;
+    /* Espacio inferior */
 }
 
-.card p {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #949e24;
+.card-title.text-success {
+    font-size: 1.8rem;
+    /* Aumenta el tamaño de la fuente para el subtítulo */
+    margin-bottom: 1rem;
+    /* Espacio inferior */
+    color: var(--green) !important;
 }
 
-.card .card-text-diponibilidad {
-    color: var(--green);
+.card-text {
+    font-size: 1.4rem;
+    /* Aumenta el tamaño de la fuente */
+    color: #666;
+    /* Color de texto */
+    margin-bottom: 1rem;
+    /* Espacio inferior */
 }
 
-
-.card .card-titleDos {
-    color: #b4c403;
+.text-muted {
     font-size: 1.5rem;
+    /* Ajusta el tamaño de la fuente */
+    margin-bottom: 1.5rem;
+    /* Espacio inferior */
 }
 
-.container .row img {
-    flex: 1 1 0.5rem;
-    padding: 2rem;
-    width: 22rem;
-    height: 22rem;
-    border-radius: 45%;
-    /* Hace que las imágenes sean circulares */
-    object-fit: cover;
-    /* Escalado de la imagen para que ocupe todo el contenedor circular */
+.card-body .display-6 {
+    font-size: 3rem;
+    /* Ajusta el tamaño según sea necesario */
+    color: var(--green);
+    /* Cambia el color según tus preferencias */
 }
+
+
+.btn {
+    padding: 10px 20px;
+    /* Espaciado en el botón */
+    font-size: 2rem !important;
+    /* Aumenta el tamaño de la fuente en el botón */
+    border-radius: 30px;
+    /* Bordes redondeados */
+    transition: background-color 0.3s ease;
+    /* Efecto de transición */
+    background: var(--green) !important;
+    border-color: var(--green) !important;
+}
+
+.btn:hover {
+    background: var(--green) !important;
+    /* Cambia el color de fondo al pasar el mouse */
+}
+
+
+
+
 
 .filter-container {
     display: flex;
@@ -214,63 +226,6 @@ select option {
 }
 
 
-.container .card-body .btn {
-    color: #eee;
-    background-color: #c1c700;
-    border-color: #c1c700;
-    font-size: 1.5rem;
-}
-
-.card-body .btn.btn-primary:hover {
-    background-color: #8f8f00;
-    /* Cambiar el color de fondo al pasar el mouse */
-    border-color: #8f8f00;
-    /* Cambiar el color del borde al pasar el mouse */
-}
-
-/* Estilos para las estrellas */
-.card .rating {
-    display: flex;
-    align-items: center;
-    margin-top: 0.1rem;
-}
-
-.rating {
-    margin-top: 0;
-}
-
-/* Estilo para el número después de las estrellas */
-.rating p {
-    font-size: 1.5rem;
-    /* Tamaño del número */
-    margin-top: 5px;
-    /* Espacio superior */
-    color: #333;
-    /* Color del número */
-    display: inline-block;
-    /* Para alinear correctamente con las estrellas */
-    font-weight: bold;
-    /* Negrita para resaltar */
-    margin-left: 5px;
-}
-
-.card .rating .fa {
-    font-size: 1.5rem;
-}
-
-.card .rating .fa.checked {
-    color: var(--green);
-    font-size: 1.5rem;
-    /* Color de las estrellas marcadas */
-}
-
-/* Estilo para la quinta estrella sin marcar */
-.card .rating .fa.unchecked {
-    font-size: 1.5rem;
-    color: #ddd;
-    /* Color para la estrella no marcada */
-}
-
 .service {
     background: #f0f0f0;
     min-height: 42rem;
@@ -300,6 +255,7 @@ select option {
     text-align: center;
     background: #fff;
     border: .2rem solid var(--green);
+    border-radius: 30px !important;
     margin: 1rem;
     cursor: pointer;
     box-sizing: border-box;

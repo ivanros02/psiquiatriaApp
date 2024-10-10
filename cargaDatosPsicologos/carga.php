@@ -4,228 +4,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de carga</title>
+    <title>Terapia Libre</title>
+
     <!--icono pestana-->
     <link rel="icon" href="../img/Logo_transparente.png" type="image/x-icon">
     <link rel="shortcut icon" href="../img/Logo_transparente.png" type="image/x-icon">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- custom css file link  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
     <link rel="stylesheet" href="../estilos/headerYFooter.css">
-    <style>
-        .logo {
-            font-size: 2rem;
-            color: inherit;
-            /* Mantener el color del texto original */
-            text-decoration: none;
-            /* Eliminar subrayado al pasar el cursor */
-            font-weight: bold;
-        }
+    <link rel="stylesheet" href="../estilos/style.css">
 
-        .logo img {
-            width: 5rem;
-            /* Ancho de la imagen */
-            height: auto;
-            /* Altura automática para mantener la proporción */
-            margin-right: 10px;
-            /* Espacio a la derecha del logo */
-            vertical-align: middle;
-            /* Alinear verticalmente */
-        }
+    <!-- Agrega los scripts de Bootstrap y jQuery justo antes de cerrar la etiqueta </body> -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-        /*FOOTER*/
-        .footer {
-            background: #333;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        .footer .box-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 86%;
-            margin: 0 auto;
-        }
 
-        .footer .box-container .box {
-            margin: 0.5rem;
-            flex: 1 1 25rem;
-        }
-
-        .footer .box-container .box .logo {
-            font-size: 1rem;
-            color: var(--green);
-        }
-
-        .footer .box-container .box .logo .img {
-            width: 1rem;
-        }
-
-        .footer .box-container .box p {
-            font-size: 1rem;
-            color: #ccc;
-            padding: 1rem 0;
-            text-decoration: none !important;
-        }
-
-        .footer .box-container .box .share {
-            text-align: center;
-            font-size: 1rem;
-            color: #fff;
-            text-decoration: none !important;
-        }
-
-        .footer .box-container .box:nth-child(2) a {
-            text-align: center;
-            font-size: 1rem;
-            color: #eee;
-            display: block;
-            padding: .5rem 0;
-            text-decoration: none !important;
-        }
-
-        .footer .credit {
-            text-align: center;
-            color: #fff;
-            font-size: 1rem;
-            width: 85%;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-            border-top: .1rem solid #ccc;
-        }
-
-        .footer .credit span {
-            color: var(--green);
-        }
-    </style>
+    <!-- custom js file link  -->
+    <script src="js/cargaProfes.js"></script>
 </head>
 
 <body>
 
     <!-- header section starts  -->
 
-    <header>
-
-        <a href="../index.php" class="logo">
-            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre">
-            Terapia Libre
+    <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
+        <a href="../index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
+            <img src="../img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
+            <span>Terapia Libre</span>
         </a>
 
-        <nav class="navbar">
-            <ul>
+        <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
+            <ul class="navbar-nav ml-auto">
                 <li><a href="../index.php">Inicio</a></li>
-
-
             </ul>
         </nav>
 
-        <div class="fas fa-bars"></div>
+        <!-- Menú tipo TikTok solo visible en móviles -->
+        <nav class="mobile-navbar d-lg-none fixed-bottom bg-white p-2 shadow">
+            <ul class="d-flex justify-content-between w-100 text-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.php">
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
     </header>
 
     <!-- header section ends -->
 
-    <div class="container mt-4">
-        <h1 class="text-center mb-4" style="color: #c1c700; margin-top:10rem;">Panel de carga</h1>
+    <div class="container mt-4 py-5">
+
+        <h1 class="text-center mb-4 display-4" style="color: #c1c700; margin-top: 5rem;">Panel de Carga</h1>
+
         <?php if (isset($_GET['status']) && isset($_GET['message'])): ?>
             <div class="alert <?php echo $_GET['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?> text-center">
                 <?php echo $_GET['message']; ?>
             </div>
         <?php endif; ?>
-        <form action="procesar_carga.php" method="POST" enctype="multipart/form-data" class="mx-auto"
-            style="max-width: 600px;">
-            <div class="mb-3">
-                <label for="imagen" class="form-label">Foto de Perfil:</label>
-                <input class="form-control" id="imagen" name="imagen" type="file" required>
+
+        <form action="procesar_carga.php" method="POST" enctype="multipart/form-data"
+            class="mx-auto shadow p-5 rounded-4 fs-3" style="max-width: 700px; background-color: #ffffff;">
+
+
+            <div class="mb-4">
+                <label for="imagen" class="form-label fw-bold">Foto de Perfil:</label>
+                <input class="form-control form-control-lg" id="imagen" name="imagen" type="file" required>
             </div>
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Nombre" required>
-            </div>
-            <div class="mb-3">
-                <label for="titulo" class="form-label">Título:</label>
-                <input class="form-control" id="titulo" name="titulo" type="text" placeholder="Título" required>
-            </div>
-            <div class="mb-3">
-                <label for="matricula" class="form-label">Matrícula:</label>
-                <input class="form-control" id="matricula" name="matricula" type="number" placeholder="Matrícula"
+
+            <div class="mb-4">
+                <label for="nombre" class="form-label fw-bold">Nombre:</label>
+                <input class="form-control form-control-lg" id="nombre" name="nombre" type="text" placeholder="Nombre"
                     required>
             </div>
-            <div class="mb-3">
-                <label for="matriculaP" class="form-label">Matrícula Provincial:</label>
-                <input class="form-control" id="matriculaP" name="matriculaP" type="number"
-                    placeholder="Matrícula Provincial" required>
+
+            <div class="mb-4">
+                <label for="titulo" class="form-label fw-bold">Título:</label>
+                <input class="form-control form-control-lg" id="titulo" name="titulo" type="text" placeholder="Título"
+                    required>
             </div>
-            <div class="mb-3">
-                <label for="especialidad" class="form-label">Especialidades:</label>
-                <div class="row">
-                    <?php
-                    // Conexión a la base de datos y consulta de las especialidades
-                    include '../php/conexion.php';
-                    $query = "SELECT * FROM especialidades";
-                    $conexion->set_charset('utf8');
-                    $result = $conexion->query($query);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $checked = (isset($_POST['especialidad']) && in_array($row['id'], $_POST['especialidad'])) ? 'checked' : ''; // Ajuste aquí
-                            echo '
-                    <div class="col-md-6 mb-2">
-                        <div class="form-check">
-                            <input type="checkbox" name="especialidad[]" value="' . $row['id'] . '" ' . $checked . ' class="form-check-input">
-                            <label class="form-check-label">' . $row['especi'] . '</label>
-                        </div>
-                    </div>';
-                        }
-                    }
-                    ?>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label for="matricula" class="form-label fw-bold">Matrícula:</label>
+                    <input class="form-control form-control-lg" id="matricula" name="matricula" type="number"
+                        placeholder="Matrícula" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="matriculaP" class="form-label fw-bold">Matrícula Provincial:</label>
+                    <input class="form-control form-control-lg" id="matriculaP" name="matriculaP" type="number"
+                        placeholder="Matrícula Provincial" required>
                 </div>
             </div>
-            <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción Personal:</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Descripción"
-                    required></textarea>
+
+            <div class="mb-4">
+                <label for="especialidad" class="form-label fw-bold">Especialidades:</label>
+                <div class="row g-2" id="especialidades-container">
+                    <!-- Carga dinámica de especialidades -->
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="telefono" class="form-label">TELÉFONO:</label>
-                <input class="form-control" id="telefono" name="telefono" type="number" placeholder="TELÉFONO" required>
+
+            <div class="mb-4">
+                <label for="descripcion" class="form-label fw-bold">Descripción Personal:</label>
+                <textarea class="form-control form-control-lg" id="descripcion" name="descripcion"
+                    placeholder="Descripción" rows="4" required></textarea>
             </div>
-            <div class="mb-3">
-                <label for="disponibilidad" class="form-label">Disponibilidad:</label>
-                <select class="form-select" id="disponibilidad" name="disponibilidad" required>
+
+            <div class="mb-4">
+                <label for="telefono" class="form-label fw-bold">Teléfono:</label>
+                <input class="form-control form-control-lg" id="telefono" name="telefono" type="number"
+                    placeholder="Teléfono" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="disponibilidad" class="form-label fw-bold">Disponibilidad:</label>
+                <select class="form-select form-select-lg" id="disponibilidad" name="disponibilidad" required>
                     <option value="24">24 horas</option>
                     <option value="48">48 horas</option>
                     <option value="72">72 horas</option>
                     <option value="96">96 horas</option>
                 </select>
             </div>
-            <div class="mb-3">
-                <label for="valor" class="form-label">Valor:</label>
-                <input class="form-control" id="valor" name="valor" type="text" placeholder="Valor"
+
+            <div class="mb-4">
+                <label for="valor" class="form-label fw-bold">Valor:</label>
+                <input class="form-control form-control-lg" id="valor" name="valor" type="text" placeholder="Valor"
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
             </div>
-            <div class="mb-3">
-                <label for="mail" class="form-label">Correo electrónico:</label>
-                <input class="form-control" id="mail" name="mail" type="text" placeholder="Correo electrónico"
-                    pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                    title="Por favor, introduce una dirección de correo electrónico válida" required>
+
+            <div class="mb-4">
+                <label for="mail" class="form-label fw-bold">Correo electrónico:</label>
+                <input class="form-control form-control-lg" id="mail" name="mail" type="email"
+                    placeholder="Correo electrónico" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    title="Introduce una dirección de correo válida" required>
             </div>
-            <div class="mb-3">
-                <label for="whatsapp" class="form-label">WhatsApp:</label>
-                <input class="form-control" id="whatsapp" name="whatsapp" type="text" placeholder="WhatsApp"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+
+            <div class="mb-4">
+                <label for="whatsapp" class="form-label fw-bold">WhatsApp:</label>
+                <input class="form-control form-control-lg" id="whatsapp" name="whatsapp" type="text"
+                    placeholder="WhatsApp" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
             </div>
-            <div class="mb-3">
-                <label for="instagram" class="form-label">Instagram:</label>
-                <input class="form-control" id="instagram" name="instagram" type="text" placeholder="Instagram">
+
+            <div class="mb-4">
+                <label for="instagram" class="form-label fw-bold">Instagram:</label>
+                <input class="form-control form-control-lg" id="instagram" name="instagram" type="text"
+                    placeholder="Instagram">
             </div>
+
             <div class="d-grid">
-                <button class="btn btn-warning text-white" type="submit"
-                    style="background-color: #c1c700; margin-bottom: 1rem;">Enviar</button>
+                <button class="btn btn-lg btn-warning text-white fw-bold" type="submit"
+                    style="background-color: #c1c700;">Enviar</button>
             </div>
         </form>
     </div>
+
 
 
     <!-- footer section starts  -->

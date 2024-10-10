@@ -1,14 +1,3 @@
-<?php
-// Incluir la conexión a la base de datos
-include '../php/conexion.php';
-
-// Consulta para obtener las especialidades
-$sql = "SELECT DISTINCT especi FROM especialidades ORDER BY especi";
-
-$especialidades = $conexion->query($sql);
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,6 +29,8 @@ $especialidades = $conexion->query($sql);
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script src="./js/psicologos.js" defer></script>
 
   <style>
     .form-select {
@@ -100,21 +91,12 @@ $especialidades = $conexion->query($sql);
 
     <div class="container my-4">
       <!-- Formulario de filtros con Bootstrap -->
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" class="row g-3">
+      <form id="filterForm" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" class="row g-3">
         <!-- Filtro de especialidad -->
         <div class="col-md-4">
           <label for="especialidadFilter" class="form-label fs-5">Especialidad:</label>
           <select id="especialidadFilter" name="especialidadFilter" class="form-select form-select-xl">
-            <option value="">Todos</option>
-            <?php
-            if ($especialidades->num_rows > 0) {
-              while ($row = $especialidades->fetch_assoc()) {
-                echo '<option value="' . htmlspecialchars($row['especi']) . '">' . htmlspecialchars($row['especi']) . '</option>';
-              }
-            } else {
-              echo '<option value="">No hay especialidades disponibles</option>';
-            }
-            ?>
+            <option value="">Cargando...</option>
           </select>
         </div>
 
@@ -145,92 +127,18 @@ $especialidades = $conexion->query($sql);
         </div>
       </form>
 
+
       <!-- Contenedor para todas las tarjetas -->
       <div class="row d-flex" id="cardContainer">
-        <?php
-        // Incluye el archivo de conexión a la base de datos
-        include_once '../php/conexion.php';
-
-
-        // Inicializa la consulta SQL
-        $sql = "SELECT * FROM presentaciones";
-        $conexion->set_charset('utf8');
-        // Verifica si se han enviado filtros
-        if (isset($_GET['disponibilidadFilter']) && !empty($_GET['disponibilidadFilter'])) {
-          $disponibilidadFilter = $_GET['disponibilidadFilter'];
-          $sql .= " WHERE disponibilidad = '$disponibilidadFilter'";
-        }
-
-        // Manejo del filtro de especialidad
-        if (isset($_GET['especialidadFilter']) && $_GET['especialidadFilter'] !== '') {
-          $especialidadFilter = $_GET['especialidadFilter'];
-          // Modifica la condición de especialidad para usar LIKE
-          $sql .= (strpos($sql, 'WHERE') !== false) ? " AND especialidad LIKE '%$especialidadFilter%'" : " WHERE especialidad LIKE '%$especialidadFilter%'";
-        }
-
-        // Verifica si se ha enviado el filtro de orden
-        if (isset($_GET['ordenar']) && !empty($_GET['ordenar'])) {
-          $ordenar = $_GET['ordenar'];
-          if ($ordenar == 'ASC') {
-            // Ordenar de menor a mayor valor
-            $sql .= " ORDER BY valor ASC, disponibilidad ASC";
-          } else {
-            // Ordenar de mayor a menor valor
-            $sql .= " ORDER BY valor DESC, disponibilidad ASC";
-          }
-        } else {
-          // Por defecto, ordena por disponibilidad
-          $sql .= " ORDER BY disponibilidad ASC";
-        }
-
-
-        $result = $conexion->query($sql);
-
-        // Verifica si hay resultados
-        if ($result->num_rows > 0) {
-          // Genera dinámicamente el HTML para cada psicólogo
-          while ($row = $result->fetch_assoc()) {
-            echo "
-            <div class='col-lg-4 col-md-6 mb-3 d-flex justify-content-center'>
-                <div class='card'>
-                <span class='tooltiptext'>$ {$row['valor']}</span>
-                    <img src='{$row['rutaImagen']}' class='card-img-top' alt='...'>
-                    <div class='card-body'>
-                        <h5 class='card-title'>{$row['nombre']}</h5>
-                        <div class='rating'>
-                            <span class='fa fa-star checked'></span>
-                            <span class='fa fa-star checked'></span>
-                            <span class='fa fa-star checked'></span>
-                            <span class='fa fa-star checked'></span>
-                            <span class='fa fa-star unchecked'></span>
-                            <p>3.5</p>
-                        </div>
-                        <h5 class='card-titleDos'>{$row['titulo']}</h5>
-                        <p class='card-text'>{$row['especialidad']}</p>
-                        <p class='card-text-diponibilidad'>Disponibilidad en: {$row['disponibilidad']}hs</p>
-                        <a href='#' class='btn btn-primary' data-id='{$row['id']}' onclick='mostrarInformacion(this)'>Más información</a>
-                    </div>
-                </div>
-            </div>
-            ";
-          }
-        } else {
-          echo '<div class="no-results-message">No hay psicólogos disponibles.</div>';
-        }
-
-
-        // Cierra la conexión a la base de datos
-        $conexion->close();
-        ?>
+        <!-- Las tarjetas se llenarán dinámicamente mediante AJAX -->
       </div>
-
-
 
 
     </div>
   </section>
 
   <!--Psicologos end-->
+
 
   <section class="service" id="service">
 
@@ -331,7 +239,6 @@ $especialidades = $conexion->query($sql);
 
 
   <!-- custom js file link  -->
-  <script src="../scripts/scriptPsicologos.js"></script>
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 
 </body>

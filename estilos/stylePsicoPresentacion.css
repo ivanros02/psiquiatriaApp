@@ -54,229 +54,241 @@ html {
   overflow-x: hidden;
 }
 
-.heading {
-  text-align: center;
-  font-size: 4rem;
-  color: var(--green);
-  padding: 1rem;
-  padding-top: 11rem;
+/*CARD*/
+.custom-margin-top {
+  margin-top: 10rem !important;
+  /* Ajusta el valor a tus necesidades */
 }
 
-.heading i {
-  color: var(--green);
-  font-size: 2rem;
-}
-
-
-
-
-
-/* Estilos para las tarjetas */
 .card {
-  border-radius: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-  width: auto;
-  display: inline-block;
-  justify-content: flex-start;
-  text-align: start;
-  margin-bottom: 2rem;
-  background-color: #fff;
+  transition: transform 0.2s;
+  /* Efecto de hover */
+  border-radius: 30px !important;
+  /* Bordes redondeados */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* Sombra suave */
 }
 
-#cardPresentacion {
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+.card img {
+  border-radius: 30px 30px 30px 30px !important;
+  /* Bordes redondeados para la imagen */
+  width: 100%;
+  /* Asegura que la imagen ocupa el 100% del contenedor */
+  height: auto;
+  /* Mantiene la proporción de la imagen */
+  display: block;
+  /* Elimina el espacio inferior que puede aparecer en algunas imágenes */
+  margin-left: -0.5rem;
+}
+
+.custom-img {
+  width: 100%; /* Ajustar la imagen al 100% del ancho de la tarjeta */
+  height: auto; /* Mantener la proporción de la imagen */
+  max-height: 400px; /* Ajustar la altura máxima si es necesario */
+  object-fit: cover; /* Recortar la imagen para que ajuste al contenedor */
 }
 
 
 .card:hover {
-  transform: scale(1.05);
-  /* Efecto de aumento al pasar el ratón */
+  transform: scale(1.02);
+  /* Efecto de zoom */
 }
 
-/* Estilos para la sección de Puntuación y Opinión */
-.card .rating {
-  display: flex;
-  justify-content: flex-end;
-  /* Alinea la puntuación hacia la derecha */
-  margin-bottom: 10px;
-  direction: rtl;
-  /* Dirección de derecha a izquierda para el texto */
+.card-title {
+  font-weight: bold;
+  /* Negrita para el título */
+  font-size: 2rem;
+  /* Aumenta el tamaño de la fuente */
+  color: var(--green) !important;
+  /* Cambia el color del texto */
 }
 
-.card .btn {
-  width: 100%;
+.card-titleDos {
+  font-size: 1.5rem;
+  /* Tamaño un poco más grande */
+  font-style: italic;
+  /* Estilo itálico */
+  color: var(--green) !important;
+  /* Cambia el color del texto */
 }
 
-.btn-primary {
+.card-text {
+  color: #555;
+  font-size: 1.3rem;
+  font-weight: 400;
+  /* Color de texto para las descripciones */
+}
+
+.card-valor {
+  text-align: center;
+  /* Centra el texto */
+  font-size: 2rem;
+  /* Tamaño de fuente ligeramente más grande */
+  font-weight: bold;
+  /* Pone el texto en negrita */
+  color: var(--dark-green);
+  /* Color del texto */
+  margin: 1rem 0;
+  /* Margen superior e inferior */
+  padding: 0.5rem;
+  /* Padding alrededor del texto */
+}
+
+.button-33 {
+  background-color: #f5fcc2;
+  /* Un color más claro basado en #c1c700 */
+  border-radius: 100px;
+  box-shadow: rgba(193, 199, 0, .2) 0 -25px 18px -14px inset,
+    rgba(193, 199, 0, .15) 0 1px 2px,
+    rgba(193, 199, 0, .15) 0 2px 4px,
+    rgba(193, 199, 0, .15) 0 4px 8px,
+    rgba(193, 199, 0, .15) 0 8px 16px,
+    rgba(193, 199, 0, .15) 0 16px 32px;
+  color: #7a7c00;
+  /* Texto de color más oscuro basado en #c1c700 */
+  cursor: pointer;
   display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  padding: 7px 20px;
   text-align: center;
   text-decoration: none;
-  color: #fff;
-  background-color: #8f8f00;
-  border: 2px solid #f3f39e;
-  border-radius: 5px;
-  cursor: pointer;
-  animation: borderAnimation 3s infinite;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-@keyframes borderAnimation {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.1);
-    border-color: #8f8f00;
-    color: #eff789;
-  }
-
-  100% {
-    transform: scale(1.1.5);
-  }
-}
-
-.container .row img {
-  flex: 1 1 0.5rem;
-  padding: 2rem;
-  width: 22rem;
-  height: 22rem;
-  border-radius: 50%;
-  /* Hace que las imágenes sean circulares */
-  object-fit: cover;
-  /* Escalado de la imagen para que ocupe todo el contenedor circular */
-}
-
-.container {
-  margin-top: 9.5rem;
-
-}
-
-.container .row {
-  flex: 1 1 40rem;
-  padding: 2rem;
-}
-
-.container .card-body .card-title {
-  font-size: 2rem;
-  color: #666;
-}
-
-.container .card-body .card-titleDos {
-  font-size: 2rem;
-  color: #b4c403;
-}
-
-.container .card-body .card-text {
-  font-size: 1.5rem;
-  color: #949e24;
+.button-33:hover {
+  box-shadow: rgba(193, 199, 0, .35) 0 -25px 18px -14px inset,
+    rgba(193, 199, 0, .25) 0 1px 2px,
+    rgba(193, 199, 0, .25) 0 2px 4px,
+    rgba(193, 199, 0, .25) 0 4px 8px,
+    rgba(193, 199, 0, .25) 0 8px 16px,
+    rgba(193, 199, 0, .25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
 }
 
 
-.container .card-body .btn {
-  color: #eee;
-  background-color: #c1c700;
-  border-color: #c1c700;
-  display: flex;
-  justify-content: center;
-  /* Centra horizontalmente */
-  align-items: center;
-  /* Centra verticalmente */
-  font-size: 2rem;
-}
 
-.text-left {
-  text-align: left !important;
+.btn:hover {
+  transform: translateY(-2px);
+  /* Efecto de elevar el botón al pasar el mouse */
 }
 
 
 /* ventana emergente*/
-.container .modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
+.card-modern-shadow {
+  max-width: 100%;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.container .modal-content {
-  background-color: var(--green);
-  border-radius: 10px;
+.modal-content {
+  background-color: #f4f4f4;
+  border-radius: 15px;
   padding: 30px;
-  max-width: 80%;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  width: 100%;
-  max-width: 400px;
-}
-
-.container .modal-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  /* Fondo con efecto de difuminado */
-  backdrop-filter: blur(5px);
-  /* Aplicación del efecto de difuminado */
-  z-index: -1;
-}
-
-.container .close {
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  background-color: rgba(255, 255, 255, 0.3);
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.container .close:hover,
-.close:focus {
-  color: #fdfded;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.container .modal-text {
-  /* Centramos el contenido vertical y horizontalmente */
+  color: #333;
+  font-family: 'Arial', sans-serif;
   font-size: 1.5rem;
+  /* Incrementa el tamaño general del texto */
+  font-weight: 500;
+  /* Hace el texto un poco más grueso */
+  position: relative;
+}
+
+/* Header modern look */
+.modal-header {
+  border-bottom: none;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
 
-.container .modal .btn {
+.modal-header .category-modern {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.btn-close {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Body content styling */
+.modal-body .content-modern {
+  padding: 20px;
+  text-align: center;
+  color: #555;
+  font-size: 1.5rem;
+}
+
+h6.category-modern {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.description-modern {
+  font-size: 1em;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.modern-input-container {
+  margin-bottom: 15px;
+}
+
+.form-control-modern {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1em;
+  color: #333;
+}
+
+.form-control-modern:focus {
+  border-color: #333;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button modern styles */
+.btn-modern-primary {
+  background-color: #333;
+  /* Color de fondo normal */
   color: #fff;
-  background-color: #8f8f00;
-  border-color: #8f8f00;
-  display: flex;
-  justify-content: center;
-  /* Centra horizontalmente */
-  align-items: center;
-  /* Centra verticalmente */
+  /* Color del texto normal */
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 1.2rem !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Añadir transición suave */
 }
 
-.container .modal .btn.btn-primary:hover {
-  background-color: #818156;
-  /* Cambiar el color de fondo al pasar el mouse */
-  border-color: #818156;
-  /* Cambiar el color del borde al pasar el mouse */
+.btn-modern-primary:hover {
+  background-color: #c1c700;
+  /* Cambia el color de fondo al pasar el mouse */
+  color: #fff;
+  /* Mantener el color del texto en blanco */
+  border-color: #c1c700;
 }
 
 
+
+
+a:hover,
+a:focus {
+  text-decoration: none;
+}

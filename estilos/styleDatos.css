@@ -1,318 +1,75 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:wght@400;700&display=swap" rel="stylesheet');
-
-:root {
-    --green: #c1c700;
-}
-
-* {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-transform: none;
-    text-decoration: none;
-    transition: all .5s cubic-bezier(.37, 1.14, .26, 1.24);
-}
-
-*::selection {
-    background: var(--green);
-    color: #fff;
-}
-
-/* Estilos para el scroll */
-::-webkit-scrollbar {
-    width: 10px;
-    /* Ancho del scroll */
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Color del fondo del scroll */
-    border-radius: 20px;
-    /* Radio del borde del fondo del scroll */
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--green);
-    /* Color del scroll */
-    border-radius: 20px;
-    /* Radio del borde del scroll */
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--green);
-    /* Color del scroll al pasar el mouse */
-}
+@import url('https://fonts.googleapis.com/css?family=Montserrat:wght@400;700&display=swap');
 
 html {
-    font-size: 62.5%;
-    overflow-x: hidden;
-}
-
-.heading {
-    text-align: center;
-    font-size: 4rem;
-    color: var(--green);
-    padding: 1rem;
-    padding-top: 11rem;
-}
-
-.heading i {
-    color: var(--green);
-    font-size: 2rem;
-}
-
-
-
-/* Estilos para las tarjetas */
-.card {
-    border-radius: 15px;
-    /* Borde redondeado para las tarjetas */
-    overflow: hidden;
-    /* Oculta los elementos que se salen de la tarjeta */
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /* Sombra suave para las tarjetas */
-    transition: transform 0.3s ease;
-    /* Efecto de transición al pasar el ratón */
-    width: auto;
-    display: flex;
-    justify-content: center;
-    /* Centra horizontalmente */
-    align-items: center;
-    /* Centra verticalmente */
-}
-
-.card:hover {
-    transform: scale(1.05);
-    /* Efecto de aumento al pasar el ratón */
-}
-
-/* Estilos para la sección de Puntuación y Opinión */
-.card .rating {
-    display: flex;
-    justify-content: flex-end;
-    /* Alinea la puntuación hacia la derecha */
-    margin-bottom: 10px;
-    direction: rtl;
-    /* Dirección de derecha a izquierda para el texto */
-}
-
-.card .btn {
-    width: 100%;
-}
-
-.container .row img {
-    flex: 1 1 0.5rem;
-    padding: 2rem;
-    width: 22rem;
-    height: 22rem;
-    border-radius: 50%;
-    /* Hace que las imágenes sean circulares */
-    object-fit: cover;
-    /* Escalado de la imagen para que ocupe todo el contenedor circular */
+    font-size: 62.5%; /* 1rem = 10px */
 }
 
 .container {
-    margin-top: 15rem;
-    padding-bottom: 13rem;
+    margin-top: 10rem;
+    padding-bottom: 5rem;
 }
 
-.container .row {
-    flex: 1 1 40rem;
-    padding: 2rem;
+.card {
+    border-radius: 30px !important; /* Bordes redondeados */
+    overflow: hidden; /* Asegura que el contenido no se desborde */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff; /* Color de fondo */
+    
 }
 
-.container .card-body .card-title {
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); /* Más fuerte al pasar el mouse */
+}
+
+.card img {
+    border-radius: 30px 30px 0 0; /* Bordes redondeados para la imagen */
+    width: 100%; /* Asegura que la imagen ocupa el 100% del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block; /* Elimina el espacio inferior que puede aparecer en algunas imágenes */
+}
+
+.card-title {
     font-size: 2rem;
+    color: #333;
+}
+
+.card-titleDos {
+    font-size: 1.6rem;
+    color: var(--green);
+}
+
+.card-text {
+    font-size: 1.4rem;
     color: #666;
-
-}
-
-.container .card-body .card-titleDos {
-    font-size: 2rem;
-    color: #b4c403;
-}
-
-.container .card-body .card-text {
-    font-size: 1.5rem;
-    color: #949e24;
-}
-
-
-.container .card-body .btn.btn-primary:hover {
-    background-color: #8f8f00;
-    /* Cambiar el color de fondo al pasar el mouse */
-    border-color: #8f8f00;
-    /* Cambiar el color del borde al pasar el mouse */
 }
 
 .cajitas {
-    text-align: center;
-    height: 50%;
-}
-
-
-
-.cajitas::before {
-    content: '';
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
 }
 
 .iconito {
-    display: inline-block;
-    font-size: 45px;
-    line-height: 90px;
-    height: 90px;
-    width: 90px;
-    margin-top: 0;
+    font-size: 3rem; /* Aumentar tamaño */
+    margin: 0 1rem;
     color: var(--green);
-    border-radius: 100%;
-    position: relative;
-}
-
-.iconito::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 100%;
-    background: #fff;
-    z-index: -1;
-}
-
-.iconito::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    vertical-align: middle;
-    width: 100%;
-    height: 100%;
-    transform: scale(0);
-    background: var(--green);
-    border-radius: 100%;
-    z-index: -1;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .iconito:hover {
-    animation-name: bubble2;
-    animation-duration: 0.5s;
-    animation-delay: 0.1s;
-    animation-fill-mode: forwards;
+    transform: scale(1.2);
+    color: #007BFF; /* Cambiar color al pasar el mouse */
 }
 
-.iconito:hover::after {
-    animation-name: bubble;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-}
-
-.icon-whatsapp {
-    color: #1ef05d;
-}
-
-.icon-instagram {
-    color: #8a2e8d;
-}
-
-
-.icon-gmail {
-    color: #dc4e41;
-}
-
-
-.icon-wrapper:hover>.text-wrapper {
-    font-weight: bold;
-    -webkit-transform: translate(0, -42px);
-    -moz-transform: translate(0, -42px);
-    -ms-transform: translate(0, -42px);
-    -o-transform: translate(0, -42px);
-    transform: translate(0, -42px);
-}
-
-@-moz-keyframes bubble {
-    100% {
-        transform: scale(1);
-    }
-}
-
-@-webkit-keyframes bubble {
-    100% {
-        transform: scale(1);
-    }
-}
-
-@-o-keyframes bubble {
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes bubble {
-    100% {
-        transform: scale(1);
-    }
-}
-
-@-moz-keyframes bubble2 {
-    100% {
-        color: #fff;
-    }
-}
-
-@-webkit-keyframes bubble2 {
-    100% {
-        color: #fff;
-    }
-}
-
-@-o-keyframes bubble2 {
-    100% {
-        color: #fff;
-    }
-}
-
-@keyframes bubble2 {
-    100% {
-        color: #fff;
-    }
-}
-
-
-/* media queries  */
-
-@media (max-width:768px) {
-
-    .container .row {
-        flex: 1 1 20rem;
-        /* Reducir el ancho de las tarjetas en pantallas grandes */
-    }
-
-    .container .row img {
-        width: 15rem;
-        /* Reducir el tamaño de las imágenes */
-        height: 15rem;
-    }
-
-    .container .card-body .card-title,
-    .container .card-body .card-titleDos,
-    .container .card-body .card-text,
-    .container .card-body .phone-number {
-        font-size: 1.8rem;
-        /* Reducir el tamaño del texto en pantallas grandes */
-    }
-
-    .contact-icons img {
-        width: 80px;
-        /* Reducir el tamaño de los íconos de contacto */
-        height: 80px;
-    }
-
+/* Estilo adicional para iconos */
+.iconito i {
+    width: 50px; /* Tamaño fijo para uniformidad */
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    line-height: 50px; /* Centrar el icono */
+    border-radius: 50%; /* Hacerlos redondos */
+    background-color: rgba(0, 123, 255, 0.1); /* Fondo sutil */
 }
