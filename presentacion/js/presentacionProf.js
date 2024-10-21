@@ -7,37 +7,67 @@ $(document).ready(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-
-                const psicologo = data[0];
+                const { presentaciones, comentarios } = data;
+                
+                const psicologo = presentaciones[0];
                 if (psicologo) {
                     $('#cardContainer').empty();
 
                     // Tarjeta de presentación
                     const card = `
-                        <div class="card mb-3 custom-margin-top" id="cardPresentacion">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="${psicologo.rutaImagen}" class="img-fluid rounded-start custom-img" alt="${psicologo.nombre}">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        
-                                        <h5 class="card-title">${psicologo.nombre}</h5>
-                                        <h5 class="card-titleDos text-muted">${psicologo.titulo}</h5>
-                                        <p class="card-text">
-                                            Matrícula: MN ${psicologo.matricula} (AR)<br>
-                                            Matrícula: MP ${psicologo.matriculaP} (AR)
-                                        </p>
-                                        <h5 class="card-title">Especialidades</h5>
-                                        <p class="card-text">${psicologo.especialidades}</p>
-                                        <p class='card-valor tooltiptext' data-valor='${psicologo.valor}'>$ ${psicologo.valor}</p>
-                                        <div class="text-center">
-                                            <button class="button-33 btn-primary" id="contact">Contactar</button>
-                                        </div>
+                                        <div class="card mb-3 custom-margin-top" id="cardPresentacion">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="${psicologo.rutaImagen}" class="img-fluid rounded-start custom-img" alt="${psicologo.nombre}">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">${psicologo.nombre}</h5>
+                                    <h5 class="card-titleDos text-muted">${psicologo.titulo}</h5>
+                                    <p class="card-text">
+                                        Matrícula: MN ${psicologo.matricula} (AR)<br>
+                                        Matrícula: MP ${psicologo.matriculaP} (AR)
+                                    </p>
+                                    <h5 class="card-title">Especialidades</h5>
+                                    <p class="card-text">${psicologo.especialidades}</p>
+                                    <p class='card-valor tooltiptext' data-valor='${psicologo.valor}'>$ ${psicologo.valor}</p>
+                                    <div class="text-center">
+                                        <button class="button-33 btn-primary" id="contact">Contactar</button>
                                     </div>
+
+                                    <!-- Carrusel de comentarios -->
+                                        <div id="comentariosCarousel" class="carousel slide mt-5" data-bs-ride="carousel">
+                                        <div class="carousel-inner" id="carouselComentarios">
+                                            ${comentarios.map((comentario, index) => `
+                                                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                                    <div class="testimonial">
+                                                        <blockquote>"${comentario.comentario}"</blockquote>
+                                                        <div></div>
+                                                        <p>${comentario.nombre}</p>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#comentariosCarousel" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Anterior</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#comentariosCarousel" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Siguiente</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- End carrusel-->
                                 </div>
                             </div>
                         </div>
+
+
+                    </div>
+
+
+
                     `;
 
                     $('#cardContainer').append(card);
@@ -49,6 +79,7 @@ $(document).ready(function () {
                     const presentacionCard = `
                         <div class="card mb-5">
                             <div class="card-body">
+                            
                                 <h5 class="card-title">Presentación</h5>
                                 <p class="card-text">${psicologo.descripcion}</p>
                             </div>
@@ -95,13 +126,22 @@ $(document).ready(function () {
 
 
 
+                    // Obtener el valor de si el usuario está logueado o no desde el atributo data
+                    var usuarioLogueado = document.body.getAttribute('data-usuario-logueado') === 'true';
+
                     // Manejar el clic en el botón de contactar
                     document.getElementById('contact').addEventListener('click', function () {
-                        var myModal = new bootstrap.Modal(document.getElementById('contactModal'));
-                        myModal.show();
+                        if (usuarioLogueado) {
+                            // Si el usuario está logueado, mostrar el modal
+                            var myModal = new bootstrap.Modal(document.getElementById('contactModal'));
+                            myModal.show();
+                        } else {
+                            // Si no está logueado, redirigir a la página de inicio de sesión
+                            // Guarda la URL de redirección
+                            const currentUrl = window.location.href;
+                            window.location.href = `../usuario/index.php?redirect_to=${encodeURIComponent(currentUrl)}`; // Asegúrate de que la ruta sea correcta
+                        }
                     });
-
-
 
 
                 } else {
@@ -196,7 +236,7 @@ $(document).on('click', '#checkout-btn', async () => {
 
     // Mostrar el mensaje de "cargando" cuando se hace clic en el botón
     document.getElementById('mp-loading-message').style.display = 'block';
-
+    //moni:APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8
     if (!mercadoPagoButtonRendered) {
         const mp = new MercadoPago("APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8", { locale: "es-AR" });
         const generateIdempotencyKey = () => {
@@ -212,20 +252,23 @@ $(document).on('click', '#checkout-btn', async () => {
             return;
         }
 
+        const precio = parseFloat(document.querySelector('.tooltiptext').getAttribute('data-valor'));
+        const userId = document.getElementById("user-id").value.trim(); // Obtener el ID del usuario
+
         const formData = {
-            userEmail,
+            userId,  // Cambia userEmail por userId
             psychologistId: presentaciontId
         };
 
-        const precio = parseFloat(document.querySelector('.tooltiptext').getAttribute('data-valor'));
         const orderData = {
             title: document.querySelector(".card-title").innerText,
             quantity: 1,
             price: precio,
             psychologistId: presentaciontId,
-            userEmail,
+            userId,  // Cambia userEmail por userId
             formData
         };
+
 
         try {
             const response = await fetch("https://terapialibre.com.ar/create_preference", {

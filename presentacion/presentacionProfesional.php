@@ -1,3 +1,12 @@
+<?php
+session_start(); // Asegúrate de iniciar la sesión en todas las páginas
+
+// Verificar si el usuario está logueado
+$usuarioLogueado = false;
+if (isset($_SESSION['user_id'])) {
+    $usuarioLogueado = true;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -49,7 +58,8 @@
 </head>
 
 
-<body>
+<body data-usuario-logueado="<?php echo $usuarioLogueado ? 'true' : 'false'; ?>">
+
     <!-- header section starts  -->
 
     <!-- header section starts  -->
@@ -64,6 +74,19 @@
             <ul class="navbar-nav ml-auto">
                 <li><a href="../index.php">Inicio</a></li>
                 <li><a href="../psicologos/psicologosOnline.php">Psicologos</a></li>
+                <!-- Mostrar "Perfil" si el usuario está logueado -->
+                <?php if ($usuarioLogueado): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../usuario/dashboard/dashboard.php">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../usuario/control/logout.php">Cerrar sesión</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../usuario/index.php">Iniciar sesión</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </nav>
 
@@ -82,6 +105,28 @@
                         <span>Psicologos</span>
                     </a>
                 </li>
+                <!-- Mostrar "Perfil" si el usuario está logueado en el menú móvil -->
+                <?php if ($usuarioLogueado): ?>
+                    <li>
+                        <a href="../usuario/dashboard/dashboard.php">
+                            <i class="fas fa-user"></i>
+                            <p>Perfil</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../usuario/control/logout.php">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="../usuario/index.php">
+                            <i class="fas fa-user"></i>
+                            <p>Iniciar sesión</p>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </nav>
 
@@ -90,12 +135,18 @@
 
     <section id="presentacion">
         <div class="container">
+            <input type="hidden" id="user-id" value="<?php echo htmlspecialchars($_SESSION['user_id']); ?>">
+
             <div class="row" id="cardContainer">
                 <!-- Las tarjetas se llenarán dinámicamente aquí -->
             </div>
+
         </div>
     </section>
 
+
+
+    
 
 
     <!-- footer section starts  -->

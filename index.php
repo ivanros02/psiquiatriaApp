@@ -1,3 +1,13 @@
+<?php
+session_start(); // Asegúrate de iniciar la sesión en todas las páginas
+
+// Verificar si el usuario está logueado
+$usuarioLogueado = false;
+if (isset($_SESSION['user_id'])) {
+    $usuarioLogueado = true;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,6 +76,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./cargaDatosPsicologos/carga.php">Soy un profesional</a>
                 </li>
+
+                <!-- Mostrar "Perfil" si el usuario está logueado -->
+                <?php if ($usuarioLogueado): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./usuario/dashboard/dashboard.php">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./usuario/control/logout.php">Cerrar sesión</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./usuario/index.php">Iniciar sesión</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </nav>
 
@@ -96,9 +120,33 @@
                         <p>Profesional</p>
                     </a>
                 </li>
+
+                <!-- Mostrar "Perfil" si el usuario está logueado en el menú móvil -->
+                <?php if ($usuarioLogueado): ?>
+                    <li>
+                        <a href="./usuario/dashboard/dashboard.php">
+                            <i class="fas fa-user"></i>
+                            <p>Perfil</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="./usuario/control/logout.php">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li>
+                        <a href="./usuario/index.php">
+                            <i class="fas fa-user"></i>
+                            <p>Iniciar sesión</p>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
+
 
     <!-- header section ends -->
 
@@ -171,40 +219,41 @@
             <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h1>
             <div class="slider">
                 <div class="item">
+
                     <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
                         sido fundamentales para mi bienestar emocional. ¡Gracias por tanto!</p>
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
 
                 </div>
                 <div class="item">
                     <p>Quiero agradecer sinceramente por la atención psicológica recibida. Su apoyo ha sido fundamental
                         para mi bienestar emocional.</p>
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <div class="item">
                     <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
                         sido fundamentales para mi bienestar emocional. Gracias!!</p>
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <div class="item">
-                    <p>Quería expresar mi más sincero agradecimiento por la atención recibida. Su profesionalismo y
-                        apoyo han sido de gran ayuda para mí."
-                        "Quiero agradecer por el tratamiento recibido. Su ayuda ha sido fundamental para mí. Gracias por
-                        todo! </p>
+                    <p>Quiero agradecer sinceramente por la atención y el apoyo recibidos. Su profesionalismo ha sido
+                        fundamental para mí.</p>
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <div class="item">
                     <p>Quisiera expresar mi agradecimiento por las rápidas evoluciones terapéuticas que experimente.</p>
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <div class="item">
                     <p>Su apoyo y orientación han sido fundamentales en mi proceso de sanación y crecimiento personal.
                         ¡Gracias por hacer posible estos avances tan significativos!</p>
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <button id="next">></button>
-                <button id="prev">
-                    << /button>
+                <button id="prev"><</button>
             </div>
         </div>
     </section>
-
-
-
 
 
     <!-- about section ends -->
@@ -212,49 +261,105 @@
     <!-- service section starts  -->
 
     <section class="service" id="service">
+        <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.4s">
+            ¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?
+        </h1>
 
-        <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">¿En qué situaciones deberías
-            acudir a nuestros profesionales de salud mental?</h1>
-
-        <div class="box-container">
-
-            <div class="box">
-                <i class="fas fa-user-clock"></i>
-                <p>Síntomas persistentes: Si experimentas emociones persistentes como tristeza intensa, ansiedad
-                    abrumadora o cambios en el sueño o alimentación, busca ayuda profesional.
-                </p>
+        <div class="row mt-4 mx-3">
+            <!-- Card 1 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card spring-fever card1">
+                    <div class="gradient-overlay"></div>
+                    <div class="title-content">
+                        <h3>Ansiedad</h3>
+                        <hr />
+                        <div class="intro">Cuando sientas niveles altos de ansiedad y estrés.</div>
+                    </div>
+                    <div class="card-info">
+                        La ansiedad puede afectar tu vida diaria y tus relaciones personales. Nuestros profesionales
+                        están capacitados para ayudarte a gestionarla.
+                    </div>
+                </div>
             </div>
-
-            <div class="box">
-                <i class="	fas fa-user-alt"></i>
-                <p>Estrés y abrumadores: Si te sientes abrumado/a por el estrés o la ansiedad, un terapeuta puede
-                    brindarte herramientas para manejar estas emociones.
-                </p>
+            <!-- Card 2 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card spring-fever card2">
+                    <div class="gradient-overlay"></div>
+                    <div class="title-content">
+                        <h3>Depresión</h3>
+                        <hr />
+                        <div class="intro">Cuando experimentes sentimientos persistentes de tristeza.</div>
+                    </div>
+                    <div class="card-info">
+                        La depresión no debe ser enfrentada sola. Nuestros terapeutas ofrecen un ambiente seguro y
+                        profesional para apoyarte en tu recuperación.
+                    </div>
+                </div>
             </div>
-
-            <div class="box">
-                <i class="fas fa-user-friends"></i>
-                <p>Eventos traumáticos o pérdidas: Si has sufrido eventos traumáticos o pérdidas significativas,
-                    hablar con un profesional puede ayudarte a superar estas experiencias.</p>
+            <!-- Card 3 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card spring-fever card3">
+                    <div class="gradient-overlay"></div>
+                    <div class="title-content">
+                        <h3>Problemas de relación</h3>
+                        <hr />
+                        <div class="intro">Cuando enfrentes dificultades en tus relaciones.</div>
+                    </div>
+                    <div class="card-info">
+                        Las relaciones pueden ser complicadas. La terapia te puede ayudar a resolver conflictos y
+                        mejorar tus habilidades de comunicación.
+                    </div>
+                </div>
             </div>
-
-            <div class="box">
-                <i class="fas fa-lungs"></i>
-                <p>Problemas de autoestima: Si tienes baja autoestima o problemas de autoimagen, un terapeuta puede
-                    ayudarte a mejorar tu confianza y bienestar emocional.</p>
+            <!-- Card 4 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card spring-fever card4">
+                    <div class="gradient-overlay"></div>
+                    <div class="title-content">
+                        <h3>Estrés laboral</h3>
+                        <hr />
+                        <div class="intro">Cuando el trabajo sea abrumador y afecte tu salud mental.</div>
+                    </div>
+                    <div class="card-info">
+                        Nuestros terapeutas pueden guiarte en el manejo del estrés y en cómo balancear mejor tu vida
+                        personal y profesional.
+                    </div>
+                </div>
             </div>
-
-            <div class="box">
-                <i class="fas fa-head-side-cough"></i>
-                <p>Trastornos mentales diagnosticados: Si has sido diagnosticado/a con trastornos mentales como
-                    depresión o ansiedad, es importante buscar tratamiento profesional para manejarlos efectivamente.
-                </p>
+            <!-- Card 5 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card spring-fever card5">
+                    <div class="gradient-overlay"></div>
+                    <div class="title-content">
+                        <h3>Autoestima baja</h3>
+                        <hr />
+                        <div class="intro">Cuando sientas inseguridades que afecten tu autovaloración.</div>
+                    </div>
+                    <div class="card-info">
+                        La autoestima es crucial para tu bienestar. Trabaja en mejorar tu autoconfianza con la guía de
+                        un terapeuta.
+                    </div>
+                </div>
             </div>
-
-
+            <!-- Card 6 -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card spring-fever card6">
+                    <div class="gradient-overlay"></div>
+                    <div class="title-content">
+                        <h3>Duelo</h3>
+                        <hr />
+                        <div class="intro">Cuando enfrentes la pérdida de un ser querido.</div>
+                    </div>
+                    <div class="card-info">
+                        El proceso de duelo puede ser abrumador, pero con el apoyo adecuado puedes encontrar formas
+                        saludables de sobrellevar la pérdida.
+                    </div>
+                </div>
+            </div>
         </div>
-
     </section>
+
+
 
     <!-- service section ends -->
 
@@ -283,9 +388,9 @@
                         class="bi bi-instagram"></i> Instagram</a>
 
                 <h3 class="share">Administradores</>
-                <!-- Añadir el enlace de administradores aquí -->
-                <a href="./administracionPresentaciones/inicioAdmin.php"><i class="bi bi-person-circle"></i> Acceder
-                    como administrador</a>
+                    <!-- Añadir el enlace de administradores aquí -->
+                    <a href="./administracionPresentaciones/inicioAdmin.php"><i class="bi bi-person-circle"></i> Acceder
+                        como administrador</a>
             </div>
 
 

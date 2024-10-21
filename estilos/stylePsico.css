@@ -51,6 +51,7 @@ html {
 .heading {
     text-align: center;
     font-size: 4rem;
+    font-family: 'Things' !important;
     color: var(--green);
     padding: 1rem;
     padding-top: 11rem;
@@ -82,12 +83,19 @@ html {
 }
 
 .custom-img {
-    width: 100%; /* Ajustar la imagen al 100% del ancho de la tarjeta */
-    height: auto; /* Mantener la proporción de la imagen */
-    max-height: 300px; /* Ajustar la altura máxima si es necesario */
-    object-fit: cover; /* Recortar la imagen para que ajuste al contenedor */
+    width: 210px;  /* Ancho fijo */
+    height: 210px; /* Alto fijo */
+    object-fit: cover; /* Ajusta la imagen al contenedor sin distorsionar */
+    border-radius: 30px 30px 0 0 !important; /* Bordes redondeados en la parte superior */
 }
 
+
+@media (max-width: 576px) {
+    .custom-img {
+        width: 50%; /* Ajustar al 100% del ancho del contenedor */
+        height: auto; /* Mantener proporción */
+    }
+}
 
 
 
@@ -233,6 +241,7 @@ select option {
 
 .service .headingService {
     text-align: center;
+    font-family: 'Things' !important;
     font-size: 3rem;
     color: var(--green);
     padding: 1rem;

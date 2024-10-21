@@ -2,6 +2,14 @@
 
 :root {
     --green: #c1c700;
+    --font : #000;
+}
+
+@font-face {
+    font-family: 'Things'; /* Nombre de la fuente */
+    src: url('../fuente/things.otf') format('opentype'); /* Ruta del archivo normal */
+    font-weight: normal; /* Peso de la fuente */
+    font-style: normal; /* Estilo normal */
 }
 
 * {
@@ -59,7 +67,6 @@ header {
 
 .logo {
     font-size: 2.5rem;
-    color: var(--green) !important;
     font-weight: bold;
     text-align: center; /* Alineación centrada */
     display: flex; /* Para centrar imagen y texto */

@@ -13,7 +13,7 @@
     transition: all .5s cubic-bezier(.37, 1.14, .26, 1.24);
 }
 
-body{
+body {
     overflow-x: hidden !important;
 }
 
@@ -93,15 +93,19 @@ html {
 }
 
 .btn:hover {
-    background: var(--green);  /* Asegura que el fondo no cambie */
-    color: #ffffff;           /* Asegura que el color de texto no cambie */
+    background: var(--green);
+    /* Asegura que el fondo no cambie */
+    color: #ffffff;
+    /* Asegura que el color de texto no cambie */
     transform: translateY(-3px);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .btn:active {
-    background: var(--green);  /* Asegura que el fondo no cambie */
-    color: #ffffff;           /* Asegura que el color de texto no cambie */
+    background: var(--green);
+    /* Asegura que el fondo no cambie */
+    color: #ffffff;
+    /* Asegura que el color de texto no cambie */
     transform: translateY(-1px);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
@@ -114,6 +118,7 @@ html {
     color: var(--green);
     padding: 1rem;
     padding-top: 11rem;
+    font-family: 'Things' !important; 
 }
 
 .quienesSomos {
@@ -121,6 +126,8 @@ html {
     color: var(--green);
     padding: 1rem;
     padding-top: 11rem;
+    margin-left: -1rem !important;
+    font-family: 'Things' !important; 
 }
 
 .heading i {
@@ -157,13 +164,25 @@ html {
     text-align: center;
     padding: 1rem;
     z-index: 1;
-     max-width: 90%;
+    max-width: 90%;
 }
 
 .home .content h1 {
     font-size: 5.6rem;
     color: var(--green);
+    font-family: 'Things' !important; 
 }
+
+/*
+.home .content h1 {
+    font-size: 5.6rem;
+    font-weight: 1rem;
+    background: linear-gradient(to bottom, #ff9999 0%, #ffcccc 33.33%, #cceeff 66.66%, #ffffcc 100%);
+    background-clip: text; 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+}
+*/
 
 .home .content p {
     font-size: 1.9rem;
@@ -184,18 +203,9 @@ html {
     padding: 0 2rem;
 }
 
-.comentariosCards {
-    text-align: center;
-    align-content: center;
-    color: var(--green);
-    font-size: 4rem;
-    margin-bottom: 1rem;
-}
-
 .imgCard {
-    width: 5rem;
-    border-radius: 50%;
-    
+    width: 5rem; /* Ancho de la imagen */
+    border-radius: 50%; /* Hacer la imagen circular */
 }
 
 .item .userComment {
@@ -217,13 +227,16 @@ html {
     width: 200px;
     height: 320px;
     text-align: center;
-    background-color: var(--green);
+    background-image: url(../img/coments/fondoMain.jpg);
+    background-size: cover; /* Para cubrir todo el elemento */
+    background-position: center; /* Para centrar la imagen */
     border-radius: 10px;
     padding: 20px;
     transition: 0.5s;
     left: calc(50% - 110px);
     top: 0;
 }
+
 
 #next {
     position: absolute;
@@ -254,65 +267,175 @@ html {
     opacity: 1;
 }
 
-.service {
-    background: #f0f0f0;
-    min-height: 57rem;
-}
-
-.service .box-container {
-    display: flex;
-    align-items: stretch;
-    /* Esto estira las cajas para igualar la altura */
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 78%;
-    margin: 0 auto;
-}
-
-.service .box-container .box {
-    flex: 1 1 25rem;
-    padding: 2rem 1rem 1rem;
+/*ACUDIR*/
+.blog-card {
+    width: 100%;
+    height: 350px;
+    /* Hacemos la tarjeta un poco más pequeña */
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 3px 3px 20px rgba(0, 0, 0, .5);
     text-align: center;
-    background: #fff;
-    border: .2rem solid var(--green);
-    margin: 1rem;
-    cursor: pointer;
-    box-sizing: border-box;
-    border-radius: 30px !important;
-    display: flex;
-    /* Para alinear verticalmente el contenido */
-    flex-direction: column;
-    /* Para alinear verticalmente el contenido */
-    justify-content: space-between;
-    /* Para alinear verticalmente el contenido */
-    border-radius: 5px;
 }
 
-.service .box-container .box i {
-    color: var(--green);
-    font-size: 3rem;
-    padding: 0.5rem 0;
+.blog-card.spring-fever.card1 {
+    background: url(../img/cuandoAcudir/card1.jpg) no-repeat center center;
+    background-size: cover;
 }
 
-.service .box-container .box p {
-    color: #666;
-    font-size: 1.5rem;
-    padding: 0.5rem 0;
-    margin: 0;
+.blog-card.spring-fever.card2 {
+    background: url(../img/cuandoAcudir/card2.jpg) no-repeat center center;
+    background-size: cover;
 }
 
-.service .box-container .box a {
-    color: #333;
-    font-size: 1.3rem;
+.blog-card.spring-fever.card3 {
+    background: url(../img/cuandoAcudir/card3.jpg) no-repeat center center;
+    background-size: cover;
 }
 
-.service .box-container .box a:hover {
-    color: var(--green);
+.blog-card.spring-fever.card4 {
+    background: url(../img/cuandoAcudir/card4.jpg) no-repeat center center;
+    background-size: cover;
 }
 
-.service .box-container .box:hover {
-    box-shadow: 0 .3rem .5rem rgba(0, 0, 0, .3);
+.blog-card.spring-fever.card5 {
+    background: url(../img/cuandoAcudir/card5.jpg) no-repeat center center;
+    background-size: cover;
 }
+
+.blog-card.spring-fever.card6 {
+    background: url(../img/cuandoAcudir/card6.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Cambia la opacidad según sea necesario */
+    z-index: 1;
+}
+
+.color-overlay {
+    background: rgba(84, 104, 110, 0.4);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    transition: background .3s cubic-bezier(.33, .66, .66, 1);
+}
+
+.gradient-overlay {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, .6) 21%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 15;
+}
+
+.blog-card:hover .card-info {
+    opacity: 1;
+    bottom: 100px;
+}
+
+.blog-card:hover .color-overlay {
+    background: rgba(84, 104, 110, 0.8);
+}
+
+.title-content {
+    text-align: center;
+    margin: 30px 0 0 0;
+    /* Ajustamos los márgenes para la tarjeta más pequeña */
+    position: absolute;
+    z-index: 20;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+h3 {
+    font-size: 18px;
+    /* Disminuimos el tamaño de la fuente */
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 0;
+}
+
+hr {
+    width: 50px;
+    height: 3px;
+    margin: 20px auto;
+    border: 0;
+    background: #d7cd9c;
+}
+
+.intro {
+    width: 170px;
+    margin: 0 auto;
+    color: #DCE3E7;
+    font-size: 13px;
+    font-style: italic;
+    line-height: 18px;
+}
+
+.card-info {
+    width: 100%;
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    margin: 0 auto;
+    padding: 0 50px;
+    color: #DCE3E7;
+    font-size: 14px;
+    /* Disminuimos un poco el tamaño de la fuente */
+    line-height: 22px;
+    z-index: 20;
+    opacity: 0;
+    transition: bottom .3s, opacity .3s cubic-bezier(.33, .66, .66, 1);
+}
+
+
+/* Estilos Responsivos */
+@media (max-width: 991px) {
+    .blog-card {
+        height: 320px;
+        /* Ajustamos la altura para pantallas medianas */
+    }
+
+    .card-info {
+        font-size: 12px;
+        /* Ajustamos el tamaño de la fuente para pantallas medianas */
+    }
+}
+
+@media (max-width: 767px) {
+    .blog-card {
+        height: 300px;
+        /* Ajustamos la altura para pantallas pequeñas */
+    }
+
+    .title-content h3 {
+        font-size: 16px;
+        /* Disminuimos el tamaño de la fuente para pantallas más pequeñas */
+        margin-bottom: 20px; /* Aumentar el margen */
+    }
+
+    .card-info {
+        font-size: 11px;
+        /* Ajustamos el tamaño de la fuente para pantallas más pequeñas */
+        margin-bottom: -7rem !important;
+    }
+}
+
+/*FIN ACUDIR*/
+
 
 /* media queries  */
 
@@ -338,17 +461,14 @@ html {
         width: auto;
     }
 
-    .service .box-container {
-        width: auto;
-    }
-
     .about .row .content p {
         margin-left: 1rem;
         margin-bottom: 1rem;
     }
 
     .video {
-        display: none; /* Oculta el contenedor del video */
+        display: none;
+        /* Oculta el contenedor del video */
     }
 
 

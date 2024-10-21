@@ -18,23 +18,34 @@ if ($psicologoId > 0) {
     // Preparar la consulta
     $stmt = $conexion->prepare($query);
     $stmt->bind_param("i", $psicologoId); // "i" indica que el parámetro es un entero
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $presentaciones = [];
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $presentaciones[] = $row;
+        }
+    }
+
+    // Query para obtener los comentarios
+    $queryComentarios = "SELECT nombre,comentario FROM comentarios_presentaciones WHERE profesional_id = ?";
+    $stmtComentarios = $conexion->prepare($queryComentarios);
+    $stmtComentarios->bind_param("i", $psicologoId);
+    $stmtComentarios->execute();
+    $resultComentarios = $stmtComentarios->get_result();
+    
+    $comentarios = [];
+    while ($row = $resultComentarios->fetch_assoc()) {
+        $comentarios[] = $row;
+    }
+
+    // Enviar la respuesta como JSON
+    header('Content-Type: application/json');
+    echo json_encode(['presentaciones' => $presentaciones, 'comentarios' => $comentarios]);
 } else {
     // Si no se pasó un ID válido, devolver un error
     echo json_encode(['error' => 'ID de psicólogo no válido']);
     exit;
 }
-
-$stmt->execute();
-$result = $stmt->get_result();
-$presentaciones = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $presentaciones[] = $row;
-    }
-}
-
-// Enviar la respuesta como JSON
-header('Content-Type: application/json');
-echo json_encode($presentaciones);
 ?>

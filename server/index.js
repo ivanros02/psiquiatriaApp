@@ -43,7 +43,7 @@ function sendEmailToUser(userEmail, psychologistInfo) {
         port: 25,
         auth: {
             user: 'terapialibre@terapialibre.com.ar',
-            pass: 'Argentina2024'
+            pass: 'abundancia2024'
         },
         tls: {
             rejectUnauthorized: false
@@ -54,7 +54,7 @@ function sendEmailToUser(userEmail, psychologistInfo) {
     const videoCallLink = generateVideoCallLink();
 
     const userMailOptions = {
-        from: 'terapialibre@terapialibre.com.ar',
+        from: 'ivanrosendo1102@gmail.com',
         to: userEmail,
         subject: 'Terapia Libre: información del profesional solicitado',
         html: `
@@ -160,7 +160,7 @@ function sendEmailToUser(userEmail, psychologistInfo) {
     const psychologistEmail = psychologistInfo.mail;
 
     const psychologistMailOptions = {
-        from: 'terapialibre@terapialibre.com.ar',
+        from: 'ivanrosendo1102@gmail.com',
         to: psychologistEmail,
         subject: 'Tienes un nuevo paciente',
         html: `
@@ -279,9 +279,20 @@ function sendEmailToUser(userEmail, psychologistInfo) {
 }
 
 
-function saveUserEmail(userEmail, psychologistId, paymentId) {
-    const insertQuery = `INSERT INTO datos_usuario (user_email, psychologist_id, payment_id) VALUES (?, ?, ?)`;
-    dbConnection.query(insertQuery, [userEmail, psychologistId, paymentId], (error, results, fields) => {
+function saveUserEmail(user, psychologistId, paymentId) {
+    const insertQuery = `INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)`;
+
+    dbConnection.query(insertQuery, [user, psychologistId, paymentId], (error, results, fields) => {
+        if (error) {
+            console.error('Error al insertar el correo electrónico en la base de datos:', error);
+        } else {
+            console.log('Correo electrónico insertado en la base de datos');
+        }
+    });
+
+    const insertUsuarioProf = `INSERT INTO usuario_profesional (usuario_id,profesional_id) VALUES (?, ?)`;
+
+    dbConnection.query(insertUsuarioProf, [user, psychologistId], (error, results, fields) => {
         if (error) {
             console.error('Error al insertar el correo electrónico en la base de datos:', error);
         } else {
@@ -305,13 +316,13 @@ app.post("/create_preference", async (req, res) => {
                     const body = {
                         items: [{ title, quantity: Number(quantity), unit_price: Number(price), currency_id: "ARS" }],
                         back_urls: {
-                            success: `https://terapialibre.com.ar/datos/datosProfesional.php?id=${psychologistId}`,
+                            success: `https://terapialibre.com.ar/usuario/dashboard/dashboard.php`,
                             failure: "https://terapialibre.com.ar/psicologos/psicologosOnline.php#",
                             pending: "https://terapialibre.com.ar/psicologos/psicologosOnline.php#",
                         },
                         auto_return: "approved",
                         psychologistInfo: psychologistInfo,
-                        notification_url: 'https://terapialibre.com.ar/webhook',
+                        notification_url: 'https://e5f3-2800-810-4e6-9984-8dc-c7d7-3299-7090.ngrok-free.app/webhook',//https://terapialibre.com.ar/webhook
                         external_reference: psychologistId,
                     };
 
@@ -337,6 +348,7 @@ app.post("/create_preference", async (req, res) => {
 
 app.post("/webhook", async function (req, res) {
     const paymentId = req.query.id;
+
     try {
         const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
             method: 'GET',
@@ -348,6 +360,9 @@ app.post("/webhook", async function (req, res) {
             const paymentData = await response.json();
             if (paymentData.status === 'approved') {
                 const userEmail = paymentData.payer.email;
+                // Aquí necesitas una manera de obtener el ID del usuario desde el payload del pago
+                const userId = paymentData.additional_info.userId; // Asegúrate de que el ID se envíe correctamente
+
                 const psychologistId = paymentData.external_reference;
                 const psychologistQuery = `SELECT * FROM presentaciones WHERE id = ?`;
                 dbConnection.query(psychologistQuery, [psychologistId], (error, results, fields) => {
@@ -356,7 +371,8 @@ app.post("/webhook", async function (req, res) {
                     } else {
                         if (results.length > 0) {
                             const psychologistInfo = results[0];
-                            saveUserEmail(userEmail, psychologistId, paymentId);
+                            saveUserEmail(userId, psychologistId, paymentId);
+                            console.log(`Enviando correo a: ${userEmail}`);
                             sendEmailToUser(userEmail, psychologistInfo);
                         } else {
                             console.error('No se encontraron datos del psicólogo con el ID proporcionado');

@@ -10,6 +10,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body {
@@ -56,7 +57,7 @@ html {
 
 /*CARD*/
 .custom-margin-top {
-  margin-top: 10rem !important;
+  margin-top: 12rem !important;
   /* Ajusta el valor a tus necesidades */
 }
 
@@ -82,10 +83,14 @@ html {
 }
 
 .custom-img {
-  width: 100%; /* Ajustar la imagen al 100% del ancho de la tarjeta */
-  height: auto; /* Mantener la proporción de la imagen */
-  max-height: 400px; /* Ajustar la altura máxima si es necesario */
-  object-fit: cover; /* Recortar la imagen para que ajuste al contenedor */
+  width: 100%;
+  /* Ajustar la imagen al 100% del ancho de la tarjeta */
+  height: auto;
+  /* Mantener la proporción de la imagen */
+  max-height: 400px;
+  /* Ajustar la altura máxima si es necesario */
+  object-fit: cover;
+  /* Recortar la imagen para que ajuste al contenedor */
 }
 
 
@@ -122,7 +127,7 @@ html {
 .card-valor {
   text-align: center;
   /* Centra el texto */
-  font-size: 2rem;
+  font-size: 3rem;
   /* Tamaño de fuente ligeramente más grande */
   font-weight: bold;
   /* Pone el texto en negrita */
@@ -158,6 +163,7 @@ html {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  margin-bottom: 1.5rem;
 }
 
 .button-33:hover {
@@ -175,6 +181,60 @@ html {
 .btn:hover {
   transform: translateY(-2px);
   /* Efecto de elevar el botón al pasar el mouse */
+}
+
+/*comentarios*/
+.testimonial {
+  max-width: 600px;
+  margin: 0 auto; /* Centrar el testimonio */
+  padding: 20px; /* Padding alrededor del testimonio */
+}
+
+.testimonial blockquote {
+  margin: 10px 10px 0;
+  background: #efefef;
+  padding: 20px 60px;
+  position: relative;
+  border: none;
+  border-radius: 8px;
+  font-style: italic;
+  overflow-y: hidden;
+}
+
+.testimonial blockquote:before,
+.testimonial blockquote:after {
+  content: "\201C";
+  position: absolute;
+  font-size: 80px;
+  line-height: 1;
+  color: #b6e6f6;
+  font-style: normal;
+}
+
+.testimonial blockquote:before {
+  top: 0;
+  left: 10px;
+}
+
+.testimonial blockquote:after {
+  content: "\201D";
+  right: 10px;
+  bottom: -0.5em;
+}
+
+.testimonial div {
+  width: 0;
+  height: 0;
+  border-left: 0 solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #efefef;
+  margin: 0 0 0 60px;
+}
+
+.testimonial p {
+  margin: 8px 0 0 20px;
+  text-align: left;
+  color: black;
 }
 
 
@@ -287,8 +347,3 @@ h6.category-modern {
 
 
 
-
-a:hover,
-a:focus {
-  text-decoration: none;
-}
