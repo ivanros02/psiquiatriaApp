@@ -52,27 +52,6 @@
             background-color: var(--blue);
             border-color: var(--blue);
         }
-
-        .btn-google {
-            background-color: #ea4335;
-            color: white;
-        }
-
-        .btn-facebook {
-            background-color: #3b5998;
-            color: white;
-        }
-
-        .btn-apple {
-            background-color: black;
-            color: white;
-        }
-
-        /* Ajustar el tamaño de los botones */
-        .btn-lg {
-            padding: 10px 15px;
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 
@@ -87,20 +66,12 @@
                     <div id="alerta-exito" class="alert alert-success d-none" role="alert">
                         Usuario creado correctamente. Ahora puedes iniciar sesión.
                     </div>
-                    <h2 class="text-center">Iniciar Sesión en <br> <strong>Terapia Libre</strong></h2>
-
-                    <!-- Botones para iniciar sesión con redes sociales -->
-                    <div class="d-grid gap-2 mb-3">
-                        <button class="btn btn-google btn-lg">
-                            <i class="fab fa-google me-2"></i> Continuar con Google
-                        </button>
-                        <button class="btn btn-facebook btn-lg">
-                            <i class="fab fa-facebook-f me-2"></i> Continuar con Facebook
-                        </button>
-                        <button class="btn btn-apple btn-lg">
-                            <i class="fab fa-apple me-2"></i> Continuar con Apple
-                        </button>
+                    <!-- Alerta de error (oculta por defecto) -->
+                    <div id="alerta-error" class="alert alert-danger d-none" role="alert">
+                        Correo o contraseña incorrectos.
                     </div>
+
+                    <h2 class="text-center">Iniciar Sesión en <br> <strong>Terapia Libre</strong></h2>
 
                     <hr>
 
@@ -134,6 +105,14 @@
 
         if (registroExitoso === 'exitoso' && alertaExito) {
             alertaExito.classList.remove('d-none');
+        }
+
+        // Mostrar alerta de error si las credenciales son incorrectas
+        const error = urlParams.get('error');
+        const alertaError = document.getElementById('alerta-error');
+
+        if (error === 'invalid_credentials' && alertaError) {
+            alertaError.classList.remove('d-none');
         }
     </script>
 </body>

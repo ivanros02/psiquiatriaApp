@@ -3,8 +3,11 @@ session_start(); // Asegúrate de iniciar la sesión en todas las páginas
 
 // Verificar si el usuario está logueado
 $usuarioLogueado = false;
+$nombreUsuario = '';  // Variable para almacenar el nombre del usuario
+
 if (isset($_SESSION['user_id'])) {
     $usuarioLogueado = true;
+    $nombreUsuario = $_SESSION['user_nombre'];  // Recuperar el nombre del usuario de la sesión
 }
 ?>
 <!DOCTYPE html>
@@ -77,7 +80,7 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Mostrar "Perfil" si el usuario está logueado -->
                 <?php if ($usuarioLogueado): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="../usuario/dashboard/dashboard.php">Perfil</a>
+                        <a class="nav-link" href="../usuario/dashboard/dashboard.php">Hola, <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../usuario/control/logout.php">Cerrar sesión</a>
@@ -110,7 +113,7 @@ if (isset($_SESSION['user_id'])) {
                     <li>
                         <a href="../usuario/dashboard/dashboard.php">
                             <i class="fas fa-user"></i>
-                            <p>Perfil</p>
+                            <p>Hola, <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></p>
                         </a>
                     </li>
                     <li>

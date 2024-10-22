@@ -9,6 +9,14 @@ include '../../php/conexion.php';
 
 $usuario_id = $_SESSION['user_id']; // Cambia esto también
 
+// Verificar si el usuario está logueado
+$usuarioLogueado = false;
+$nombreUsuario = '';  // Variable para almacenar el nombre del usuario
+
+if (isset($_SESSION['user_id'])) {
+    $usuarioLogueado = true;
+    $nombreUsuario = $_SESSION['user_nombre'];  // Recuperar el nombre del usuario de la sesión
+}
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +81,7 @@ $usuario_id = $_SESSION['user_id']; // Cambia esto también
 
 <body>
     <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
-        <a href="index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
+        <a href="../../index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
             <img src="../../img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
             <span>Terapia Libre</span>
         </a>
@@ -81,7 +89,7 @@ $usuario_id = $_SESSION['user_id']; // Cambia esto también
         <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="../../index.php">Inicio</a>
+                    <a class="nav-link" href="../../index.php">Hola, <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./perfil/perfil.php">Perfil</a>
@@ -101,7 +109,7 @@ $usuario_id = $_SESSION['user_id']; // Cambia esto también
                 <li>
                     <a href="./perfil/perfil.php">
                         <i class="fas fa-user"></i>
-                        <p>Perfil</p>
+                        <p>Hola, <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></p>
                     </a>
                 </li>
             </ul>

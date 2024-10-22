@@ -15,7 +15,7 @@ $(document).ready(function () {
 
                     // Tarjeta de presentación
                     const card = `
-                                        <div class="card mb-3 custom-margin-top" id="cardPresentacion">
+                        <div class="card mb-3 custom-margin-top" id="cardPresentacion">
                         <div class="row g-0">
                             <div class="col-md-4">
                                 <img src="${psicologo.rutaImagen}" class="img-fluid rounded-start custom-img" alt="${psicologo.nombre}">
@@ -73,6 +73,11 @@ $(document).ready(function () {
                     $('#cardContainer').append(card);
 
 
+                    // Inicializar el carrusel de Bootstrap después de agregarlo al DOM
+                    $('#comentariosCarousel').carousel({
+                        interval: 5000,  // Puedes ajustar el intervalo a tu preferencia
+                        ride: 'carousel'
+                    });
 
 
                     // Presentación
@@ -93,7 +98,7 @@ $(document).ready(function () {
                             <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content card-modern-shadow" style="background-color: #f4f4f4; border-radius: 15px;">
-                                        <div class="modal-header" style="border-bottom: none; padding-bottom: 0;">
+                                        <div class="modal-header" style="border-bottom: none; padding-bottom: 0; overflow-y: hidden;">
                                             <h5 class="modal-title category-modern" id="contactModalLabel">Aviso Importante</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background: transparent; border: none;"></button>
                                         </div>

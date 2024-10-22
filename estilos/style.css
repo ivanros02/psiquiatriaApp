@@ -270,7 +270,7 @@ html {
 /*ACUDIR*/
 .blog-card {
     width: 100%;
-    height: 350px;
+    height: 290px;
     /* Hacemos la tarjeta un poco más pequeña */
     position: relative;
     overflow: hidden;
@@ -341,7 +341,7 @@ html {
 
 .blog-card:hover .card-info {
     opacity: 1;
-    bottom: 100px;
+    bottom: 60px;
 }
 
 .blog-card:hover .color-overlay {
@@ -388,7 +388,7 @@ hr {
 .card-info {
     width: 100%;
     position: absolute;
-    bottom: 80px;
+    bottom: 10px;
     left: 0;
     margin: 0 auto;
     padding: 0 50px;
@@ -403,15 +403,14 @@ hr {
 
 
 /* Estilos Responsivos */
-@media (max-width: 991px) {
+@media (max-width: 1280px) {
     .blog-card {
-        height: 320px;
+        height: 350px;
         /* Ajustamos la altura para pantallas medianas */
     }
 
     .card-info {
         font-size: 12px;
-        /* Ajustamos el tamaño de la fuente para pantallas medianas */
     }
 }
 
@@ -430,8 +429,10 @@ hr {
     .card-info {
         font-size: 11px;
         /* Ajustamos el tamaño de la fuente para pantallas más pequeñas */
-        margin-bottom: -7rem !important;
+        margin-bottom: -5rem !important;
     }
+
+
 }
 
 /*FIN ACUDIR*/

@@ -52,22 +52,6 @@
             background-color: var(--blue);
             border-color: var(--blue);
         }
-
-        .btn-google {
-            background-color: #ea4335;
-            color: white;
-        }
-
-        .btn-facebook {
-            background-color: #3b5998;
-            color: white;
-        }
-
-        .btn-apple {
-            background-color: black;
-            color: white;
-        }
-
         .btn-lg {
             padding: 10px 15px;
             font-size: 0.9rem;
@@ -103,19 +87,6 @@
                     <img src="../img/Logo_transparente.png" alt="Logo" class="logo">
                     <h2 class="text-center">Regístrate en <strong>Terapia Libre</strong></h2>
 
-                    <!-- Botones para iniciar sesión con redes sociales -->
-                    <div class="d-grid gap-2 mb-3">
-                        <button class="btn btn-google btn-lg">
-                            <i class="fab fa-google me-2"></i> Continuar con Google
-                        </button>
-                        <button class="btn btn-facebook btn-lg">
-                            <i class="fab fa-facebook-f me-2"></i> Continuar con Facebook
-                        </button>
-                        <button class="btn btn-apple btn-lg">
-                            <i class="fab fa-apple me-2"></i> Continuar con Apple
-                        </button>
-                    </div>
-
                     <hr>
 
                     <form action="./control/registro.php" method="POST">
@@ -134,7 +105,7 @@
                         <button type="submit" class="btn btn-primary w-100">Crear Cuenta</button>
                     </form>
                     <div class="text-center mt-3">
-                        <a href="./index.html">¿Ya tienes una cuenta? Inicia sesión</a>
+                        <a href="./index.php">¿Ya tienes una cuenta? Inicia sesión</a>
                     </div>
                 </div>
             </div>

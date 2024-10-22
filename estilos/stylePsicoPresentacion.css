@@ -57,7 +57,7 @@ html {
 
 /*CARD*/
 .custom-margin-top {
-  margin-top: 12rem !important;
+  margin-top: 11rem !important;
   /* Ajusta el valor a tus necesidades */
 }
 
@@ -71,16 +71,25 @@ html {
 }
 
 .card img {
-  border-radius: 30px 30px 30px 30px !important;
-  /* Bordes redondeados para la imagen */
-  width: 100%;
-  /* Asegura que la imagen ocupa el 100% del contenedor */
-  height: auto;
-  /* Mantiene la proporción de la imagen */
-  display: block;
-  /* Elimina el espacio inferior que puede aparecer en algunas imágenes */
-  margin-left: -0.5rem;
+  border-radius: 30px !important; /* Bordes redondeados para la imagen */
+  width: 100%; /* Asegura que la imagen ocupa el 100% del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  display: block; /* Elimina el espacio inferior que puede aparecer en algunas imágenes */
+  margin-left: -0.5rem; /* Elimina el margen negativo */
+  margin-top: 3rem !important;
 }
+
+.custom-img {
+  margin: 0 auto !important; /* Centra la imagen en el contenedor */
+}
+
+@media (max-width: 576px) {
+  .custom-img {
+    width: 90% !important; /* Ajusta el ancho para móviles */
+    margin: 0 auto !important; /* Asegura que esté centrada */
+  }
+}
+
 
 .custom-img {
   width: 100%;

@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($user && password_verify($password, $user['password'])) {
     $_SESSION['user_id'] = $user['id'];
+    $_SESSION['user_nombre'] = $user['nombre'];  // Guardar el nombre del usuario en la sesión
 
     // Si hay un valor en 'redirect_to', redirige a esa URL
     if (!empty($_POST['redirect_to'])) {
@@ -25,7 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     exit();  // Siempre es buena práctica terminar el script después de la redirección
   } else {
-    echo "Correo o contraseña incorrectos.";
+    // Redirige a la página de inicio de sesión con un mensaje de error
+    header('Location: ../index.php?error=invalid_credentials');
+    exit();
   }
 
 
