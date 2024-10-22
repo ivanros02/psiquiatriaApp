@@ -54,7 +54,7 @@ function sendEmailToUser(userEmail, psychologistInfo) {
     const videoCallLink = generateVideoCallLink();
 
     const userMailOptions = {
-        from: 'ivanrosendo1102@gmail.com',
+        from: 'terapialibre@terapialibre.com.ar',
         to: userEmail,
         subject: 'Terapia Libre: información del profesional solicitado',
         html: `
@@ -160,7 +160,7 @@ function sendEmailToUser(userEmail, psychologistInfo) {
     const psychologistEmail = psychologistInfo.mail;
 
     const psychologistMailOptions = {
-        from: 'ivanrosendo1102@gmail.com',
+        from: 'terapialibre@terapialibre.com.ar',
         to: psychologistEmail,
         subject: 'Tienes un nuevo paciente',
         html: `
@@ -303,7 +303,7 @@ function saveUserEmail(user, psychologistId, paymentId) {
 
 app.post("/create_preference", async (req, res) => {
     try {
-        const { psychologistId, userEmail, title, quantity, price } = req.body;
+        const { psychologistId, userId, title, quantity, price } = req.body;
         const idempotencyKey = req.headers['x-idempotency-key'];
         const query = `SELECT * FROM presentaciones WHERE id = ${psychologistId}`;
         dbConnection.query(query, (error, results, fields) => {
@@ -313,6 +313,8 @@ app.post("/create_preference", async (req, res) => {
             } else {
                 if (results.length > 0) {
                     const psychologistInfo = results[0];
+                    // Concatenar `userId` y `psychologistId` en `external_reference`
+                    const externalReference = `${userId},${psychologistId}`;
                     const body = {
                         items: [{ title, quantity: Number(quantity), unit_price: Number(price), currency_id: "ARS" }],
                         back_urls: {
@@ -322,8 +324,8 @@ app.post("/create_preference", async (req, res) => {
                         },
                         auto_return: "approved",
                         psychologistInfo: psychologistInfo,
-                        notification_url: 'https://e5f3-2800-810-4e6-9984-8dc-c7d7-3299-7090.ngrok-free.app/webhook',//https://terapialibre.com.ar/webhook
-                        external_reference: psychologistId,
+                        notification_url: 'https://terapialibre.com.ar/webhook',
+                        external_reference: externalReference // Agrega aquí si lo necesitas en el webhook
                     };
 
                     const preference = new Preference(client);
@@ -360,10 +362,13 @@ app.post("/webhook", async function (req, res) {
             const paymentData = await response.json();
             if (paymentData.status === 'approved') {
                 const userEmail = paymentData.payer.email;
-                // Aquí necesitas una manera de obtener el ID del usuario desde el payload del pago
-                const userId = paymentData.additional_info.userId; // Asegúrate de que el ID se envíe correctamente
 
-                const psychologistId = paymentData.external_reference;
+                // Descomponer external_reference para obtener userId y psychologistId
+                const [userId, psychologistId] = paymentData.external_reference.split(',');
+
+                console.log('User ID:', userId);  // Verifica si userId tiene un valor
+                console.log('Psychologist ID:', psychologistId);  // Verifica si psychologistId tiene un valor
+
                 const psychologistQuery = `SELECT * FROM presentaciones WHERE id = ?`;
                 dbConnection.query(psychologistQuery, [psychologistId], (error, results, fields) => {
                     if (error) {

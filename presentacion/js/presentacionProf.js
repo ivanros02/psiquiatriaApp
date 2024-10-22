@@ -8,7 +8,7 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (data) {
                 const { presentaciones, comentarios } = data;
-                
+
                 const psicologo = presentaciones[0];
                 if (psicologo) {
                     $('#cardContainer').empty();
@@ -184,7 +184,6 @@ $(document).on('click', '#checkout-btn', async () => {
     $(this).prop('disabled', true);
     // Captura el valor del span
     const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
-
     // PAYPAL
     if (!paypalButtonRendered) {
         paypal.Buttons({
@@ -205,25 +204,31 @@ $(document).on('click', '#checkout-btn', async () => {
                 let url = '../paypal/captura.php';
                 actions.order.capture().then(detalles => {
                     const user_email = detalles.payer.email_address;
+                    const userId = document.getElementById("user-id").value.trim();
+
                     return fetch(url, {
                         method: 'post',
-                        headers: { 'content-type': 'application/json' },
-                        body: JSON.stringify({ detalles })
-                    }).then(response => {
-                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                        return response.text();
-                    }).then(bodyText => {
-                        const data = JSON.parse(bodyText);
-                        if (data.status === 'success') {
-                            console.log('Datos guardados correctamente:', data.message);
-                            enviarCorreoElectronicoAComprador(presentaciontId, user_email);
-                            window.location.href = '../datos/datosProfesional.php?id=' + presentaciontId;
-                        } else {
-                            console.error('Error al guardar los datos:', data.message);
-                        }
-                    }).catch(error => console.error('Error en la solicitud:', error));
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ detalles, userId }) // Enviando los detalles y userId en el cuerpo
+                    })
+                        .then(response => {
+                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                            return response.json();  // Ahora esperamos JSON directamente
+                        })
+                        .then(data => {
+                            // Ya no necesitas JSON.parse aquí, ya es un objeto
+                            if (data.status === 'success') {
+                                console.log('Datos guardados correctamente:', data.message);
+                                enviarCorreoElectronicoAComprador(presentaciontId, user_email);
+                                window.location.href = 'https://terapialibre.com.ar/usuario/dashboard/dashboard.php';
+                            } else {
+                                console.error('Error al guardar los datos:', data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error en la solicitud:', error));
                 });
             },
+
             onCancel: () => {
                 alert('Pago cancelado');
             }
@@ -265,8 +270,10 @@ $(document).on('click', '#checkout-btn', async () => {
             quantity: 1,
             price: precio,
             psychologistId: presentaciontId,
-            userId,  // Cambia userEmail por userId
-            formData
+            userId,  // Aquí estás enviando el userId
+            additional_info: {
+                userId  // Asegúrate de que el userId esté dentro de additional_info
+            }
         };
 
 

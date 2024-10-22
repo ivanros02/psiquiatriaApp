@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-10-2024 a las 17:00:24
+-- Tiempo de generación: 22-10-2024 a las 02:40:16
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -52,6 +52,28 @@ CREATE TABLE `chats` (
   `profesional_id` int(11) NOT NULL,
   `fecha_creacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `comentarios_presentaciones`
+--
+
+CREATE TABLE `comentarios_presentaciones` (
+  `id` int(255) NOT NULL,
+  `profesional_id` int(255) NOT NULL,
+  `comentario` varchar(255) NOT NULL,
+  `nombre` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `comentarios_presentaciones`
+--
+
+INSERT INTO `comentarios_presentaciones` (`id`, `profesional_id`, `comentario`, `nombre`) VALUES
+(3, 2, 'holaa', 'Sergio'),
+(4, 2, 'aburrido', 'Walter'),
+(5, 2, 'me voy', 'Martin');
 
 -- --------------------------------------------------------
 
@@ -190,8 +212,8 @@ INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `telefono`, `fecha_
 --
 
 CREATE TABLE `usuario_profesional` (
-  `usuario_id` int(11) NOT NULL,
-  `profesional_id` int(11) NOT NULL
+  `usuario_id` int(255) NOT NULL,
+  `profesional_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -220,6 +242,13 @@ ALTER TABLE `administradores`
 ALTER TABLE `chats`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_chat` (`usuario_id`,`profesional_id`);
+
+--
+-- Indices de la tabla `comentarios_presentaciones`
+--
+ALTER TABLE `comentarios_presentaciones`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_comentario_prof` (`profesional_id`);
 
 --
 -- Indices de la tabla `datos_usuario`
@@ -279,6 +308,12 @@ ALTER TABLE `chats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `comentarios_presentaciones`
+--
+ALTER TABLE `comentarios_presentaciones`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
@@ -305,6 +340,12 @@ ALTER TABLE `usuarios`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `comentarios_presentaciones`
+--
+ALTER TABLE `comentarios_presentaciones`
+  ADD CONSTRAINT `fk_comentario_prof` FOREIGN KEY (`profesional_id`) REFERENCES `presentaciones` (`id`);
 
 --
 -- Filtros para la tabla `datos_usuario`
