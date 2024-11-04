@@ -31,10 +31,22 @@ try {
     // Iniciar la transacción
     $conexion->begin_transaction();
 
-    // Consulta SQL para insertar en presentaciones
-    $sql = "INSERT INTO presentaciones (rutaImagen, nombre, titulo, matricula, matriculaP, descripcion, telefono, disponibilidad, valor, valor_internacional, mail, whatsapp, instagram) 
-            VALUES ('$rutaImagen', '$nombre', '$titulo', $matricula, $matriculaP, '$descripcion', '$telefono', $disponibilidad, $valor, $valor_internacional, '$mail', '$whatsapp', '$instagram')";
-    
+    // Crear un usuario con el mismo mail y contraseña
+    $password = password_hash($mail, PASSWORD_DEFAULT); // Hasheamos la contraseña
+    $sql_usuario = "INSERT INTO usuarios (nombre, email, password, telefono) 
+                    VALUES ('$nombre', '$mail', '$password', '$telefono')";
+
+    if (!$conexion->query($sql_usuario)) {
+        throw new Exception("Error al insertar en usuarios: " . $conexion->error);
+    }
+
+    // Obtener el ID del nuevo usuario
+    $usuario_id = $conexion->insert_id;
+
+    // Consulta SQL para insertar en presentaciones, incluyendo el id_usuario
+    $sql = "INSERT INTO presentaciones (rutaImagen, nombre, titulo, matricula, matriculaP, descripcion, telefono, disponibilidad, valor, valor_internacional, mail, whatsapp, instagram, id_usuario) 
+            VALUES ('$rutaImagen', '$nombre', '$titulo', $matricula, $matriculaP, '$descripcion', '$telefono', $disponibilidad, $valor, $valor_internacional, '$mail', '$whatsapp', '$instagram', $usuario_id)";
+
     if (!$conexion->query($sql)) {
         throw new Exception("Error al insertar en presentaciones: " . $conexion->error);
     }
@@ -47,23 +59,14 @@ try {
         foreach ($especialidades_id as $especialidad_id) {
             $especialidad_id = mysqli_real_escape_string($conexion, $especialidad_id);
             $sql_especialidades = "INSERT INTO presentaciones_especialidades (presentacion_id, especialidad_id) VALUES ($presentacion_id, $especialidad_id)";
-            
+
             if (!$conexion->query($sql_especialidades)) {
                 throw new Exception("Error al insertar especialidad con ID $especialidad_id: " . $conexion->error);
             }
         }
     }
 
-    // Crear un usuario con el mismo mail y contraseña
-    $password = password_hash($mail, PASSWORD_DEFAULT); // Hasheamos la contraseña
-    $sql_usuario = "INSERT INTO usuarios (nombre, email, password, telefono, id_presentacion) 
-                    VALUES ('$nombre', '$mail', '$password', '$telefono', $presentacion_id)";
-
-    if (!$conexion->query($sql_usuario)) {
-        throw new Exception("Error al insertar en usuarios: " . $conexion->error);
-    }
-
-   /*
+    /*
     // Enviar correo de confirmación
     $to = $mail;
     $subject = 'Registro exitoso en Terapia Libre';

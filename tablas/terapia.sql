@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 03:22:23
+-- Tiempo de generación: 04-11-2024 a las 17:22:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,26 +39,6 @@ CREATE TABLE `administradores` (
 
 INSERT INTO `administradores` (`id`, `username`, `password`) VALUES
 (1, 'admin', '$2y$10$oj/vo.EBl5JLTi2dQSLA0O0wVBCn/wFCjCLc5NlTLzGOUSf8/94ta');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `chats`
---
-
-CREATE TABLE `chats` (
-  `id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `profesional_id` int(11) NOT NULL,
-  `fecha_creacion` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `chats`
---
-
-INSERT INTO `chats` (`id`, `usuario_id`, `profesional_id`, `fecha_creacion`) VALUES
-(8, 4, 9, '2024-11-03 22:32:39');
 
 -- --------------------------------------------------------
 
@@ -117,7 +97,7 @@ CREATE TABLE `disponibilidad_turnos` (
 --
 
 INSERT INTO `disponibilidad_turnos` (`id`, `profesional_id`, `fecha`, `hora`, `disponible`) VALUES
-(7, 9, '2024-11-02', '10:00:00', 0);
+(7, 9, '2024-11-04', '10:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -155,27 +135,6 @@ INSERT INTO `especialidades` (`id`, `especi`) VALUES
 (38, 'Psicología Forense'),
 (39, 'Psicología Intercultural'),
 (40, 'Psicología Gerontológica');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mensajes`
---
-
-CREATE TABLE `mensajes` (
-  `id` int(11) NOT NULL,
-  `chat_id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `texto` text NOT NULL,
-  `fecha_creacion` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `mensajes`
---
-
-INSERT INTO `mensajes` (`id`, `chat_id`, `usuario_id`, `texto`, `fecha_creacion`) VALUES
-(1, 8, 9, 'hola', '2024-11-03 23:21:13');
 
 -- --------------------------------------------------------
 
@@ -257,7 +216,7 @@ CREATE TABLE `reservas_turnos` (
 --
 
 INSERT INTO `reservas_turnos` (`id`, `turno_id`, `usuario_id`, `fecha_reserva`) VALUES
-(8, 7, 4, '2024-11-03 00:55:21');
+(9, 7, 4, '2024-11-04 15:31:37');
 
 -- --------------------------------------------------------
 
@@ -302,7 +261,30 @@ CREATE TABLE `usuario_profesional` (
 INSERT INTO `usuario_profesional` (`usuario_id`, `profesional_id`) VALUES
 (4, 1),
 (4, 2),
+(4, 26),
 (5, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `videollamadas`
+--
+
+CREATE TABLE `videollamadas` (
+  `id` int(11) NOT NULL,
+  `profesional_id` int(11) NOT NULL,
+  `paciente_id` int(11) NOT NULL,
+  `fecha_hora` datetime NOT NULL,
+  `enlace` varchar(255) NOT NULL,
+  `fecha_creacion` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `videollamadas`
+--
+
+INSERT INTO `videollamadas` (`id`, `profesional_id`, `paciente_id`, `fecha_hora`, `enlace`, `fecha_creacion`) VALUES
+(2, 9, 4, '2024-11-04 10:49:04', 'https://meet.jit.si/reunion-1730728144504', '2024-11-04 10:49:04');
 
 --
 -- Índices para tablas volcadas
@@ -313,13 +295,6 @@ INSERT INTO `usuario_profesional` (`usuario_id`, `profesional_id`) VALUES
 --
 ALTER TABLE `administradores`
   ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `chats`
---
-ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `unique_chat` (`usuario_id`,`profesional_id`);
 
 --
 -- Indices de la tabla `comentarios_presentaciones`
@@ -348,14 +323,6 @@ ALTER TABLE `disponibilidad_turnos`
 --
 ALTER TABLE `especialidades`
   ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `mensajes`
---
-ALTER TABLE `mensajes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `chat_id` (`chat_id`),
-  ADD KEY `usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `presentaciones`
@@ -395,6 +362,14 @@ ALTER TABLE `usuario_profesional`
   ADD KEY `profesional_id` (`profesional_id`);
 
 --
+-- Indices de la tabla `videollamadas`
+--
+ALTER TABLE `videollamadas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `profesional_id` (`profesional_id`),
+  ADD KEY `paciente_id` (`paciente_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -403,12 +378,6 @@ ALTER TABLE `usuario_profesional`
 --
 ALTER TABLE `administradores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `chats`
---
-ALTER TABLE `chats`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `comentarios_presentaciones`
@@ -435,12 +404,6 @@ ALTER TABLE `especialidades`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
--- AUTO_INCREMENT de la tabla `mensajes`
---
-ALTER TABLE `mensajes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT de la tabla `presentaciones`
 --
 ALTER TABLE `presentaciones`
@@ -450,13 +413,19 @@ ALTER TABLE `presentaciones`
 -- AUTO_INCREMENT de la tabla `reservas_turnos`
 --
 ALTER TABLE `reservas_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `videollamadas`
+--
+ALTER TABLE `videollamadas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -480,13 +449,6 @@ ALTER TABLE `datos_usuario`
 --
 ALTER TABLE `disponibilidad_turnos`
   ADD CONSTRAINT `fk_disponibilidad_usuario` FOREIGN KEY (`profesional_id`) REFERENCES `usuarios` (`id`);
-
---
--- Filtros para la tabla `mensajes`
---
-ALTER TABLE `mensajes`
-  ADD CONSTRAINT `mensajes_ibfk_1` FOREIGN KEY (`chat_id`) REFERENCES `chats` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `mensajes_ibfk_2` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `presentaciones`
@@ -520,6 +482,13 @@ ALTER TABLE `usuarios`
 ALTER TABLE `usuario_profesional`
   ADD CONSTRAINT `usuario_profesional_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `usuario_profesional_ibfk_2` FOREIGN KEY (`profesional_id`) REFERENCES `presentaciones` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `videollamadas`
+--
+ALTER TABLE `videollamadas`
+  ADD CONSTRAINT `videollamadas_ibfk_1` FOREIGN KEY (`profesional_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `videollamadas_ibfk_2` FOREIGN KEY (`paciente_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

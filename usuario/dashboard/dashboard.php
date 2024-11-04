@@ -286,28 +286,30 @@ if ($id_presentacion !== null) {
 
         $(document).on('click', '.btn-video', function () {
             const usuarioId = <?= $usuario_id; ?>; // ID del usuario actual
-
-            // Llamar al archivo PHP para obtener la video llamada
+            const profesionalId = $(this).data('id'); // ID del profesional desde el atributo data-id
+            console.log(usuarioId);
+            console.log(profesionalId)
+            // Llamar al archivo PHP para obtener la videollamada específica del profesional
             $.ajax({
                 url: './gets/obtener_videollamada.php',
                 type: 'POST',
-                data: { usuario_id: usuarioId },
+                data: { usuario_id: usuarioId, profesional_id: profesionalId },
                 success: function (response) {
-                    
                     const resultado = JSON.parse(response);
-                    
+
                     if (resultado.status === 'success') {
                         $('#videoCallModal').modal('show'); // Abrir el modal primero
                         iniciarVideoLlamada(resultado.enlace); // Luego inicia la videollamada
                     } else if (resultado.status === 'no_call') {
-                        alert('Espera a que tu terapeuta cree la video llamada.');
+                        alert('Espera a que tu terapeuta cree la videollamada.');
                     }
                 },
                 error: function () {
-                    alert('Error al obtener la información de la video llamada.');
+                    alert('Error al obtener la información de la videollamada.');
                 }
             });
         });
+
 
         let api; // Variable para almacenar la instancia de JitsiMeetExternalAPI
 
