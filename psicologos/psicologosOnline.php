@@ -177,8 +177,28 @@ if (isset($_SESSION['user_id'])) {
       </form>
 
 
+      <!-- Modal de Selección de Región -->
+      <div class="modal fade" id="regionModal" tabindex="-1" aria-labelledby="regionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="regionModalLabel">Selecciona tu región</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <h4>Selecciona tu región:</h4>
+              <button id="btnArgentina" class="btn btn-primary mx-2" onclick="seleccionarRegion('local')">🇦🇷
+                Argentina</button>
+              <button id="btnRestoMundo" class="btn btn-primary mx-2" onclick="seleccionarRegion('internacional')">🌍
+                Resto del Mundo</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!-- Contenedor para todas las tarjetas -->
-      <div class="row d-flex" id="cardContainer">
+      <div class="row d-flex" id="cardContainer" style="display: none;">
         <!-- Las tarjetas se llenarán dinámicamente mediante AJAX -->
       </div>
 

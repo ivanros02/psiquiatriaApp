@@ -32,10 +32,15 @@
 
 <body>
     <div class="container login-container">
+        <!-- Botón de volver a la página principal -->
+        <div class="text-center mt-3">
+            <a href="../index.php" class="btn btn-secondary">Volver a Inicio</a>
+        </div>
         <div class="row justify-content-center">
+
             <div class="col-md-6">
                 <form action="./manejoUsuario/login.php" method="POST" class="login-form">
-                    <h3 class="text-center">Iniciar Sesión</h3>
+                    <h3 class="text-center">Iniciar Sesión Como Administrador</h3>
 
                     <!-- Aquí se mostrará la alerta con JavaScript si existe un error -->
                     <div id="alert-container"></div>

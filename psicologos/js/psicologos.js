@@ -1,11 +1,31 @@
 function mostrarInformacion(card) {
-    const psychologistId = card.getAttribute('data-id'); // Cambié aquí para asegurarme de que accedemos correctamente al data-id
+    const psychologistId = card.getAttribute('data-id'); // Obtiene el ID del psicólogo
+    const valorSeleccionado = (document.getElementById('btnArgentina').classList.contains('active')) ? 'local' : 'internacional'; // Verifica qué botón está activo
     if (psychologistId) { // Verifica que psychologistId no sea nulo
-        window.location.href = `../presentacion/presentacionProfesional.php?id=${psychologistId}`;
+        window.location.href = `../presentacion/presentacionProfesional.php?id=${psychologistId}&valor=${valorSeleccionado}`; // Incluye el valor en la URL
     } else {
         console.error('ID del psicólogo no encontrado.');
     }
 }
+
+// Variable para almacenar el valor de la región seleccionada
+let valorSeleccionado = 'local'; // Valor por defecto
+
+function seleccionarRegion(region) {
+    valorSeleccionado = region; // Guarda el valor seleccionado
+
+    // Elimina la clase 'active' de ambos botones
+    document.getElementById('btnArgentina').classList.remove('active');
+    document.getElementById('btnRestoMundo').classList.remove('active');
+
+    // Añade la clase 'active' al botón seleccionado
+    if (region === 'local') {
+        document.getElementById('btnArgentina').classList.add('active');
+    } else {
+        document.getElementById('btnRestoMundo').classList.add('active');
+    }
+}
+
 
 
 //ESPECIALIDADES
@@ -38,8 +58,14 @@ document.addEventListener("DOMContentLoaded", function () {
     cargarEspecialidades();
 });
 
-//PRESENTACIONES
+// PRESENTACIONES
 document.addEventListener("DOMContentLoaded", function () {
+    var valorSeleccionado = 'local'; // Valor por defecto (local)
+
+    // Mostrar modal de selección de región
+    var regionModal = new bootstrap.Modal(document.getElementById('regionModal'));
+    regionModal.show(); // Mostrar modal al cargar la página
+
     // Función para cargar las presentaciones
     function cargarPresentaciones() {
         var xhr = new XMLHttpRequest();
@@ -47,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.onload = function () {
             if (this.status == 200) {
                 var presentaciones = JSON.parse(this.responseText);
-                mostrarPresentaciones(presentaciones);
+                mostrarPresentaciones(presentaciones, valorSeleccionado);
             } else {
                 console.error('Error al obtener las presentaciones');
             }
@@ -56,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Función para mostrar las presentaciones en tarjetas
-    function mostrarPresentaciones(presentaciones) {
+    function mostrarPresentaciones(presentaciones, tipoValor) {
         var cardContainer = document.getElementById('cardContainer');
         cardContainer.innerHTML = ''; // Limpia el contenedor antes de agregar tarjetas
 
@@ -68,53 +94,60 @@ document.addEventListener("DOMContentLoaded", function () {
         // Agrupamos especialidades por id de presentación respetando el orden
         var presentacionesMap = [];
         presentaciones.forEach(function (presentacion) {
-            // Verificamos si la presentación ya está en el array `presentacionesMap`
             var presentacionExistente = presentacionesMap.find(function (p) {
                 return p.id === presentacion.id;
             });
 
             if (!presentacionExistente) {
-                // Si no existe, la añadimos con un array vacío de especialidades
                 presentacionesMap.push({
-                    ...presentacion, // Copiamos las propiedades de la presentación
-                    especialidades: [presentacion.especi] // Inicializamos con la especialidad actual
+                    ...presentacion,
+                    especialidades: [presentacion.especi]
                 });
             } else {
-                // Si ya existe, solo añadimos la nueva especialidad
                 presentacionExistente.especialidades.push(presentacion.especi);
             }
         });
 
         // Ahora creamos las tarjetas respetando el orden del JSON original
         presentacionesMap.forEach(function (presentacion) {
-            var especialidadesHTML = presentacion.especialidades.join(', '); // Une las especialidades en un string
+            var especialidadesHTML = presentacion.especialidades.join(', ');
+            var valorMostrar = (tipoValor === 'local') ? presentacion.valor : presentacion.valor_internacional;
             var cardHTML = `
             <div class="col-lg-3 col-md-4 mb-3 d-flex mt-5 justify-content-center">
                 <div class="card shadow-sm" data-id="${presentacion.id}" onclick="mostrarInformacion(this)">
                     <img src="${presentacion.rutaImagen}" class="card-img-top custom-img" alt="${presentacion.nombre}">
                     <div class="card-body d-flex flex-column">
-                        <span class="tooltiptext" style="display: none;">$ ${presentacion.valor}</span>
+                        <span class="tooltiptext" style="display: none;">$ ${valorMostrar}</span>
                         <h5 class="card-title">${presentacion.nombre}</h5>
                         <h6 class="card-title text-success">${presentacion.titulo}</h6>
                         <p class="card-text">${especialidadesHTML}</p>
                         <p class="text-muted">Disponibilidad en: ${presentacion.disponibilidad} hs</p>
-                        <div class="mt-auto text-center"> <!-- Se agregó un div aquí -->
-                            <strong class="display-6">$ ${presentacion.valor}</strong> <!-- Mostrar el valor -->
+                        <div class="mt-auto text-center">
+                            <strong class="display-6">$ ${valorMostrar}</strong>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-        `;
+            `;
             cardContainer.insertAdjacentHTML('beforeend', cardHTML);
         });
+
+        // Mostrar el contenedor de tarjetas
+        cardContainer.style.display = 'block';
     }
 
+    // Manejar la selección de la región
+    document.getElementById('btnArgentina').addEventListener('click', function () {
+        valorSeleccionado = 'local'; // Establecer el valor a local
+        cargarPresentaciones(); // Cargar las presentaciones
+        regionModal.hide(); // Ocultar modal
+    });
+
+    document.getElementById('btnRestoMundo').addEventListener('click', function () {
+        valorSeleccionado = 'internacional'; // Establecer el valor a internacional
+        cargarPresentaciones(); // Cargar las presentaciones
+        regionModal.hide(); // Ocultar modal
+    });
 
     // Evento para el envío del formulario
     var filterForm = document.getElementById('filterForm');
@@ -132,11 +165,6 @@ document.addEventListener("DOMContentLoaded", function () {
         var especialidad = document.getElementById('especialidadFilter').value;
         var disponibilidad = document.getElementById('disponibilidadFilter').value;
         var ordenar = document.getElementById('ordenar').value;
-        // Verificar los valores que se envían
-        console.log('Especialidad:', especialidad, 'Disponibilidad:', disponibilidad, 'Ordenar:', ordenar);
-
-
-
 
         // Realizar la petición AJAX para obtener las presentaciones filtradas
         var xhr = new XMLHttpRequest();
@@ -144,8 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.onload = function () {
             if (this.status == 200) {
                 var presentaciones = JSON.parse(this.responseText);
-                console.log(presentaciones)
-                mostrarPresentaciones(presentaciones);
+                mostrarPresentaciones(presentaciones, valorSeleccionado); // Pasar el valor seleccionado
             } else {
                 console.error('Error al obtener las presentaciones filtradas');
             }
@@ -153,8 +180,10 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send();
     }
 
-    // Carga inicial de presentaciones
-    cargarPresentaciones();
+    // Carga inicial del modal
+    regionModal.show();
 });
+
+
 
 

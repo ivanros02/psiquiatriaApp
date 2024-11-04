@@ -1,5 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const presentaciontId = urlParams.get('id');
+const valor = urlParams.get('valor');
 $(document).ready(function () {
     if (presentaciontId) {
         $.ajax({
@@ -30,7 +31,7 @@ $(document).ready(function () {
                                     </p>
                                     <h5 class="card-title">Especialidades</h5>
                                     <p class="card-text">${psicologo.especialidades}</p>
-                                    <p class='card-valor tooltiptext' data-valor='${psicologo.valor}'>$ ${psicologo.valor}</p>
+                                    <p class='card-valor tooltiptext' data-valor='${valor === 'local' ? psicologo.valor : psicologo.valor_internacional}'>$ ${valor === 'local' ? psicologo.valor : psicologo.valor_internacional}</p>
                                     <div class="text-center">
                                         <button class="button-33 btn-primary" id="contact">Contactar</button>
                                     </div>
@@ -128,6 +129,21 @@ $(document).ready(function () {
                     `;
                     $('body').append(modal);
 
+                    const modal_turno = `
+                            <div class="modal fade" id="calendarModal" tabindex="-1" aria-labelledby="calendarModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="calendarModalLabel">Seleccionar Turno</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="calendar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                    $('body').append(modal_turno)
 
 
 
@@ -135,18 +151,172 @@ $(document).ready(function () {
                     var usuarioLogueado = document.body.getAttribute('data-usuario-logueado') === 'true';
 
                     // Manejar el clic en el botón de contactar
+                    /* 
+                    document.getElementById('contact').addEventListener('click', function () {
+                            if (usuarioLogueado) {
+                                // Llamada AJAX para obtener los turnos disponibles del profesional
+                                $.ajax({
+                                    url: `./gets/get_turnos_disponibles.php?id=${psicologo.id}`,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    success: function (turnos) {
+                                        // Procesar y mostrar el calendario en el modal
+                                        mostrarCalendarioModal(turnos);
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('Error en la carga de turnos disponibles:', error);
+                                    }
+                                });
+                            } else {
+                                // Redirigir al usuario a la página de inicio de sesión si no está logueado
+                                const currentUrl = window.location.href;
+                                window.location.href = `../usuario/index.php?redirect_to=${encodeURIComponent(currentUrl)}`;
+                            }
+                        });
+                    */
+
                     document.getElementById('contact').addEventListener('click', function () {
                         if (usuarioLogueado) {
-                            // Si el usuario está logueado, mostrar el modal
-                            var myModal = new bootstrap.Modal(document.getElementById('contactModal'));
-                            myModal.show();
+                            // Llamada AJAX para obtener los turnos disponibles del profesional
+                            $.ajax({
+                                url: `./gets/get_turnos_disponibles.php?id=${psicologo.id}`,
+                                type: 'GET',
+                                dataType: 'json',
+                                success: function (turnos) {
+                                    // Procesar y mostrar el calendario en el modal
+                                    console.log(turnos); // Verifica que los turnos están bien formados
+                                    mostrarCalendarioModal(turnos);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error en la carga de turnos disponibles:', error);
+                                }
+                            });
                         } else {
-                            // Si no está logueado, redirigir a la página de inicio de sesión
-                            // Guarda la URL de redirección
+                            // Redirigir al usuario a la página de inicio de sesión si no está logueado
                             const currentUrl = window.location.href;
-                            window.location.href = `../usuario/index.php?redirect_to=${encodeURIComponent(currentUrl)}`; // Asegúrate de que la ruta sea correcta
+                            window.location.href = `../usuario/index.php?redirect_to=${encodeURIComponent(currentUrl)}`;
                         }
                     });
+
+
+
+                    function mostrarCalendarioModal(turnos) {
+                        var calendarModal = new bootstrap.Modal(document.getElementById('calendarModal'));
+                        var calendarEl = document.getElementById('calendar');
+                        calendarEl.innerHTML = '';
+
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                            initialView: 'dayGridWeek',
+                            themeSystem: 'bootstrap',
+                            headerToolbar: {
+                                left: 'prev,next today',
+                                center: 'title',
+                                right: ''
+                            },
+                            buttonText: {
+                                today: 'Hoy'
+                            },
+                            selectable: true,
+                            locale: 'es',
+                            events: turnos.map(turno => {
+                                const start = `${turno.fecha}T${turno.hora}`;
+                                const end = new Date(start);
+                                end.setHours(end.getHours() + 1);
+
+                                // Formatear la hora
+                                let [hour, minute] = turno.hora.split(':'); // Divide la hora y el minuto
+                                let formattedTime = `${hour}:${minute}`; // Vuelve a construir el formato
+
+                                return {
+                                    id: Number(turno.id),
+                                    title: formattedTime, // Solo la hora en el título
+                                    start: start,
+                                    end: end.toISOString(),
+                                    color: turno.disponible === "1" ? '#b6e6f6' : '#ff6f61',
+                                    textColor: '#000',
+                                    extendedProps: {
+                                        terapeuta: turno.terapeuta
+                                    }
+                                };
+                            }),
+                            eventContent: function (arg) {
+                                let eventInfo = arg.event.extendedProps;
+                                let time = document.createElement('div');
+                                time.innerHTML = `<strong>${arg.event.title}</strong>`; // Mostrar solo la hora
+
+                                let name = document.createElement('div');
+                                name.innerHTML = `<small>${eventInfo.terapeuta}</small>`; // Mostrar el nombre debajo
+
+                                return { domNodes: [time, name] };
+                            },
+                            eventClick: function (info) {
+                                if (confirm("¿Quieres seleccionar este turno con el terapeuta?")) {
+                                    seleccionarTurno(info.event.id);
+                                }
+                            },
+                            windowResize: function (view) {
+                                // Cambia la vista al tamaño de pantalla al redimensionar
+                                if (window.innerWidth < 768) {
+                                    calendar.changeView('timeGridDay');
+                                } else {
+                                    calendar.changeView('dayGridWeek');
+                                }
+                                calendar.render(); // Asegúrate de volver a renderizar los eventos
+                            },
+                            editable: false,
+                            eventBorderColor: '#ffffff',
+                            eventDisplay: 'block',
+                            height: 'auto',
+                            navLinks: true,
+                        });
+
+                        calendarModal.show();
+
+                        calendarModal._element.addEventListener('shown.bs.modal', function () {
+                            calendar.render(); // Renderiza el calendario al abrir el modal
+                        });
+                    }
+
+
+
+
+
+
+                    var usuarioId = document.body.getAttribute('data-usuario-id');
+
+                    function seleccionarTurno(turnoId) {
+                        if (!usuarioId) {
+                            console.error("El ID de usuario no está definido.");
+                            return;
+                        }
+                        console.log(usuarioId)
+                        $.ajax({
+                            url: './sets/set_reserva_turno.php',
+                            type: 'POST',
+                            data: {
+                                turno_id: turnoId,
+                                usuario_id: usuarioId
+                            },
+                            success: function (response) {
+                                try {
+                                    const res = JSON.parse(response);
+                                    if (res.success) {
+                                        alert("Turno reservado exitosamente");
+                                    } else {
+                                        alert(res.error || "Error al reservar el turno");
+                                    }
+                                } catch (error) {
+                                    console.error("Respuesta no válida:", response);
+                                    alert("Hubo un problema con la respuesta del servidor.");
+                                }
+                            },
+
+                        });
+                    }
+
+
+
+
 
 
                 } else {

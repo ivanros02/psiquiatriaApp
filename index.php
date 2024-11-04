@@ -12,12 +12,14 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terapia Libre</title>
+    <meta name="description"
+        content="Terapia Libre ofrece servicios de terapia psicológica profesional para ayudar a las personas a mejorar su bienestar emocional y mental.">
 
     <!--icono pestana-->
     <link rel="icon" href="img/Logo_transparente.png" type="image/x-icon">
@@ -53,6 +55,26 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1237863354199215');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1237863354199215&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
 </head>
 
 <body>
@@ -83,7 +105,8 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Mostrar "Perfil" si el usuario está logueado -->
                 <?php if ($usuarioLogueado): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="./usuario/dashboard/dashboard.php">Hola, <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></a>
+                        <a class="nav-link" href="./usuario/dashboard/dashboard.php">Hola,
+                            <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./usuario/control/logout.php">Cerrar sesión</a>
@@ -164,10 +187,11 @@ if (isset($_SESSION['user_id'])) {
 
         <div class="content">
 
-            <h1 class="wow animate__animated animate__zoomIn">ENCUENTRA DE INMEDIATO EL PROFESIONAL PARA INICIAR TU
+            <h1 class="wow animate__animated animate__zoomIn">ENCUENTRA DE INMEDIATO <br> EL PROFESIONAL PARA <br>
+                INICIAR TU
                 TRATAMIENTO.</h1>
-            <p class="wow animate__animated animate__zoomIn">Elegí entre más de 1000 especialistas,
-                tu asistencia terapéutica de forma inmediata
+            <p class="wow animate__animated animate__zoomIn">Elegí entre más de 1000 especialistas,<br>
+                tu asistencia terapéutica de forma <br> inmediata
                 con turnos a partir de 24 hs.
             </p>
             <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR
@@ -193,17 +217,17 @@ if (isset($_SESSION['user_id'])) {
                 <div class="row align-items-center">
                     <!-- Video a la izquierda con un margen superior y un pequeño margen a la derecha, oculto en móviles -->
                     <div class="col-lg-5 col-md-12 mb-4 mb-lg-0 d-none d-md-block" style="margin-top: 16rem;">
-                        <video class="w-75 ms-lg-3" autoplay loop muted>
+                        <video class="w-100 ms-lg-3" autoplay loop muted>
                             <source src="img/nuevoCerebro.mp4" type="video/mp4">
                             Tu navegador no soporta el elemento de video.
                         </video>
                     </div>
                     <!-- Contenido a la derecha -->
                     <div class="col-lg-7 col-md-12">
-                        <h1 class="quienesSomos wow animate__animated animate__backInLeft"
+                        <h2 class="quienesSomos wow animate__animated animate__backInLeft"
                             style="font-size: 3rem; margin-bottom: 20px;">
                             Quienes Somos
-                        </h1>
+                        </h2>
                         <p class="wow animate__animated animate__backInLeft" style="font-size: 2rem;">
                             En nuestra plataforma web, nos encargamos de conectar a los usuarios que requieren atención
                             terapéutica con profesionales altamente competentes. Buscamos facilitar el acceso a
@@ -221,7 +245,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
         <div class="container">
-            <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h1>
+            <h2 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h2>
             <div class="slider">
                 <div class="item">
 
@@ -255,7 +279,8 @@ if (isset($_SESSION['user_id'])) {
                     <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <button id="next">></button>
-                <button id="prev"><</button>
+                <button id="prev">
+                    << /button>
             </div>
         </div>
     </section>
@@ -266,9 +291,9 @@ if (isset($_SESSION['user_id'])) {
     <!-- service section starts  -->
 
     <section class="service" id="service">
-        <h1 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.4s">
+        <h2 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.4s">
             ¿En qué situaciones deberías acudir a nuestros profesionales de salud mental?
-        </h1>
+        </h2>
 
         <div class="row mt-4 mx-3">
             <!-- Card 1 -->
@@ -403,7 +428,7 @@ if (isset($_SESSION['user_id'])) {
 
         </div>
 
-        <h1 class="credit">created by <span>WorldSoftSystem</span> | all rights reserved. </h1>
+        <h2 class="credit">created by <span>WorldSoftSystem</span> | all rights reserved. </h2>
 
     </section>
 

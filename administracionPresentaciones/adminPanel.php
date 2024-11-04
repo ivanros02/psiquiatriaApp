@@ -4,7 +4,7 @@ session_start();
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     // Redirigir al login si no está logueado
-    header("Location: ./manejoUsuario/login.php");
+    header("Location: inicioAdmin.php");
     exit;
 }
 ?>
@@ -15,84 +15,149 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script src="./js/admin.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .table img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <a href="./manejoUsuario/logout.php" class="btn btn-danger mb-3">Cerrar sesión</a>
-        <h1>Bienvenido, <?php echo $_SESSION['username']; ?></h1>
-        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">Bienvenido, <?php echo $_SESSION['username']; ?></h1>
+            <a href="./manejoUsuario/logout.php" class="btn btn-danger">Cerrar sesión</a>
+        </div>
 
-        <h2>Listado de Presentaciones</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Especialidades</th>
-                    <th>Aprobado</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody id="presentaciones-list">
-                <!-- Las filas de presentaciones se generarán aquí con JS -->
-            </tbody>
-        </table>
+        <h2 class="mb-4">Listado de Presentaciones</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Título</th>
+                        <th>Mail</th>
+                        <th>WhatsApp</th>
+                        <th>Aprobado</th>
+                        <th>Aprobar</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="presentaciones-list">
+                    <!-- Las filas de presentaciones se generarán aquí con JS -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
-        // Función para cargar las presentaciones desde el servidor
-        function cargarPresentaciones() {
-            $.ajax({
-                url: './manejoPresentaciones/obtenerPresentaciones.php', // Ruta del archivo PHP que obtiene las presentaciones
-                method: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    let rows = '';
-                    data.forEach(function (presentacion) {
-                        rows += `
-                            <tr>
-                                <td>${presentacion.id}</td>
-                                <td>${presentacion.nombre}</td>
-                                <td>${presentacion.especialidades}</td>
-                                <td>${presentacion.aprobado == 1 ? 'Sí' : 'No'}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-success" onclick="cambiarEstado(${presentacion.id}, 1)">Aprobar</button>
-                                    <button class="btn btn-sm btn-danger" onclick="cambiarEstado(${presentacion.id}, 0)">Rechazar</button>
-                                </td>
-                            </tr>
-                        `;
-                    });
-                    $('#presentaciones-list').html(rows);
-                }
-            });
-        }
+    <!-- Modal para editar -->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarModalLabel">Editar Presentación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarForm">
+                        <input type="hidden" id="editarId">
+                        <div class="mb-3">
+                            <label for="editarRutaImagen" class="form-label">Vista previa de la imagen</label>
+                            <!-- Elemento para vista previa de la imagen con estilos ajustados -->
+                            <img id="previewImagen" src="" alt="Vista previa de la imagen"
+                                style="max-width: 200px; max-height: 200px; display: none; margin-bottom: 10px;">
+                            <input type="file" class="form-control" id="editarRutaImagen" accept="image/*">
+                        </div>
 
-        // Función para cambiar el estado de aprobación de una presentación
-        function cambiarEstado(id, aprobado) {
-            $.ajax({
-                url: './manejoPresentaciones/cambiarEstado.php', // Ruta del archivo PHP que actualiza el estado
-                method: 'POST',
-                data: { id: id, aprobado: aprobado },
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        alert('Estado actualizado con éxito');
-                        cargarPresentaciones(); // Recargar la lista de presentaciones
-                    } else {
-                        alert('Error al actualizar el estado');
-                    }
-                }
-            });
-        }
 
-        // Cargar las presentaciones cuando la página esté lista
-        $(document).ready(function () {
-            cargarPresentaciones();
-        });
-    </script>
+                        <div class="mb-3">
+                            <label for="editarNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editarNombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarTitulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="editarTitulo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarMatricula" class="form-label">Matrícula</label>
+                            <input type="number" class="form-control" id="editarMatricula">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarMatriculaP" class="form-label">Matrícula Profesional</label>
+                            <input type="number" class="form-control" id="editarMatriculaP">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarDescripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="editarDescripcion" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarTelefono" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="editarTelefono">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarDisponibilidad" class="form-label">Disponibilidad</label>
+                            <select class="form-control" id="editarDisponibilidad">
+                                <option value="24">24 horas</option>
+                                <option value="48">48 horas</option>
+                                <option value="96">96 horas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarValor" class="form-label">Valor</label>
+                            <input type="number" class="form-control" id="editarValor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarMail" class="form-label">Mail</label>
+                            <input type="email" class="form-control" id="editarMail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarWhatsapp" class="form-label">WhatsApp</label>
+                            <input type="text" class="form-control" id="editarWhatsapp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarInstagram" class="form-label">Instagram</label>
+                            <input type="text" class="form-control" id="editarInstagram">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarCambios()">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 </html>

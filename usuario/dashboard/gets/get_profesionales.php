@@ -40,10 +40,6 @@ if ($result->num_rows > 0) {
     echo '<div class="alert alert-warning text-center" role="alert">No hay profesionales relacionados.</div>';
 }
 
-
-
-
-
 $stmt->close();
 $conexion->close();
 ?>

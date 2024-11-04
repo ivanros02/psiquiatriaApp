@@ -4,10 +4,12 @@ session_start(); // Asegúrate de iniciar la sesión en todas las páginas
 // Verificar si el usuario está logueado
 $usuarioLogueado = false;
 $nombreUsuario = '';  // Variable para almacenar el nombre del usuario
+$usuarioId= '';  // Guarda el ID del usuario en la sesión
 
 if (isset($_SESSION['user_id'])) {
     $usuarioLogueado = true;
     $nombreUsuario = $_SESSION['user_nombre'];  // Recuperar el nombre del usuario de la sesión
+    $usuarioId = $_SESSION['user_id'];  // Recuperar el nombre del usuario de la sesión
 }
 ?>
 <!DOCTYPE html>
@@ -49,7 +51,7 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://sdk.mercadopago.com/js/v2"></script>
 
 
-    <script src="./js/presentacionProf.js"></script>
+
 
     <!-- MercadoPago -->
     <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
@@ -58,10 +60,17 @@ if (isset($_SESSION['user_id'])) {
     <script
         src="https://www.paypal.com/sdk/js?client-id=ASuvwaL7zuIKfyr5_OppnnQGrKqyvWDPkSn2BSHYTSR8wHbxOQPZE1JzVQ2Oj8ECpJSJ2XF-0ADkTk4l&currency=USD"></script>
 
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet" />
+    <!-- FullCalendar JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+
+    <script src="./js/presentacionProf.js"></script>
 </head>
 
 
-<body data-usuario-logueado="<?php echo $usuarioLogueado ? 'true' : 'false'; ?>">
+<body data-usuario-logueado="<?php echo $usuarioLogueado ? 'true' : 'false'; ?>" data-usuario-id="<?php echo $usuarioId; ?>">
+
 
     <!-- header section starts  -->
 
@@ -80,7 +89,8 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Mostrar "Perfil" si el usuario está logueado -->
                 <?php if ($usuarioLogueado): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="../usuario/dashboard/dashboard.php">Hola, <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></a>
+                        <a class="nav-link" href="../usuario/dashboard/dashboard.php">Hola,
+                            <strong><?php echo htmlspecialchars($nombreUsuario); ?></strong></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../usuario/control/logout.php">Cerrar sesión</a>
@@ -149,7 +159,7 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-    
+
 
 
     <!-- footer section starts  -->

@@ -136,13 +136,14 @@ html {
 }
 
 .home {
-    min-height: 100vh;
+    margin-top: 10rem !important;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     /* Añade esta línea */
-    background: url(../img/main.jpeg) no-repeat;
+    background: url(../img/main.jpg) no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -155,7 +156,6 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
     /* Ajusta la opacidad según sea necesario */
 
 }
@@ -169,7 +169,7 @@ html {
 
 .home .content h1 {
     font-size: 5.6rem;
-    color: var(--green);
+    color: black;
     font-family: 'Things' !important; 
 }
 
@@ -186,7 +186,7 @@ html {
 
 .home .content p {
     font-size: 1.9rem;
-    color: #ffffff;
+    color: black;
     padding: 1rem 0;
     width: 70rem;
     margin: 0 auto;

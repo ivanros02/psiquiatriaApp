@@ -99,7 +99,7 @@
 
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
-                    <label for="matricula" class="form-label fw-bold">Matrícula:</label>
+                    <label for="matricula" class="form-label fw-bold">Matrícula Nacional:</label>
                     <input class="form-control form-control-lg" id="matricula" name="matricula" type="number"
                         placeholder="Matrícula" required>
                 </div>
@@ -140,10 +140,18 @@
             </div>
 
             <div class="mb-4">
-                <label for="valor" class="form-label fw-bold">Valor:</label>
+                <label for="valor" class="form-label fw-bold">Valor Nacional:</label>
                 <input class="form-control form-control-lg" id="valor" name="valor" type="text" placeholder="Valor"
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
             </div>
+
+            <div class="mb-4">
+                <label for="valor_internacional" class="form-label fw-bold">Valor Internacional:</label>
+                <input class="form-control form-control-lg" id="valor_internacional" name="valor_internacional" type="text"
+                    placeholder="Valor en Pesos"
+                    onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
+            </div>
+
 
             <div class="mb-4">
                 <label for="mail" class="form-label fw-bold">Correo electrónico:</label>

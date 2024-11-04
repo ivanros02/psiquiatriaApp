@@ -51,6 +51,16 @@
     /* Color del scroll al pasar el mouse */
 }
 
+.mobile-navbar i {
+    font-size: 18px !important; /* Ajusta este valor según el tamaño deseado */
+    margin-bottom: 5px !important; /* Espaciado inferior para separar el ícono del texto */
+}
+
+.mobile-navbar p {
+    font-size: 12px !important; /* Ajusta el tamaño del texto si es necesario */
+}
+
+
 header {
     display: flex;
     align-items: center;
