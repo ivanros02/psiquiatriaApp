@@ -279,27 +279,36 @@ function sendEmailToUser(userEmail, psychologistInfo) {
 }
 
 
-function saveUserEmail(user, psychologistId, paymentId) {
-    const insertQuery = `INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)`;
+function saveUserEmail(user, psychologistReferenceId, paymentId) {
+    // Primero, buscar el id_usuario en la tabla `presentaciones` usando el psychologistReferenceId
+    const searchQuery = `SELECT id_usuario FROM presentaciones WHERE id = ?`;
 
-    dbConnection.query(insertQuery, [user, psychologistId, paymentId], (error, results, fields) => {
+    dbConnection.query(searchQuery, [psychologistReferenceId], (error, results) => {
         if (error) {
-            console.error('Error al insertar el correo electrónico en la base de datos:', error);
-        } else {
-            console.log('Correo electrónico insertado en la base de datos');
+            console.error('Error al buscar id_usuario en la tabla presentaciones:', error);
+            return;
         }
-    });
 
-    const insertUsuarioProf = `INSERT INTO usuario_profesional (usuario_id,profesional_id) VALUES (?, ?)`;
+        // Verificar si se encontró un id_usuario
+        if (results.length > 0) {
+            const psychologistId = results[0].id_usuario;
 
-    dbConnection.query(insertUsuarioProf, [user, psychologistId], (error, results, fields) => {
-        if (error) {
-            console.error('Error al insertar el correo electrónico en la base de datos:', error);
+            // Ahora insertar en la tabla `datos_usuario` con el id_usuario obtenido
+            const insertQuery = `INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)`;
+
+            dbConnection.query(insertQuery, [user, psychologistId, paymentId], (insertError, insertResults) => {
+                if (insertError) {
+                    console.error('Error al insertar los datos de usuario en la base de datos:', insertError);
+                } else {
+                    console.log('Correo electrónico insertado en la base de datos');
+                }
+            });
         } else {
-            console.log('Correo electrónico insertado en la base de datos');
+            console.error('No se encontró el usuario en la tabla presentaciones con el psychologistReferenceId proporcionado.');
         }
     });
 }
+
 
 app.post("/create_preference", async (req, res) => {
     try {

@@ -14,38 +14,90 @@ $datos = json_decode($json, true);
 if (isset($datos['userId']) && isset($datos['detalles'])) {
     // Extraer los datos necesarios del JSON
     $userId = $datos['userId'];
-    $psychologist_id = $datos['detalles']['purchase_units'][0]['reference_id'];
+    $psychologist_reference_id = $datos['detalles']['purchase_units'][0]['reference_id'];
     $payment_id = $datos['detalles']['id'];
 
-    if ($psychologist_id === null) {
-        echo json_encode(['status' => 'error', 'message' => 'Psychologist ID is missing']);
+    // Comprobar que el ID de referencia no sea nulo
+    if ($psychologist_reference_id === null) {
+        echo json_encode(['status' => 'error', 'message' => 'Psychologist reference ID is missing']);
         exit;
     }
 
-    // Insertar los datos en la base de datos
-    $query = "INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)";
-    $stmt = mysqli_prepare($conexion, $query);
+    // Iniciar transacción
+    mysqli_begin_transaction($conexion);
 
-    if ($stmt) {
-        // Usar bind_param con tipos correctos
-        mysqli_stmt_bind_param($stmt, 'sis', $userId, $psychologist_id, $payment_id);
-        mysqli_stmt_execute($stmt);
+    try {
+        // Obtener el `id_usuario` de la tabla `presentaciones` usando el `psychologist_reference_id`
+        $query = "SELECT id_usuario FROM presentaciones WHERE id = ?";
+        $stmt = mysqli_prepare($conexion, $query);
+        
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, 'i', $psychologist_reference_id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_bind_result($stmt, $psychologist_id);
+            mysqli_stmt_fetch($stmt);
+            mysqli_stmt_close($stmt);
 
-        if (mysqli_stmt_affected_rows($stmt) > 0) {
-            // Respuesta exitosa
-            echo json_encode(['status' => 'success', 'message' => 'Datos guardados correctamente']);
+            // Verificar si se encontró un `id_usuario`
+            if ($psychologist_id !== null) {
+                // Insertar los datos de pago en la tabla `datos_usuario`
+                $insertQuery = "INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)";
+                $insertStmt = mysqli_prepare($conexion, $insertQuery);
+
+                if ($insertStmt) {
+                    mysqli_stmt_bind_param($insertStmt, 'iis', $userId, $psychologist_id, $payment_id);
+                    mysqli_stmt_execute($insertStmt);
+
+                    if (mysqli_stmt_affected_rows($insertStmt) > 0) {
+                        // Actualizar el estado de la videollamada a 'completado'
+                        $updateQuery = "UPDATE videollamadas SET estado_pago = 'completado' WHERE profesional_id = ? AND paciente_id = ?";
+                        $updateStmt = mysqli_prepare($conexion, $updateQuery);
+
+                        if ($updateStmt) {
+                            mysqli_stmt_bind_param($updateStmt, 'ii', $psychologist_id, $userId);
+                            mysqli_stmt_execute($updateStmt);
+
+                            if (mysqli_stmt_affected_rows($updateStmt) > 0) {
+                                // Confirmar transacción y responder con éxito
+                                mysqli_commit($conexion);
+                                echo json_encode(['status' => 'success', 'message' => 'Datos guardados correctamente y estado de videollamada actualizado.']);
+                            } else {
+                                // Revertir transacción si no se encontró la videollamada para actualizar
+                                mysqli_rollback($conexion);
+                                echo json_encode(['status' => 'error', 'message' => 'No se encontró la videollamada para actualizar.']);
+                            }
+                            mysqli_stmt_close($updateStmt);
+                        } else {
+                            mysqli_rollback($conexion);
+                            echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta de actualización de videollamada.']);
+                        }
+                    } else {
+                        mysqli_rollback($conexion);
+                        echo json_encode(['status' => 'error', 'message' => 'Error al guardar los datos de pago en la tabla datos_usuario.']);
+                    }
+                    mysqli_stmt_close($insertStmt);
+                } else {
+                    mysqli_rollback($conexion);
+                    echo json_encode(['status' => 'error', 'message' => 'Error en la consulta de inserción en datos_usuario.']);
+                }
+            } else {
+                // Si no se encontró el `id_usuario` correspondiente
+                mysqli_rollback($conexion);
+                echo json_encode(['status' => 'error', 'message' => 'No se encontró el usuario en la tabla presentaciones.']);
+            }
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Error al guardar los datos']);
+            mysqli_rollback($conexion);
+            echo json_encode(['status' => 'error', 'message' => 'Error en la consulta de búsqueda de usuario en presentaciones.']);
         }
-
-        mysqli_stmt_close($stmt);
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Error en la consulta']);
+    } catch (Exception $e) {
+        // En caso de error, revertir transacción
+        mysqli_rollback($conexion);
+        echo json_encode(['status' => 'error', 'message' => 'Error en la transacción: ' . $e->getMessage()]);
     }
+
+    // Cerrar la conexión
+    mysqli_close($conexion);
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Datos no válidos']);
 }
-
-// Cerrar la conexión
-mysqli_close($conexion);
 ?>

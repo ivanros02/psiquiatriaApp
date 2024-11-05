@@ -165,3 +165,62 @@ function cambiarEstado(id, aprobado) {
 $(document).ready(function () {
     cargarPresentaciones();
 });
+
+// Función para cargar la lista de comentarios
+function cargarComentarios() {
+    $.ajax({
+        url: './manejoPresentaciones/listar_comentarios_ajax.php', // Archivo PHP que genera la tabla
+        method: 'GET',
+        success: function (data) {
+            $('#comentarios-list').html(data); // Cargar el HTML recibido en el contenedor
+        }
+    });
+}
+
+// Llamada inicial para cargar los comentarios
+$(document).ready(function () {
+    cargarComentarios();
+
+    // Acción para abrir el modal de edición
+    $(document).on('click', '.edit-btn', function () {
+        const id = $(this).data('id');
+        const comentario = $(this).data('comentario');
+        const nombre = $(this).data('nombre');
+
+        $('#editId').val(id);
+        $('#editComentario').val(comentario);
+        $('#editNombre').val(nombre);
+        $('#editModal').modal('show');
+    });
+
+    // Acción para eliminar con confirmación
+    $(document).on('click', '.delete-btn', function () {
+        const id = $(this).data('id');
+        if (confirm('¿Estás seguro de que deseas eliminar este comentario?')) {
+            $.ajax({
+                url: './manejoPresentaciones/eliminar_comentario.php',
+                method: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    alert(response); // Mostrar respuesta
+                    cargarComentarios(); // Recargar la lista de comentarios
+                }
+            });
+        }
+    });
+
+    // Formulario para editar comentario
+    $('#editForm').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: './manejoPresentaciones/editar_comentario.php',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                alert(response);
+                $('#editModal').modal('hide');
+                cargarComentarios();
+            }
+        });
+    });
+});

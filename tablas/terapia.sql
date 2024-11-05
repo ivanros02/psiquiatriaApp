@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 17:22:45
+-- Tiempo de generación: 05-11-2024 a las 14:18:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -53,18 +53,6 @@ CREATE TABLE `comentarios_presentaciones` (
   `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `comentarios_presentaciones`
---
-
-INSERT INTO `comentarios_presentaciones` (`id`, `profesional_id`, `comentario`, `nombre`) VALUES
-(3, 2, 'Me siento más tranquila después de hablar sobre mis preocupaciones. Creo que estoy empezando a entender mejor cómo gestionar mi ansiedad.', 'Sergio'),
-(4, 2, 'Fue útil explorar mis emociones. Me di cuenta de patrones que antes no había notado en mis relaciones.', 'Walter'),
-(6, 1, 'Hoy me llevé herramientas concretas para manejar el estrés. Siento que tengo más control sobre mi situación.', 'Sol'),
-(7, 1, 'Hablar sobre mis miedos me hizo sentir escuchado, y creo que estoy en el camino correcto para enfrentar mis inseguridades.', 'Francisco'),
-(8, 3, 'Hablar sobre mis miedos me hizo sentir escuchado, y creo que estoy en el camino correcto para enfrentar mis inseguridades.', 'Sergio'),
-(9, 3, 'La sesión de hoy me ayudó a ver las cosas desde una perspectiva diferente. Me siento más motivado para hacer cambios en mi vida.', 'Walter');
-
 -- --------------------------------------------------------
 
 --
@@ -91,13 +79,6 @@ CREATE TABLE `disponibilidad_turnos` (
   `hora` time NOT NULL,
   `disponible` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `disponibilidad_turnos`
---
-
-INSERT INTO `disponibilidad_turnos` (`id`, `profesional_id`, `fecha`, `hora`, `disponible`) VALUES
-(7, 9, '2024-11-04', '10:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -161,16 +142,6 @@ CREATE TABLE `presentaciones` (
   `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `presentaciones`
---
-
-INSERT INTO `presentaciones` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `matriculaP`, `descripcion`, `telefono`, `disponibilidad`, `valor`, `valor_internacional`, `mail`, `whatsapp`, `instagram`, `aprobado`, `id_usuario`) VALUES
-(1, '../img/perfiles/Fondos-11.jpg', 'Psicólogo E', 'Psicología General', 12345678, 87654321, 'En 2009, a los veintidós años, ganó su primer Balón de Oro y el premio al Jugador Mundial de la FIFA del año. Siguieron tres temporadas exitosas, en las que ganó cuatro Balones de Oro de forma consecutiva, hecho que no tenía precedentes. Hasta el momento, su mejor campaña personal fue en 2011-12, cuando estableció el récord de más goles en una temporada, tanto en La Liga como en otras competiciones europeas. Durante las dos siguientes temporadas, también sufrió lesiones y, en 2014, perdió el Balón de Oro frente a Cristiano Ronaldo, a quien se considera su rival. Recuperó su mejor forma durante la campaña 2014-15, en la que superó los registros de máximo goleador absoluto en La Liga y la Liga de Campeones y logró con el Barcelona un histórico segundo triplete, además de ganar su quinto Balón de Oro. Volvería a ganarlo en 2019, 2021 y 2023.', '1122334455', 48, 1000, 10, 'psicologo1@example.com', '1122334455', '@psicologo1', 1, NULL),
-(2, '../img/perfiles/Lic. Luciana Ardaiz.jpg', 'Psicólogo 2', 'Psicología Infantil', 12345679, 87654322, 'Descripción de Psicólogo 2', '2233445566', 24, 120, 0, 'psicologo2@example.com', '2233445566', '@psicologo2', 1, NULL),
-(3, '../img/perfiles/Lic. Vanesa Pérez.jpg', 'borrar', 'Psicología Clínica', 12345680, 87654323, 'Descripción de Psicólogo 3', '3344556677', 24, 150, 0, 'psicologo3@example.com', '3344556677', '@psicologo3', 0, NULL),
-(26, '../img/perfiles/diego.jpg', 'Diego Armando Maradona', 'Genio Del Futbol Mundial', 1010, 1010, 'prueba', '1010', 24, 10000, 100, 'diego@gmail.com', '101010', '101010', 1, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -181,22 +152,6 @@ CREATE TABLE `presentaciones_especialidades` (
   `presentacion_id` int(11) NOT NULL,
   `especialidad_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `presentaciones_especialidades`
---
-
-INSERT INTO `presentaciones_especialidades` (`presentacion_id`, `especialidad_id`) VALUES
-(1, 24),
-(1, 27),
-(1, 34),
-(1, 40),
-(2, 24),
-(2, 27),
-(3, 24),
-(3, 27),
-(26, 24),
-(26, 28);
 
 -- --------------------------------------------------------
 
@@ -210,13 +165,6 @@ CREATE TABLE `reservas_turnos` (
   `usuario_id` int(11) NOT NULL,
   `fecha_reserva` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `reservas_turnos`
---
-
-INSERT INTO `reservas_turnos` (`id`, `turno_id`, `usuario_id`, `fecha_reserva`) VALUES
-(9, 7, 4, '2024-11-04 15:31:37');
 
 -- --------------------------------------------------------
 
@@ -234,15 +182,6 @@ CREATE TABLE `usuarios` (
   `id_presentacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `telefono`, `fecha_registro`, `id_presentacion`) VALUES
-(4, 'Ivan', 'ivanrosendo@gmail.com', '$2y$10$avl92iqWz6rYoQI0DAB1P.oUZ3pZw1IYjWYJo2Z.otHbO3Q9bpaqS', '1139114579', '2024-10-16 09:42:11', NULL),
-(5, 'Walter', 'infowss@gmail.com', '$2y$10$DjfdcAql2lXQ0muWrkz0KeX4yTcgkBfYmQ5fxQrBE9iRKtmJGx962', NULL, '2024-10-16 15:08:52', NULL),
-(9, 'Diego Armando Maradona', 'diego@gmail.com', '$2y$10$5jYCLG8wcdVu/6AQXBFDJ..aiw3p1qSEfrzhDGor.b1CXwHwY0rx.', '1010', '2024-11-02 19:29:51', 26);
-
 -- --------------------------------------------------------
 
 --
@@ -253,16 +192,6 @@ CREATE TABLE `usuario_profesional` (
   `usuario_id` int(255) NOT NULL,
   `profesional_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `usuario_profesional`
---
-
-INSERT INTO `usuario_profesional` (`usuario_id`, `profesional_id`) VALUES
-(4, 1),
-(4, 2),
-(4, 26),
-(5, 1);
 
 -- --------------------------------------------------------
 
@@ -276,15 +205,9 @@ CREATE TABLE `videollamadas` (
   `paciente_id` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL,
   `enlace` varchar(255) NOT NULL,
-  `fecha_creacion` datetime DEFAULT current_timestamp()
+  `fecha_creacion` datetime DEFAULT current_timestamp(),
+  `estado_pago` enum('pendiente','completado') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `videollamadas`
---
-
-INSERT INTO `videollamadas` (`id`, `profesional_id`, `paciente_id`, `fecha_hora`, `enlace`, `fecha_creacion`) VALUES
-(2, 9, 4, '2024-11-04 10:49:04', 'https://meet.jit.si/reunion-1730728144504', '2024-11-04 10:49:04');
 
 --
 -- Índices para tablas volcadas
@@ -383,19 +306,19 @@ ALTER TABLE `administradores`
 -- AUTO_INCREMENT de la tabla `comentarios_presentaciones`
 --
 ALTER TABLE `comentarios_presentaciones`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `disponibilidad_turnos`
 --
 ALTER TABLE `disponibilidad_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidades`
@@ -407,19 +330,19 @@ ALTER TABLE `especialidades`
 -- AUTO_INCREMENT de la tabla `presentaciones`
 --
 ALTER TABLE `presentaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `reservas_turnos`
 --
 ALTER TABLE `reservas_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `videollamadas`
@@ -441,8 +364,8 @@ ALTER TABLE `comentarios_presentaciones`
 -- Filtros para la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
-  ADD CONSTRAINT `datos_usuario_ibfk_1` FOREIGN KEY (`psychologist_id`) REFERENCES `presentaciones` (`id`),
-  ADD CONSTRAINT `fk_pago_usuario` FOREIGN KEY (`user`) REFERENCES `usuarios` (`id`);
+  ADD CONSTRAINT `fk_pago_usuario` FOREIGN KEY (`user`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `fk_teraputa` FOREIGN KEY (`psychologist_id`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `disponibilidad_turnos`

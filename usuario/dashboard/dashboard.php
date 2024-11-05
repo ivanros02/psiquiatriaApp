@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id'])) {
 // Obtener las reservas del profesional si es un profesional
 $reservas = [];
 if ($id_presentacion !== null) {
-    $queryReservas = "SELECT r.fecha_reserva, u.nombre, u.email, u.telefono,u.id AS id_usuario
+    $queryReservas = "SELECT r.fecha_reserva, u.nombre, u.email, u.telefono, u.id AS id_usuario, d.hora AS hora_turno
                       FROM reservas_turnos r
                       LEFT JOIN disponibilidad_turnos d ON d.id = r.turno_id
                       LEFT JOIN usuarios u ON u.id = r.usuario_id
@@ -42,6 +42,7 @@ if ($id_presentacion !== null) {
         while ($rowReserva = $resultReservas->fetch_assoc()) {
             $reservas[] = [
                 'fecha_reserva' => $rowReserva['fecha_reserva'],
+                'hora_turno' => $rowReserva['hora_turno'], // Incluir la hora
                 'nombre' => $rowReserva['nombre'],
                 'email' => $rowReserva['email'],
                 'telefono' => $rowReserva['telefono'],
@@ -50,6 +51,7 @@ if ($id_presentacion !== null) {
         }
     }
 }
+
 
 ?>
 
@@ -84,6 +86,16 @@ if ($id_presentacion !== null) {
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js"></script>
     <script src='https://meet.jit.si/external_api.js'></script>
+
+    <!-- custom js file link  -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+    <!-- MercadoPago -->
+    <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
+
+    <!-- PayPal SDK -->
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=ASuvwaL7zuIKfyr5_OppnnQGrKqyvWDPkSn2BSHYTSR8wHbxOQPZE1JzVQ2Oj8ECpJSJ2XF-0ADkTk4l&currency=USD"></script>
 
 
     <style>
@@ -244,7 +256,37 @@ if ($id_presentacion !== null) {
 
 
 
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content card-modern-shadow" style="background-color: #f4f4f4; border-radius: 15px;">
+                <div class="modal-header" style="border-bottom: none; padding-bottom: 0; overflow-y: hidden;">
+                    <h5 class="modal-title category-modern" id="contactModalLabel">Aviso Importante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        style="background: transparent; border: none;"></button>
+                </div>
+                <div class="modal-body content-modern">
+                    <h6 class="category-modern">Plataforma Segura</h6>
+                    <p class="description-modern">
+                        Estimado usuario, por favor, ten en cuenta que estás a punto de ser redirigido a nuestra
+                        plataforma de pago segura para completar tu transacción. Garantizamos la confidencialidad y
+                        seguridad de tus datos durante este proceso. Asegúrate de revisar cuidadosamente los detalles de
+                        tu compra antes de proceder con el pago. Si tienes alguna pregunta o necesitas asistencia, no
+                        dudes en contactarnos. ¡Gracias por tu confianza! Equipo de Terapia Libre.
+                    </p>
+                    <div style="text-align: center;">
+                        <button class="btn-modern-primary" id="checkout-btn"
+                            data-psychologist-id="${psicologo.id}">Contactar Profesional</button>
+                    </div>
+                    <div id="wallet_container" style="margin-top: 10px;">
+                        <p id="mp-loading-message" style="text-align: center; display: none;">Botón de Mercado Pago
+                            cargando...</p>
+                    </div>
 
+                    <div id="paypal-button-container" style="margin-top: 10px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -283,13 +325,13 @@ if ($id_presentacion !== null) {
     <!-- footer section ends -->
 
     <script>
+        let presentaciontId = null;
 
         $(document).on('click', '.btn-video', function () {
             const usuarioId = <?= $usuario_id; ?>; // ID del usuario actual
-            const profesionalId = $(this).data('id'); // ID del profesional desde el atributo data-id
-            console.log(usuarioId);
-            console.log(profesionalId)
-            // Llamar al archivo PHP para obtener la videollamada específica del profesional
+            const profesionalId = $(this).data('id'); // ID del presentacion desde el atributo data-id
+            presentaciontId = profesionalId;
+            // Llamar al archivo PHP para verificar el estado de la videollamada o del pago
             $.ajax({
                 url: './gets/obtener_videollamada.php',
                 type: 'POST',
@@ -298,8 +340,12 @@ if ($id_presentacion !== null) {
                     const resultado = JSON.parse(response);
 
                     if (resultado.status === 'success') {
-                        $('#videoCallModal').modal('show'); // Abrir el modal primero
-                        iniciarVideoLlamada(resultado.enlace); // Luego inicia la videollamada
+                        $('#videoCallModal').modal('show'); // Abre el modal de videollamada
+                        iniciarVideoLlamada(resultado.enlace); // Inicia la videollamada con el enlace proporcionado
+                    } else if (resultado.status === 'no_payment') {
+                        // Muestra el modal de pago en lugar de la videollamada
+                        $('#contactModal').modal('show'); // Mostrar el modal de pago
+                        $('#checkout-btn').data('psychologist-id', profesionalId); // Asociar el profesionalId al botón de pago
                     } else if (resultado.status === 'no_call') {
                         alert('Espera a que tu terapeuta cree la videollamada.');
                     }
@@ -309,6 +355,7 @@ if ($id_presentacion !== null) {
                 }
             });
         });
+
 
 
         let api; // Variable para almacenar la instancia de JitsiMeetExternalAPI
@@ -371,7 +418,7 @@ if ($id_presentacion !== null) {
                             'title' => 'Reservado',
                             'start' => $reserva['fecha_reserva'],
                             'allDay' => true,
-                            'description' => 'Nombre: ' . $reserva['nombre'] . '<br>Email: ' . $reserva['email'] . '<br>Teléfono: ' . $reserva['telefono'],
+                            'description' => 'Nombre: ' . $reserva['nombre'] . '<br>Email: ' . $reserva['email'] . '<br>Teléfono: ' . $reserva['telefono'] . '<br>Hora: ' . $reserva['hora_turno'],
                             'usuarioId' => $reserva['id']
                         ];
                     }, $reservas);
@@ -444,6 +491,159 @@ if ($id_presentacion !== null) {
                 });
             <?php endif; ?>
         });
+
+
+        // Función para renderizar el botón de PayPal
+        function enviarCorreoElectronicoAComprador(psychologistId, userEmail) {
+            // Realizar una solicitud AJAX para enviar el correo electrónico
+            $.ajax({
+                url: 'https://terapialibre.com.ar/paypal/correo.php',
+                method: 'POST',
+                data: { psychologist_id: psychologistId, user_email: userEmail },
+                success: function (response) {
+                    console.log('Correo electrónico enviado correctamente:', response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al enviar el correo electrónico:', error);
+                }
+            });
+        }
+
+        // Variables para controlar si los botones ya fueron creados
+        let paypalButtonRendered = false;
+
+        $(document).on('click', '#checkout-btn', async () => {
+            // Deshabilitar el botón para evitar múltiples clics
+            $(this).prop('disabled', true);
+            // Captura el valor del span
+            const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
+
+            // PAYPAL
+            if (!paypalButtonRendered) {
+                paypal.Buttons({
+                    style: {
+                        color: 'blue',
+                        shape: 'pill',
+                        label: 'pay'
+                    },
+                    createOrder: (data, actions) => {
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: { value: valorSpan },
+                                reference_id: presentaciontId
+                            }],
+                            application_context: {
+                                shipping_preference: "NO_SHIPPING"  // Esta línea desactiva el campo de dirección
+                            }
+                        });
+                    },
+                    onApprove: (data, actions) => {
+                        let url = '../../paypal/captura.php';
+                        actions.order.capture().then(detalles => {
+                            const user_email = detalles.payer.email_address;
+                            const userId = <?= $usuario_id; ?>;
+                            console.log(detalles);
+                            return fetch(url, {
+                                method: 'post',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ detalles, userId }) // Enviando los detalles y userId en el cuerpo
+                            })
+                                .then(response => {
+                                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                                    return response.json();  // Ahora esperamos JSON directamente
+                                })
+                                .then(data => {
+                                    if (data.status === 'success') {
+                                        console.log('Datos guardados correctamente:', data.message);
+                                        enviarCorreoElectronicoAComprador(presentaciontId, user_email);
+                                        window.location.href = 'https://terapialibre.com.ar/usuario/dashboard/dashboard.php';
+                                    } else {
+                                        console.error('Error al guardar los datos:', data.message);
+                                    }
+                                })
+                                .catch(error => console.error('Error en la solicitud:', error));
+                        });
+                    },
+                    onCancel: () => {
+                        alert('Pago cancelado');
+                    }
+                }).render('#paypal-button-container');
+
+                paypalButtonRendered = true;
+            }
+
+            // MERCADO PAGO
+
+            // Mostrar el mensaje de "cargando" cuando se hace clic en el botón
+            document.getElementById('mp-loading-message').style.display = 'block';
+            //moni:APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8
+            if (!mercadoPagoButtonRendered) {
+                const mp = new MercadoPago("APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8", { locale: "es-AR" });
+                const generateIdempotencyKey = () => {
+                    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                    return Array.from({ length: 20 }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
+                };
+
+                const idempotencyKey = generateIdempotencyKey();
+
+
+                const precio = parseFloat(document.querySelector('.tooltiptext').getAttribute('data-valor'));
+                const userId = <?= $usuario_id; ?>; // Obtener el ID del usuario
+
+                const formData = {
+                    userId,  // Cambia userEmail por userId
+                    psychologistId: presentaciontId
+                };
+
+                const orderData = {
+                    title: document.querySelector(".card-title").innerText,
+                    quantity: 1,
+                    price: precio,
+                    psychologistId: presentaciontId,
+                    userId,  // Aquí estás enviando el userId
+                    additional_info: {
+                        userId  // Asegúrate de que el userId esté dentro de additional_info
+                    }
+                };
+
+
+                try {
+                    const response = await fetch("https://terapialibre.com.ar/create_preference", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-Idempotency-Key": idempotencyKey,
+                        },
+                        body: JSON.stringify(orderData),
+                    });
+
+                    const preference = await response.json();
+                    createCheckoutButton(preference.id, mp);
+
+                    // Ocultar el mensaje de "cargando" cuando el botón esté listo
+                    document.getElementById('mp-loading-message').style.display = 'none';
+
+                    mercadoPagoButtonRendered = true;
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Ocurrió un error: " + error.message);
+                }
+            }
+
+        });
+
+        const createCheckoutButton = (preferenceId, mp) => {
+            const bricksBuilder = mp.bricks();
+            const renderComponent = async () => {
+                if (window.checkoutButton) window.checkoutButton.unmount();
+
+                await bricksBuilder.create("wallet", "wallet_container", { initialization: { preferenceId } });
+
+                // Ocultar el mensaje de "cargando" cuando el botón esté completamente renderizado
+                document.getElementById('mp-loading-message').style.display = 'none';
+            };
+            renderComponent();
+        };
     </script>
 </body>
 

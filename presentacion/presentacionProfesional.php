@@ -47,18 +47,7 @@ if (isset($_SESSION['user_id'])) {
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-    <!-- custom js file link  -->
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
-
-
-
-
-    <!-- MercadoPago -->
-    <script src="https://www.mercadopago.com/v2/security.js" view="checkout"></script>
-
-    <!-- PayPal SDK -->
-    <script
-        src="https://www.paypal.com/sdk/js?client-id=ASuvwaL7zuIKfyr5_OppnnQGrKqyvWDPkSn2BSHYTSR8wHbxOQPZE1JzVQ2Oj8ECpJSJ2XF-0ADkTk4l&currency=USD"></script>
+   
 
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet" />

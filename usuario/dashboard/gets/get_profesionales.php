@@ -4,7 +4,7 @@ include '../../../php/conexion.php';
 $usuario_id = $_POST['usuario_id'];
 
 // Obtener los profesionales relacionados con el usuario
-$query = "SELECT p.id, p.nombre, p.mail, p.rutaImagen FROM presentaciones p
+$query = "SELECT p.id, p.nombre, p.mail, p.rutaImagen, p.valor FROM presentaciones p
           INNER JOIN usuario_profesional up ON p.id = up.profesional_id
           WHERE up.usuario_id = ?";
 $stmt = $conexion->prepare($query);
@@ -23,6 +23,9 @@ if ($result->num_rows > 0) {
         echo '<p class="card-text text-muted" style="font-size: 1.4rem;">' . htmlspecialchars($row['mail']) . '</p>';
         echo '<p class="fw-normal" style="font-size: 1.4rem;">Profesional</p>';
         echo '<p class="text-muted" style="font-size: 1.4rem;">Relación establecida</p>';
+        // Span oculto con el valor data-valor
+        echo '<span class="tooltiptext" data-valor="' . htmlspecialchars($row['valor']) . '" style="display: none;"></span>';
+        
         echo '<div class="mt-auto">'; // Espacio para botones al final
         echo '<button class="btn btn-link btn-sm btn-rounded btn-chat" data-id="' . $row['id'] . '">';
         echo '<i class="fas fa-comments fa-2x"></i>';

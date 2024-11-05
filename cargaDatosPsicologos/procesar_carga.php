@@ -66,7 +66,7 @@ try {
         }
     }
 
-    /*
+    
     // Enviar correo de confirmación
     $to = $mail;
     $subject = 'Registro exitoso en Terapia Libre';
@@ -97,7 +97,7 @@ try {
     if (!mail($to, $subject, $message, $headers)) {
         throw new Exception("Error al enviar el correo electrónico.");
     }
-   */
+   
 
     // Confirmar la transacción
     $conexion->commit();
