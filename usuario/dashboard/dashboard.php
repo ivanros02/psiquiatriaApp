@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id'])) {
 // Obtener las reservas del profesional si es un profesional
 $reservas = [];
 if ($id_presentacion !== null) {
-    $queryReservas = "SELECT r.fecha_reserva, u.nombre, u.email, u.telefono, u.id AS id_usuario, d.hora AS hora_turno
+    $queryReservas = "SELECT d.fecha AS fecha_reserva, u.nombre, u.email, u.telefono, u.id AS id_usuario, d.hora AS hora_turno
                       FROM reservas_turnos r
                       LEFT JOIN disponibilidad_turnos d ON d.id = r.turno_id
                       LEFT JOIN usuarios u ON u.id = r.usuario_id
@@ -414,10 +414,12 @@ if ($id_presentacion !== null) {
                 // Convertir las reservas a un formato JSON compatible con FullCalendar
                 if (!empty($reservas)) {
                     $eventos = array_map(function ($reserva) {
+                        // Concatenar fecha y hora para el campo 'start'
+                        $fechaHora = $reserva['fecha_reserva'] . 'T' . $reserva['hora_turno'];
                         return [
                             'title' => 'Reservado',
-                            'start' => $reserva['fecha_reserva'],
-                            'allDay' => true,
+                            'start' => $fechaHora, // Fecha y hora combinadas
+                            'allDay' => false,      // Para mostrar en una hora específica
                             'description' => 'Nombre: ' . $reserva['nombre'] . '<br>Email: ' . $reserva['email'] . '<br>Teléfono: ' . $reserva['telefono'] . '<br>Hora: ' . $reserva['hora_turno'],
                             'usuarioId' => $reserva['id']
                         ];
@@ -427,7 +429,8 @@ if ($id_presentacion !== null) {
                 } else {
                     echo '[]';
                 }
-                ?>,
+                ?>
+                ,
                 // Función para manejar el clic en un evento del calendario
                 eventClick: function (event) {
                     if (event) {

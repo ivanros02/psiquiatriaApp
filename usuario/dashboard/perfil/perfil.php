@@ -127,8 +127,11 @@ if (isset($_SESSION['user_id'])) {
 
                             if ($result_turnos && $result_turnos->num_rows > 0) {
                                 while ($turno = $result_turnos->fetch_assoc()) {
+                                    // Formatear la fecha
+                                    $fecha_formateada = DateTime::createFromFormat('Y-m-d', $turno['fecha'])->format('d/m/Y');
+
                                     echo "<tr>
-                                    <td>" . $turno['fecha'] . "</td>
+                                    <td>" . $fecha_formateada. "</td>
                                     <td>" . $turno['hora'] . "</td>
                                     <td>" . ($turno['disponible'] ? 'Sí' : 'No') . "</td>
                                     <td>
