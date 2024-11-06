@@ -428,45 +428,73 @@ if ($id_presentacion !== null) {
                     echo '[]';
                 }
                 ?>,
+                // Función para manejar el clic en un evento del calendario
                 eventClick: function (event) {
                     if (event) {
+                        // Actualiza la información en el modal de detalles
                         $('#modalTitle').text(event.title);
                         $('#modalDate').text(event.start.format('DD/MM/YYYY'));
                         $('#modalDescription').html(event.description);
-                        $('#eventModal').modal('show');
+                        $('#eventModal').modal('show'); // Muestra el modal de detalles del turno
 
                         const usuarioId = event.usuarioId;
                         const profesionalId = <?= $usuario_id; ?>;
 
-                        $('#startChatButton').off('click').on('click', function () {
-                            // Generar enlace de video llamada
-                            const enlaceVideoLlamada = generarEnlaceVideoLlamada();
+                        // Realizar la verificación de existencia de la videollamada
+                        $.ajax({
+                            url: './gets/obtener_videollamada.php',
+                            type: 'POST',
+                            data: { profesional_id: profesionalId, paciente_id: usuarioId },
+                            success: function (response) {
+                                const resultado = response;
 
-                            // Guardar en la base de datos
-                            $.ajax({
-                                url: './sets/guardar_videollamada.php', // Archivo que manejará la inserción en la base de datos
-                                type: 'POST',
-                                data: {
-                                    profesional_id: profesionalId,
-                                    paciente_id: usuarioId,
-                                    fecha_hora: moment().format('YYYY-MM-DD HH:mm:ss'), // Fecha y hora actual
-                                    enlace: enlaceVideoLlamada
-                                },
-                                success: function (response) {
-                                    const resultado = JSON.parse(response);
-                                    if (resultado.status === 'success') {
-                                        alert('La video llamada ha sido creada. Enlace: ' + enlaceVideoLlamada);
-                                    } else {
-                                        alert('Error al crear la video llamada: ' + resultado.message);
-                                    }
-                                },
-                                error: function () {
-                                    alert('Error al crear la video llamada.');
+                                // Configuración del botón basado en la existencia de una llamada
+                                if (resultado.status === 'success') {
+                                    $('#startChatButton').text('Iniciar videollamada');
+                                    $('#startChatButton').off('click').on('click', function () {
+                                        $('#videoCallModal').modal('show'); // Muestra el modal de videollamada
+                                        iniciarVideoLlamada(resultado.enlace); // Inicia la videollamada con el enlace existente
+                                    });
+                                } else {
+                                    $('#startChatButton').text('Crear enlace de videollamada');
+                                    $('#startChatButton').off('click').on('click', function () {
+                                        const enlaceVideoLlamada = generarEnlaceVideoLlamada();
+
+                                        // Guardar la videollamada en la base de datos
+                                        $.ajax({
+                                            url: './sets/guardar_videollamada.php',
+                                            type: 'POST',
+                                            data: {
+                                                profesional_id: profesionalId,
+                                                paciente_id: usuarioId,
+                                                fecha_hora: moment().format('YYYY-MM-DD HH:mm:ss'),
+                                                enlace: enlaceVideoLlamada
+                                            },
+                                            success: function (response) {
+                                                const resultado = JSON.parse(response);
+                                                if (resultado.status === 'success') {
+                                                    alert('Videollamada creada. Enlace: ' + enlaceVideoLlamada);
+                                                    $('#videoCallModal').modal('show'); // Muestra el modal de videollamada
+                                                    iniciarVideoLlamada(enlaceVideoLlamada); // Inicia la videollamada con el nuevo enlace
+                                                } else {
+                                                    alert('Error al crear la videollamada: ' + resultado.message);
+                                                }
+                                            },
+                                            error: function () {
+                                                alert('Error al crear la videollamada.');
+                                            }
+                                        });
+                                    });
                                 }
-                            });
+                            },
+                            error: function () {
+                                alert('Error al obtener el estado de la videollamada.');
+                            }
                         });
                     }
                 }
+
+
             });
 
             // Función para generar el enlace de video llamada
@@ -511,7 +539,7 @@ if ($id_presentacion !== null) {
 
         // Variables para controlar si los botones ya fueron creados
         let paypalButtonRendered = false;
-
+        let mercadoPagoButtonRendered = false;
         $(document).on('click', '#checkout-btn', async () => {
             // Deshabilitar el botón para evitar múltiples clics
             $(this).prop('disabled', true);
@@ -573,11 +601,10 @@ if ($id_presentacion !== null) {
             }
 
             // MERCADO PAGO
-
-            // Mostrar el mensaje de "cargando" cuando se hace clic en el botón
-            document.getElementById('mp-loading-message').style.display = 'block';
-            //moni:APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8
             if (!mercadoPagoButtonRendered) {
+                // Mostrar el mensaje de "cargando" solo si el botón no ha sido renderizado
+                document.getElementById('mp-loading-message').style.display = 'block';
+
                 const mp = new MercadoPago("APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8", { locale: "es-AR" });
                 const generateIdempotencyKey = () => {
                     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -585,27 +612,17 @@ if ($id_presentacion !== null) {
                 };
 
                 const idempotencyKey = generateIdempotencyKey();
-
-
                 const precio = parseFloat(document.querySelector('.tooltiptext').getAttribute('data-valor'));
                 const userId = <?= $usuario_id; ?>; // Obtener el ID del usuario
-
-                const formData = {
-                    userId,  // Cambia userEmail por userId
-                    psychologistId: presentaciontId
-                };
 
                 const orderData = {
                     title: document.querySelector(".card-title").innerText,
                     quantity: 1,
                     price: precio,
                     psychologistId: presentaciontId,
-                    userId,  // Aquí estás enviando el userId
-                    additional_info: {
-                        userId  // Asegúrate de que el userId esté dentro de additional_info
-                    }
+                    userId,
+                    additional_info: { userId }
                 };
-
 
                 try {
                     const response = await fetch("https://terapialibre.com.ar/create_preference", {
@@ -623,13 +640,17 @@ if ($id_presentacion !== null) {
                     // Ocultar el mensaje de "cargando" cuando el botón esté listo
                     document.getElementById('mp-loading-message').style.display = 'none';
 
-                    mercadoPagoButtonRendered = true;
+                    mercadoPagoButtonRendered = true; // Marcar que el botón ha sido renderizado
                 } catch (error) {
                     console.error("Error:", error);
                     alert("Ocurrió un error: " + error.message);
+                    document.getElementById('mp-loading-message').style.display = 'none'; // Ocultar el mensaje de carga
+                    $(this).prop('disabled', false); // Volver a habilitar el botón en caso de error
                 }
+            } else {
+                // Si el botón ya ha sido renderizado, simplemente oculta el mensaje de carga
+                document.getElementById('mp-loading-message').style.display = 'none';
             }
-
         });
 
         const createCheckoutButton = (preferenceId, mp) => {

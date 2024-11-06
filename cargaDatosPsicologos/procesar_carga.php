@@ -43,7 +43,7 @@ try {
     // Obtener el ID del nuevo usuario
     $usuario_id = $conexion->insert_id;
 
-    // Consulta SQL para insertar en presentaciones, incluyendo el id_usuario
+    // Consulta SQL para insertar en presentaciones
     $sql = "INSERT INTO presentaciones (rutaImagen, nombre, titulo, matricula, matriculaP, descripcion, telefono, disponibilidad, valor, valor_internacional, mail, whatsapp, instagram, id_usuario) 
             VALUES ('$rutaImagen', '$nombre', '$titulo', $matricula, $matriculaP, '$descripcion', '$telefono', $disponibilidad, $valor, $valor_internacional, '$mail', '$whatsapp', '$instagram', $usuario_id)";
 
@@ -53,6 +53,12 @@ try {
 
     // Obtener el ID de la nueva presentación
     $presentacion_id = $conexion->insert_id;
+
+    // Actualizar el usuario para agregar el id_presentacion
+    $sql_actualizar_usuario = "UPDATE usuarios SET id_presentacion = $presentacion_id WHERE id = $usuario_id";
+    if (!$conexion->query($sql_actualizar_usuario)) {
+        throw new Exception("Error al actualizar el usuario con id_presentacion: " . $conexion->error);
+    }
 
     // Insertar especialidades seleccionadas
     if (is_array($especialidades_id) && !empty($especialidades_id)) {
@@ -97,13 +103,14 @@ try {
     if (!mail($to, $subject, $message, $headers)) {
         throw new Exception("Error al enviar el correo electrónico.");
     }
-   
+    
+    
 
     // Confirmar la transacción
     $conexion->commit();
 
     echo '<script>alert("Datos enviados correctamente. Revisa tu correo para más detalles.");</script>';
-    echo '<script>setTimeout(function() { window.location.href = "../psicologos/psicologosOnline.php"; }, 3000);</script>';
+    echo '<script>setTimeout(function() { window.location.href = "../psicologos/psicologosOnline.php"; }, 1000);</script>';
 
 } catch (Exception $e) {
     // Si ocurre un error, revertir la transacción

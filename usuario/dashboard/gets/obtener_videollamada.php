@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json'); // Establece el tipo de contenido como JSON
+error_reporting(0); // Opcional: Desactiva el reporte de errores (para producción)
 include '../../../php/conexion.php';
 
 $usuario_id = $_POST['usuario_id'];
