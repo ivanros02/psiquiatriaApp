@@ -101,6 +101,7 @@ function guardarCambios() {
         formData.append('imagen', fileInput);
     }
 
+
     $.ajax({
         url: './manejoPresentaciones/editarPresentacion.php',
         method: 'POST',

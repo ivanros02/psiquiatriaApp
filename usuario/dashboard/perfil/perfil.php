@@ -38,7 +38,8 @@ if (isset($_SESSION['user_id'])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+    <!-- Flatpickr CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -47,6 +48,13 @@ if (isset($_SESSION['user_id'])) {
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Flatpickr locale español -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <!-- Cargar el archivo de localización español -->
 
     <style>
         :root {
@@ -67,6 +75,26 @@ if (isset($_SESSION['user_id'])) {
             color: #000;
             background-color: var(--blue);
             border-color: var(--blue);
+        }
+
+        /* Posicionar el botón Volver en la esquina superior izquierda */
+        #volverBtn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            /* Asegura que el botón esté por encima de otros elementos */
+            padding: 10px 20px;
+            border-radius: 50px;
+            background-color: var(--blue);
+        }
+
+        /* Responsivo: Ajustar el tamaño del botón en pantallas más pequeñas */
+        @media (max-width: 768px) {
+            #volverBtn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -96,15 +124,28 @@ if (isset($_SESSION['user_id'])) {
                                 <input type="tel" class="form-control" id="telefono" name="telefono"
                                     placeholder="Escribe tu teléfono" required>
                             </div>
+
                             <button type="submit" class="btn btn-primary w-100 mb-3"><i class="bi bi-save"></i>
                                 Actualizar</button>
                         </form>
-                        <a href="../dashboard.php" class="btn btn-outline-secondary w-100"><i
-                                class="bi bi-arrow-left"></i> Volver</a>
+
+                        <?php if ($id_presentacion !== null): ?>
+                            <a href="https://www.mercadopago.com.ar/subscriptions/checkout?preapproval_plan_id=2c9380848f81302d018f81f9c2da004b"
+                                target="_blank" id="mercadoPagoBtn" class="btn btn-success w-100 mb-3">
+                                <i class="bi bi-credit-card"></i> Suscribirse
+                            </a>
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Botón Volver -->
+        <a href="../dashboard.php" class="btn btn-outline-secondary" id="volverBtn">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+
 
         <!-- Sección de disponibilidad de turnos -->
         <?php if ($id_presentacion !== null): ?>
@@ -131,7 +172,7 @@ if (isset($_SESSION['user_id'])) {
                                     $fecha_formateada = DateTime::createFromFormat('Y-m-d', $turno['fecha'])->format('d/m/Y');
 
                                     echo "<tr>
-                                    <td>" . $fecha_formateada. "</td>
+                                    <td>" . $fecha_formateada . "</td>
                                     <td>" . $turno['hora'] . "</td>
                                     <td>" . ($turno['disponible'] ? 'Sí' : 'No') . "</td>
                                     <td>
@@ -157,14 +198,16 @@ if (isset($_SESSION['user_id'])) {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="nuevoTurnoModalLabel">Agregar Nuevo Turno</h5>
+                            <h5 class="modal-title" id="nuevoTurnoModalLabel">Agregar Nuevos Turnos</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form id="nuevoTurnoForm">
                                 <div class="mb-3">
-                                    <label for="fecha" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                    <label for="fechas" class="form-label">Fechas</label>
+                                    <input type="text" class="form-control" id="fechas" name="fechas"
+                                        placeholder="Selecciona múltiples fechas (separadas por coma)" required>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="hora" class="form-label">Hora</label>
@@ -177,10 +220,21 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                 </div>
             </div>
+
         <?php endif; ?>
     </div>
 
     <script>
+        $(document).ready(function () {
+            flatpickr("#fechas", {
+                mode: "multiple", // Permite seleccionar múltiples fechas
+                dateFormat: "Y-m-d", // Formato de la fecha
+                locale: "es", // Ahora sí debería funcionar el locale en español
+                allowInput: true, // Permite que el usuario también escriba fechas manualmente
+            });
+        });
+
+
         // JavaScript para manejar el envío de formularios y la interacción
         $(document).ready(function () {
             $('#nuevoTurnoForm').on('submit', function (event) {
@@ -188,24 +242,24 @@ if (isset($_SESSION['user_id'])) {
 
                 // Obtener los datos del formulario
                 const profesional_id = <?php echo $usuario_id; ?>; // Asignar el ID de la sesión al profesional_id
-                const fecha = $('#fecha').val();
+                const fechas = $('#fechas').val().split(',').map(fecha => fecha.trim()); // Convertir las fechas en un array
                 const hora = $('#hora').val();
 
                 // Verificar que los campos no estén vacíos antes de enviar la solicitud
-                if (fecha && hora) {
+                if (fechas.length > 0 && hora) {
                     $.ajax({
                         url: './abm/agregar_disponibilidad.php', // Ruta al archivo PHP que manejará la inserción
                         type: 'POST',
                         data: {
                             profesional_id: profesional_id,
-                            fecha: fecha,
+                            fechas: fechas,
                             hora: hora
                         },
                         success: function (response) {
                             const result = JSON.parse(response);
                             if (result.success) {
                                 alert(result.message);
-                                // Opcional: recargar la tabla de turnos o la página para mostrar el nuevo turno
+                                // Opcional: recargar la tabla de turnos o la página para mostrar los nuevos turnos
                                 location.reload(); // Recargar la página para actualizar la lista de turnos
                             } else {
                                 alert(result.message);
@@ -220,6 +274,7 @@ if (isset($_SESSION['user_id'])) {
                 }
             });
         });
+
 
 
     </script>

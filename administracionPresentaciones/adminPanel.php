@@ -90,7 +90,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 
     <!-- Modal para agregar comentario -->
     <!-- Modal para agregar un nuevo comentario -->
-    <!--<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form id="addForm" action="./manejoPresentaciones/agregar_comentario.php" method="POST">
@@ -135,7 +135,8 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                     </div>
                 </form>
             </div>
-        </div> -->
+        </div>
+    </div>
 
     <!-- Modal para editar comentario -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -249,6 +250,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             </div>
         </div>
     </div>
+
 
 
 

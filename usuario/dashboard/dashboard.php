@@ -337,7 +337,7 @@ if ($id_presentacion !== null) {
                 type: 'POST',
                 data: { usuario_id: usuarioId, profesional_id: profesionalId },
                 success: function (response) {
-                    const resultado = JSON.parse(response);
+                    const resultado = response;
 
                     if (resultado.status === 'success') {
                         $('#videoCallModal').modal('show'); // Abre el modal de videollamada
@@ -547,7 +547,7 @@ if ($id_presentacion !== null) {
             // Deshabilitar el botón para evitar múltiples clics
             $(this).prop('disabled', true);
             // Captura el valor del span
-            const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
+            const valorSpan = document.querySelector('.tooltiptext[data-valor_internacional]').getAttribute('data-valor_internacional');
 
             // PAYPAL
             if (!paypalButtonRendered) {

@@ -252,6 +252,7 @@ $(document).ready(function () {
                             eventClick: function (info) {
                                 if (confirm("¿Quieres seleccionar este turno con el terapeuta?")) {
                                     seleccionarTurno(info.event.id);
+                                    window.location.href = "../usuario/dashboard/dashboard.php";
                                 }
                             },
                             windowResize: function (view) {

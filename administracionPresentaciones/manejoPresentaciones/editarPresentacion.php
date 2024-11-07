@@ -19,8 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $whatsapp = $_POST['whatsapp'];
     $instagram = $_POST['instagram'];
 
-    // Inicializar la variable de ruta de imagen
-    $rutaImagen = null;
+    // Recuperar la imagen actual de la base de datos
+    // Asumiendo que tienes una consulta para obtener la imagen actual según el ID
+    $sql = "SELECT rutaImagen FROM presentaciones WHERE id = ?";
+    if ($stmt = $conexion->prepare($sql)) {
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $rutaImagen = $row['rutaImagen']; // Imagen actual
+
+        $stmt->close();
+    }
 
     // Procesar imagen (con validación)
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
@@ -31,9 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // La ruta que se guardará en la base de datos
         $rutaImagen = "../img/perfiles/" . $imagen_nombre;
-    } else {
-        $rutaImagen = "../img/por_defecto.png"; // Imagen por defecto si no se sube una nueva
     }
+
+    // Si no se sube una nueva imagen, se mantiene la imagen actual
+    if (!$rutaImagen) {
+        $rutaImagen = "../img/por_defecto.png"; // Imagen por defecto si no se sube una nueva y no hay imagen previa
+    }
+
+
 
 
     // Verificar que el ID no esté vacío
