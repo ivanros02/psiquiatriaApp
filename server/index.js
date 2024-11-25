@@ -309,12 +309,38 @@ function saveUserEmail(user, psychologistReferenceId, paymentId) {
     });
 }
 
+function realizarReserva(turnoId, usuarioId) {
+    if (!turnoId || !usuarioId) {
+        console.error('Faltan datos: turnoId o usuarioId');
+        return;
+    }
+    
+    console.log('Intentando realizar la reserva con:', { turnoId, usuarioId });
+    
+    fetch('https://terapialibre.com.ar/presentacion/sets/set_reserva_turno.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ turno_id: turnoId, usuario_id: usuarioId })
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('Reserva realizada con éxito:', data);
+            } else {
+                console.error('Error al realizar la reserva:', data.error);
+            }
+        })
+        .catch(error => console.error('Error en la solicitud de reserva:', error));
+}
 
 
 
 app.post("/create_preference", async (req, res) => {
     try {
-        const { psychologistId, userId, title, quantity, price } = req.body;
+        const { psychologistId, userId, title, quantity, price,turno_id } = req.body;
         const idempotencyKey = req.headers['x-idempotency-key'];
         const query = `SELECT * FROM presentaciones WHERE id = ${psychologistId}`;
         dbConnection.query(query, (error, results, fields) => {
@@ -325,7 +351,7 @@ app.post("/create_preference", async (req, res) => {
                 if (results.length > 0) {
                     const psychologistInfo = results[0];
                     // Concatenar `userId` y `psychologistId` en `external_reference`
-                    const externalReference = `${userId},${psychologistId}`;
+                    const externalReference = `${userId},${psychologistId},${turno_id}`;
                     const body = {
                         items: [{ title, quantity: Number(quantity), unit_price: Number(price), currency_id: "ARS" }],
                         back_urls: {
@@ -345,7 +371,7 @@ app.post("/create_preference", async (req, res) => {
                         res.json({ id: result.id, psychologistInfo });
                     }).catch(error => {
                         console.error('Error al crear la preferencia:', error);
-                        res.status(500).json({ error: "Error al crear la preferencia :(" });
+                        res.status(500).json({ error: "Error al crear la preferencia" });
                     });
                 } else {
                     console.error('No se encontraron datos del psicólogo con el ID proporcionado');
@@ -375,10 +401,8 @@ app.post("/webhook", async function (req, res) {
                 const userEmail = paymentData.payer.email;
 
                 // Descomponer external_reference para obtener userId y psychologistId
-                const [userId, psychologistId] = paymentData.external_reference.split(',');
+                const [userId, psychologistId,turno_id] = paymentData.external_reference.split(',');
 
-                console.log('User ID:', userId);  // Verifica si userId tiene un valor
-                console.log('Psychologist ID:', psychologistId);  // Verifica si psychologistId tiene un valor
 
                 const psychologistQuery = `SELECT * FROM presentaciones WHERE id = ?`;
                 dbConnection.query(psychologistQuery, [psychologistId], (error, results, fields) => {
@@ -387,6 +411,7 @@ app.post("/webhook", async function (req, res) {
                     } else {
                         if (results.length > 0) {
                             const psychologistInfo = results[0];
+                            realizarReserva(turno_id, userId);
                             saveUserEmail(userId, psychologistId, paymentId);
                             console.log(`Enviando correo a: ${userEmail}`);
                             sendEmailToUser(userEmail, psychologistInfo);

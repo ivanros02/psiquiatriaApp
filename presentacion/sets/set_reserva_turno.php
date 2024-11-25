@@ -6,54 +6,61 @@ error_reporting(E_ALL);
 // Conexión a la base de datos
 include '../../php/conexion.php';
 
-// Verificar que se enviaron los datos necesarios
-if (isset($_POST['turno_id']) && isset($_POST['usuario_id'])) {
-    $turno_id = intval($_POST['turno_id']);
-    $usuario_id = intval($_POST['usuario_id']);
+// Leer datos del cuerpo de la solicitud
+$inputData = json_decode(file_get_contents("php://input"), true);
 
-    // Consultar el profesional asociado al turno
-    $turno_query = "SELECT p.id_presentacion AS profesional_id
-                    FROM disponibilidad_turnos d
-                    LEFT JOIN usuarios p ON p.id=d.profesional_id
-                    WHERE d.id = $turno_id AND d.disponible = 1";
-    $turno_result = mysqli_query($conexion, $turno_query);
+if (!isset($inputData['turno_id']) || !isset($inputData['usuario_id'])) {
+    echo json_encode(['error' => 'Datos insuficientes para la reserva']);
+    exit;
+}
 
-    if ($turno_result && mysqli_num_rows($turno_result) > 0) {
-        $turno_row = mysqli_fetch_assoc($turno_result);
-        $profesional_id = intval($turno_row['profesional_id']);
+$turno_id = intval($inputData['turno_id']);
+$usuario_id = intval($inputData['usuario_id']);
 
-        // Verificar si la relación entre usuario y profesional ya existe
-        $relacion_query = "SELECT * FROM usuario_profesional WHERE usuario_id = $usuario_id AND profesional_id = $profesional_id";
-        $relacion_result = mysqli_query($conexion, $relacion_query);
+// Validar si turno_id y usuario_id son válidos
+if ($turno_id <= 0 || $usuario_id <= 0) {
+    echo json_encode(['error' => 'Datos inválidos para la reserva']);
+    exit;
+}
 
-        if (!$relacion_result || mysqli_num_rows($relacion_result) == 0) {
-            // Si la relación no existe, insertarla
-            $insert_relacion_query = "INSERT INTO usuario_profesional (usuario_id, profesional_id) VALUES ($usuario_id, $profesional_id)";
-            mysqli_query($conexion, $insert_relacion_query);
+// Consultar el profesional asociado al turno
+$turno_query = "SELECT p.id_presentacion AS profesional_id
+                FROM disponibilidad_turnos d
+                LEFT JOIN usuarios p ON p.id = d.profesional_id
+                WHERE d.id = $turno_id AND d.disponible = 1";
+$turno_result = mysqli_query($conexion, $turno_query);
+
+if ($turno_result && mysqli_num_rows($turno_result) > 0) {
+    $turno_row = mysqli_fetch_assoc($turno_result);
+    $profesional_id = intval($turno_row['profesional_id']);
+
+    // Verificar o insertar relación usuario-profesional
+    $relacion_query = "SELECT * FROM usuario_profesional WHERE usuario_id = $usuario_id AND profesional_id = $profesional_id";
+    $relacion_result = mysqli_query($conexion, $relacion_query);
+
+    if (!$relacion_result || mysqli_num_rows($relacion_result) == 0) {
+        $insert_relacion_query = "INSERT INTO usuario_profesional (usuario_id, profesional_id) VALUES ($usuario_id, $profesional_id)";
+        if (!mysqli_query($conexion, $insert_relacion_query)) {
+            echo json_encode(['error' => 'Error al crear relación usuario-profesional']);
+            exit;
         }
+    }
 
-        // Insertar la reserva en la tabla reservas_turnos
-        $insert_query = "INSERT INTO reservas_turnos (turno_id, usuario_id) VALUES ($turno_id, $usuario_id)";
-        $insert_result = mysqli_query($conexion, $insert_query);
-
-        if ($insert_result) {
-            // Actualizar la disponibilidad del turno a no disponible
-            $update_query = "UPDATE disponibilidad_turnos SET disponible = 0 WHERE id = $turno_id";
-            $update_result = mysqli_query($conexion, $update_query);
-
-            if ($update_result) {
-                echo json_encode(['success' => true]);
-            } else {
-                echo json_encode(['error' => 'Error en la base de datos al actualizar la disponibilidad']);
-            }
+    // Insertar reserva y actualizar turno
+    $insert_query = "INSERT INTO reservas_turnos (turno_id, usuario_id) VALUES ($turno_id, $usuario_id)";
+    if (mysqli_query($conexion, $insert_query)) {
+        $update_query = "UPDATE disponibilidad_turnos SET disponible = 0 WHERE id = $turno_id";
+        if (mysqli_query($conexion, $update_query)) {
+            echo json_encode(['success' => true]);
         } else {
-            echo json_encode(['error' => 'Error en la base de datos al insertar la reserva']);
+            echo json_encode(['error' => 'Error al actualizar la disponibilidad del turno: ' . mysqli_error($conexion)]);
         }
     } else {
-        echo json_encode(['error' => 'El turno no está disponible']);
+        echo json_encode(['error' => 'Error al insertar la reserva: ' . mysqli_error($conexion)]);
     }
+
 } else {
-    echo json_encode(['error' => 'Datos insuficientes para la reserva']);
+    echo json_encode(['error' => 'El turno no está disponible o no existe']);
 }
 
 // Cerrar la conexión

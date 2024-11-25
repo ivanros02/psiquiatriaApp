@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const presentaciontId = urlParams.get('id');
 const valor = urlParams.get('valor');
+let turno_id = null;
 $(document).ready(function () {
     if (presentaciontId) {
         $.ajax({
@@ -183,8 +184,6 @@ $(document).ready(function () {
                                 type: 'GET',
                                 dataType: 'json',
                                 success: function (turnos) {
-                                    // Procesar y mostrar el calendario en el modal
-                                    console.log(turnos); // Verifica que los turnos están bien formados
                                     mostrarCalendarioModal(turnos);
                                 },
                                 error: function (xhr, status, error) {
@@ -258,6 +257,7 @@ $(document).ready(function () {
                                     });
                                     calendarModal.hide();
                                     modalPago.show();
+                                    turno_id = info.event.id;
                                 }
                             },
                             windowResize: function (view) {
@@ -323,6 +323,33 @@ function enviarCorreoElectronicoAComprador(psychologistId, userEmail) {
     });
 }
 
+function realizarReserva(turnoId, usuarioId) {
+    if (!turnoId || !usuarioId) {
+        console.error('Faltan datos: turnoId o usuarioId');
+        return;
+    }
+    
+    console.log('Intentando realizar la reserva con:', { turnoId, usuarioId });
+    
+    fetch('./sets/set_reserva_turno.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ turno_id: turnoId, usuario_id: usuarioId })
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('Reserva realizada con éxito:', data);
+            } else {
+                console.error('Error al realizar la reserva:', data.error);
+            }
+        })
+        .catch(error => console.error('Error en la solicitud de reserva:', error));
+}
+
 
 //PAGOS
 // Variables para controlar si los botones ya fueron creados
@@ -347,7 +374,10 @@ $(document).on('click', '#checkout-btn', async () => {
                     purchase_units: [{
                         amount: { value: valorSpan },
                         reference_id: presentaciontId
-                    }]
+                    }],
+                    application_context: {
+                        shipping_preference: 'NO_SHIPPING'  // Desactiva la solicitud de dirección de facturación
+                    }
                 });
             },
             onApprove: (data, actions) => {
@@ -355,7 +385,8 @@ $(document).on('click', '#checkout-btn', async () => {
                 actions.order.capture().then(detalles => {
                     const user_email = detalles.payer.email_address;
                     const userId = document.getElementById("user-id").value.trim();
-
+                    console.log(turno_id);
+                    console.log(userId)
                     return fetch(url, {
                         method: 'post',
                         headers: { 'Content-Type': 'application/json' },
@@ -366,11 +397,13 @@ $(document).on('click', '#checkout-btn', async () => {
                             return response.json();  // Ahora esperamos JSON directamente
                         })
                         .then(data => {
-                            // Ya no necesitas JSON.parse aquí, ya es un objeto
                             if (data.status === 'success') {
                                 console.log('Datos guardados correctamente:', data.message);
                                 enviarCorreoElectronicoAComprador(presentaciontId, user_email);
-                                window.location.href = 'https://terapialibre.com.ar/usuario/dashboard/dashboard.php';
+                                console.log(turno_id);
+                                console.log(userId)
+                                realizarReserva(turno_id, userId); // Asegúrate de tener el turnoId y userId disponibles
+                                window.location.href = '../usuario/dashboard/dashboard.php';
                             } else {
                                 console.error('Error al guardar los datos:', data.message);
                             }
@@ -421,6 +454,7 @@ $(document).on('click', '#checkout-btn', async () => {
             price: precio,
             psychologistId: presentaciontId,
             userId,  // Aquí estás enviando el userId
+            turno_id,
             additional_info: {
                 userId  // Asegúrate de que el userId esté dentro de additional_info
             }
