@@ -75,6 +75,18 @@ if (isset($_SESSION['user_id'])) {
     <noscript><img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=1237863354199215&ev=PageView&noscript=1" /></noscript>
     <!-- End Meta Pixel Code -->
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-63TNDL4FG4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-63TNDL4FG4');
+    </script>
+    <!-- End Google Analytics 4 -->
+
 </head>
 
 <body>

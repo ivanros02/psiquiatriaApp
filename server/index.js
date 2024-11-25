@@ -293,7 +293,7 @@ function saveUserEmail(user, psychologistReferenceId, paymentId) {
         if (results.length > 0) {
             const psychologistId = results[0].id_usuario;
 
-            // Ahora insertar en la tabla `datos_usuario` con el id_usuario obtenido
+            // Insertar en la tabla `datos_usuario` con el id_usuario obtenido
             const insertQuery = `INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)`;
 
             dbConnection.query(insertQuery, [user, psychologistId, paymentId], (insertError, insertResults) => {
@@ -308,6 +308,8 @@ function saveUserEmail(user, psychologistReferenceId, paymentId) {
         }
     });
 }
+
+
 
 
 app.post("/create_preference", async (req, res) => {

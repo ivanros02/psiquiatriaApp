@@ -1,6 +1,5 @@
 <?php
 header('Content-Type: application/json'); // Establece el tipo de contenido como JSON
-error_reporting(0); // Opcional: Desactiva el reporte de errores (para producción)
 include '../../../php/conexion.php';
 
 $usuario_id = $_POST['usuario_id'];
@@ -17,8 +16,8 @@ if ($result_profesional->num_rows > 0) {
     $row_profesional = $result_profesional->fetch_assoc();
     $real_profesional_id = $row_profesional['id_usuario'];
 
-    // Verificar el enlace de videollamada y el estado del pago
-    $query_enlace = "SELECT enlace, estado_pago FROM videollamadas 
+    // Obtener el enlace de la videollamada sin verificar el estado de pago
+    $query_enlace = "SELECT enlace FROM videollamadas 
                      WHERE profesional_id = ? AND paciente_id = ? 
                      ORDER BY fecha_hora DESC LIMIT 1";
     $stmt_enlace = $conexion->prepare($query_enlace);
@@ -28,12 +27,7 @@ if ($result_profesional->num_rows > 0) {
 
     if ($result_enlace->num_rows > 0) {
         $row_enlace = $result_enlace->fetch_assoc();
-        
-        if ($row_enlace['estado_pago'] === 'completado') {
-            echo json_encode(['status' => 'success', 'enlace' => $row_enlace['enlace']]);
-        } else {
-            echo json_encode(['status' => 'no_payment', 'message' => 'Debe completar el pago antes de iniciar la videollamada.']);
-        }
+        echo json_encode(['status' => 'success', 'enlace' => $row_enlace['enlace']]);
     } else {
         echo json_encode(['status' => 'no_call', 'message' => 'No se encontró un enlace de videollamada.']);
     }

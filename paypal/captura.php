@@ -49,28 +49,9 @@ if (isset($datos['userId']) && isset($datos['detalles'])) {
                     mysqli_stmt_execute($insertStmt);
 
                     if (mysqli_stmt_affected_rows($insertStmt) > 0) {
-                        // Actualizar el estado de la videollamada a 'completado'
-                        $updateQuery = "UPDATE videollamadas SET estado_pago = 'completado' WHERE profesional_id = ? AND paciente_id = ?";
-                        $updateStmt = mysqli_prepare($conexion, $updateQuery);
-
-                        if ($updateStmt) {
-                            mysqli_stmt_bind_param($updateStmt, 'ii', $psychologist_id, $userId);
-                            mysqli_stmt_execute($updateStmt);
-
-                            if (mysqli_stmt_affected_rows($updateStmt) > 0) {
-                                // Confirmar transacción y responder con éxito
-                                mysqli_commit($conexion);
-                                echo json_encode(['status' => 'success', 'message' => 'Datos guardados correctamente y estado de videollamada actualizado.']);
-                            } else {
-                                // Revertir transacción si no se encontró la videollamada para actualizar
-                                mysqli_rollback($conexion);
-                                echo json_encode(['status' => 'error', 'message' => 'No se encontró la videollamada para actualizar.']);
-                            }
-                            mysqli_stmt_close($updateStmt);
-                        } else {
-                            mysqli_rollback($conexion);
-                            echo json_encode(['status' => 'error', 'message' => 'Error al preparar la consulta de actualización de videollamada.']);
-                        }
+                        // Confirmar transacción y responder con éxito
+                        mysqli_commit($conexion);
+                        echo json_encode(['status' => 'success', 'message' => 'Datos guardados correctamente']);
                     } else {
                         mysqli_rollback($conexion);
                         echo json_encode(['status' => 'error', 'message' => 'Error al guardar los datos de pago en la tabla datos_usuario.']);

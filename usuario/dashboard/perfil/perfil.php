@@ -146,6 +146,41 @@ if (isset($_SESSION['user_id'])) {
             <i class="bi bi-arrow-left"></i> Volver
         </a>
 
+        <!-- Modal para editar un turno -->
+        <div class="modal fade" id="editarTurnoModal" tabindex="-1" aria-labelledby="editarTurnoModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarTurnoModalLabel">Editar Turno</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editarTurnoForm">
+                            <input type="hidden" id="turnoId" name="id">
+                            <div class="mb-3">
+                                <label for="editarFecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="editarFecha" name="fecha" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editarHora" class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="editarHora" name="hora" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editarDisponible" class="form-label">Disponible</label>
+                                <select class="form-select" id="editarDisponible" name="disponible">
+                                    <option value="1">Sí</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <!-- Sección de disponibilidad de turnos -->
         <?php if ($id_presentacion !== null): ?>
@@ -225,6 +260,63 @@ if (isset($_SESSION['user_id'])) {
     </div>
 
     <script>
+        // Manejar el envío del formulario de edición
+        document.getElementById('editarTurnoForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita el envío del formulario normal
+
+            const formData = new FormData(this);
+
+            fetch('./abm/editar_turno.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Si la edición fue exitosa, recargar la página para ver los cambios
+                        location.reload();
+                    } else {
+                        alert('Hubo un error al actualizar el turno.');
+                    }
+                });
+        });
+
+        // Captura el clic en el botón Editar
+        document.querySelectorAll('.btn-warning').forEach(button => {
+            button.addEventListener('click', function () {
+                const turnoId = this.getAttribute('data-id');
+
+                // Llenar los campos del modal de edición con datos del turno
+                fetch(`./gets/obtener_turno.php?id=${turnoId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('turnoId').value = data.id;
+                        document.getElementById('editarFecha').value = data.fecha;
+                        document.getElementById('editarHora').value = data.hora;
+                        document.getElementById('editarDisponible').value = data.disponible;
+                        new bootstrap.Modal(document.getElementById('editarTurnoModal')).show();
+                    });
+            });
+        });
+
+        // Captura el clic en el botón Eliminar
+        document.querySelectorAll('.btn-danger').forEach(button => {
+            button.addEventListener('click', function () {
+                const turnoId = this.getAttribute('data-id');
+                if (confirm('¿Estás seguro de que deseas eliminar este turno?')) {
+                    fetch(`./abm/eliminar_turno.php?id=${turnoId}`, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                location.reload();
+                            } else {
+                                alert('Error al eliminar el turno');
+                            }
+                        });
+                }
+            });
+        });
+
         $(document).ready(function () {
             flatpickr("#fechas", {
                 mode: "multiple", // Permite seleccionar múltiples fechas

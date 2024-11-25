@@ -251,8 +251,13 @@ $(document).ready(function () {
                             },
                             eventClick: function (info) {
                                 if (confirm("¿Quieres seleccionar este turno con el terapeuta?")) {
-                                    seleccionarTurno(info.event.id);
-                                    window.location.href = "../usuario/dashboard/dashboard.php";
+                                    // Obtener el modal y mostrarlo usando Bootstrap
+                                    const modalPago = new bootstrap.Modal(document.getElementById('contactModal'), {
+                                        backdrop: 'static',
+                                        keyboard: false
+                                    });
+                                    calendarModal.hide();
+                                    modalPago.show();
                                 }
                             },
                             windowResize: function (view) {
@@ -283,37 +288,6 @@ $(document).ready(function () {
 
 
 
-                    var usuarioId = document.body.getAttribute('data-usuario-id');
-
-                    function seleccionarTurno(turnoId) {
-                        if (!usuarioId) {
-                            console.error("El ID de usuario no está definido.");
-                            return;
-                        }
-                        console.log(usuarioId)
-                        $.ajax({
-                            url: './sets/set_reserva_turno.php',
-                            type: 'POST',
-                            data: {
-                                turno_id: turnoId,
-                                usuario_id: usuarioId
-                            },
-                            success: function (response) {
-                                try {
-                                    const res = JSON.parse(response);
-                                    if (res.success) {
-                                        alert("Turno reservado exitosamente");
-                                    } else {
-                                        alert(res.error || "Error al reservar el turno");
-                                    }
-                                } catch (error) {
-                                    console.error("Respuesta no válida:", response);
-                                    alert("Hubo un problema con la respuesta del servidor.");
-                                }
-                            },
-
-                        });
-                    }
 
 
 
@@ -332,6 +306,164 @@ $(document).ready(function () {
         console.error('No se encontró el ID del psicólogo en la URL.');
     }
 });
+
+// Función para renderizar el botón de PayPal
+function enviarCorreoElectronicoAComprador(psychologistId, userEmail) {
+    // Realizar una solicitud AJAX para enviar el correo electrónico
+    $.ajax({
+        url: 'https://terapialibre.com.ar/paypal/correo.php',
+        method: 'POST',
+        data: { psychologist_id: psychologistId, user_email: userEmail },
+        success: function (response) {
+            console.log('Correo electrónico enviado correctamente:', response);
+        },
+        error: function (xhr, status, error) {
+            console.error('Error al enviar el correo electrónico:', error);
+        }
+    });
+}
+
+
+//PAGOS
+// Variables para controlar si los botones ya fueron creados
+let paypalButtonRendered = false;
+let mercadoPagoButtonRendered = false;
+
+$(document).on('click', '#checkout-btn', async () => {
+    // Deshabilitar el botón para evitar múltiples clics
+    $(this).prop('disabled', true);
+    // Captura el valor del span
+    const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
+    // PAYPAL
+    if (!paypalButtonRendered) {
+        paypal.Buttons({
+            style: {
+                color: 'blue',
+                shape: 'pill',
+                label: 'pay'
+            },
+            createOrder: (data, actions) => {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: { value: valorSpan },
+                        reference_id: presentaciontId
+                    }]
+                });
+            },
+            onApprove: (data, actions) => {
+                let url = '../paypal/captura.php';
+                actions.order.capture().then(detalles => {
+                    const user_email = detalles.payer.email_address;
+                    const userId = document.getElementById("user-id").value.trim();
+
+                    return fetch(url, {
+                        method: 'post',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ detalles, userId }) // Enviando los detalles y userId en el cuerpo
+                    })
+                        .then(response => {
+                            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                            return response.json();  // Ahora esperamos JSON directamente
+                        })
+                        .then(data => {
+                            // Ya no necesitas JSON.parse aquí, ya es un objeto
+                            if (data.status === 'success') {
+                                console.log('Datos guardados correctamente:', data.message);
+                                enviarCorreoElectronicoAComprador(presentaciontId, user_email);
+                                window.location.href = 'https://terapialibre.com.ar/usuario/dashboard/dashboard.php';
+                            } else {
+                                console.error('Error al guardar los datos:', data.message);
+                            }
+                        })
+                        .catch(error => console.error('Error en la solicitud:', error));
+                });
+            },
+
+            onCancel: () => {
+                alert('Pago cancelado');
+            }
+        }).render('#paypal-button-container');
+
+        paypalButtonRendered = true;
+    }
+
+    // MERCADO PAGO
+
+    // Mostrar el mensaje de "cargando" cuando se hace clic en el botón
+    document.getElementById('mp-loading-message').style.display = 'block';
+    //moni:APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8
+    if (!mercadoPagoButtonRendered) {
+        const mp = new MercadoPago("APP_USR-ebcfb544-a26e-44bf-8c55-7605f5ecb7d8", { locale: "es-AR" });
+        const generateIdempotencyKey = () => {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            return Array.from({ length: 20 }, () => characters.charAt(Math.floor(Math.random() * characters.length))).join('');
+        };
+
+        const idempotencyKey = generateIdempotencyKey();
+        const userEmail = document.getElementById("user-email").value.trim();
+
+        if (!userEmail) {
+            alert("Por favor, ingresa tu correo electrónico.");
+            return;
+        }
+
+        const precio = parseFloat(document.querySelector('.tooltiptext').getAttribute('data-valor'));
+        const userId = document.getElementById("user-id").value.trim(); // Obtener el ID del usuario
+
+        const formData = {
+            userId,  // Cambia userEmail por userId
+            psychologistId: presentaciontId
+        };
+
+        const orderData = {
+            title: document.querySelector(".card-title").innerText,
+            quantity: 1,
+            price: precio,
+            psychologistId: presentaciontId,
+            userId,  // Aquí estás enviando el userId
+            additional_info: {
+                userId  // Asegúrate de que el userId esté dentro de additional_info
+            }
+        };
+
+
+        try {
+            const response = await fetch("https://terapialibre.com.ar/create_preference", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Idempotency-Key": idempotencyKey,
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            const preference = await response.json();
+            createCheckoutButton(preference.id, mp);
+
+            // Ocultar el mensaje de "cargando" cuando el botón esté listo
+            document.getElementById('mp-loading-message').style.display = 'none';
+
+            mercadoPagoButtonRendered = true;
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Ocurrió un error: " + error.message);
+        }
+    }
+
+});
+
+const createCheckoutButton = (preferenceId, mp) => {
+    const bricksBuilder = mp.bricks();
+    const renderComponent = async () => {
+        if (window.checkoutButton) window.checkoutButton.unmount();
+
+        await bricksBuilder.create("wallet", "wallet_container", { initialization: { preferenceId } });
+
+        // Ocultar el mensaje de "cargando" cuando el botón esté completamente renderizado
+        document.getElementById('mp-loading-message').style.display = 'none';
+    };
+    renderComponent();
+};
 
 
 
