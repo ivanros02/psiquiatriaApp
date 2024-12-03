@@ -1,18 +1,19 @@
 // Variable global temporal
-let presentacionTemp = {};
+let paginaActual = 1; // Página inicial
+const registrosPorPagina = 30; // Registros por página
 
 // Función para cargar las presentaciones desde el servidor
-function cargarPresentaciones() {
+function cargarPresentaciones(pagina = 1) {
     $.ajax({
-        url: './manejoPresentaciones/obtenerPresentaciones.php', // Ruta del archivo PHP que obtiene las presentaciones
+        url: './manejoPresentaciones/obtenerPresentaciones.php',
         method: 'GET',
+        data: { pagina },
         dataType: 'json',
-        success: function (data) {
+        success: function (response) {
+            const { presentaciones, total, registrosPorPagina } = response;
             let rows = '';
-            data.forEach(function (presentacion) {
-                // Almacenar cada presentación en la variable global
-                presentacionTemp[presentacion.id] = presentacion;
 
+            presentaciones.forEach(function (presentacion) {
                 rows += `
                     <tr>
                         <td>${presentacion.id}</td>
@@ -33,37 +34,79 @@ function cargarPresentaciones() {
                     </tr>
                 `;
             });
+
             $('#presentaciones-list').html(rows);
+
+            // Generar la paginación
+            generarPaginacion(total, registrosPorPagina, pagina);
         }
     });
 }
 
+// Función para generar botones de paginación
+function generarPaginacion(total, registrosPorPagina, paginaActual) {
+    const totalPaginas = Math.ceil(total / registrosPorPagina);
+    let paginationHTML = '';
 
-// Función para abrir el modal de edición con los datos de la presentación
-function abrirModalEditar(id) {
-    const p = presentacionTemp[id]; // Recuperar los datos de la variable global
-    if (p) {
-        $('#editarId').val(p.id);
-        // Mostrar la imagen actual como vista previa
-        if (p.rutaImagen) {
-            $('#previewImagen').attr('src', p.rutaImagen).show();
-        } else {
-            $('#previewImagen').hide();
-        }
-        $('#editarNombre').val(p.nombre);
-        $('#editarTitulo').val(p.titulo);
-        $('#editarMatricula').val(p.matricula);
-        $('#editarMatriculaP').val(p.matriculaP);
-        $('#editarDescripcion').val(p.descripcion);
-        $('#editarTelefono').val(p.telefono);
-        $('#editarDisponibilidad').val(p.disponibilidad);
-        $('#editarValor').val(p.valor);
-        $('#editarMail').val(p.mail);
-        $('#editarWhatsapp').val(p.whatsapp);
-        $('#editarInstagram').val(p.instagram);
-        $('#editarModal').modal('show');
+    for (let i = 1; i <= totalPaginas; i++) {
+        paginationHTML += `
+            <button class="btn btn-sm ${i === paginaActual ? 'btn-primary' : 'btn-outline-primary'}"
+                onclick="cargarPresentaciones(${i})">${i}</button>
+        `;
     }
+
+    $('#pagination').html(paginationHTML);
 }
+
+// Inicializar la carga de presentaciones
+$(document).ready(function () {
+    cargarPresentaciones();
+});
+
+
+function abrirModalEditar(id) {
+    fetch(`./manejoPresentaciones/obtenerPresentacionPorId.php?id=${id}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error al obtener los datos de la presentación.");
+            }
+            return response.json();
+        })
+        .then(p => {
+            if (!p) {
+                alert("No se encontraron datos para esta presentación.");
+                return;
+            }
+
+            // Llenar el formulario con los datos recibidos
+            $('#editarId').val(p.id);
+            if (p.rutaImagen) {
+                $('#previewImagen').attr('src', p.rutaImagen).show();
+            } else {
+                $('#previewImagen').hide();
+            }
+            $('#editarNombre').val(p.nombre);
+            $('#editarTitulo').val(p.titulo);
+            $('#editarMatricula').val(p.matricula);
+            $('#editarMatriculaP').val(p.matriculaP);
+            $('#editarDescripcion').val(p.descripcion);
+            $('#editarTelefono').val(p.telefono);
+            $('#editarDisponibilidad').val(p.disponibilidad);
+            $('#editarValor').val(p.valor);
+            $('#editarValorInternacional').val(p.valor_internacional);
+            $('#editarMail').val(p.mail);
+            $('#editarWhatsapp').val(p.whatsapp);
+            $('#editarInstagram').val(p.instagram);
+
+            // Mostrar el modal de edición
+            $('#editarModal').modal('show');
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Ocurrió un error al cargar los datos de la presentación.");
+        });
+}
+
 
 // Función para guardar los cambios de la edición
 function guardarCambios() {
@@ -76,6 +119,7 @@ function guardarCambios() {
     const telefono = $('#editarTelefono').val();
     const disponibilidad = $('#editarDisponibilidad').val();
     const valor = $('#editarValor').val();
+    const valor_internacional = $('#editarValorInternacional').val();
     const mail = $('#editarMail').val();
     const whatsapp = $('#editarWhatsapp').val();
     const instagram = $('#editarInstagram').val();
@@ -91,6 +135,7 @@ function guardarCambios() {
     formData.append('telefono', telefono);
     formData.append('disponibilidad', disponibilidad);
     formData.append('valor', valor);
+    formData.append('valor_internacional', valor_internacional);
     formData.append('mail', mail);
     formData.append('whatsapp', whatsapp);
     formData.append('instagram', instagram);
@@ -167,16 +212,23 @@ $(document).ready(function () {
     cargarPresentaciones();
 });
 
-// Función para cargar la lista de comentarios
-function cargarComentarios() {
+function cargarComentarios(pagina = 1) {
+    const registrosPorPagina = 10; // Configura cuántos registros mostrar por página
     $.ajax({
-        url: './manejoPresentaciones/listar_comentarios_ajax.php', // Archivo PHP que genera la tabla
+        url: './manejoPresentaciones/listar_comentarios_ajax.php',
         method: 'GET',
+        data: { pagina, registrosPorPagina },
         success: function (data) {
             $('#comentarios-list').html(data); // Cargar el HTML recibido en el contenedor
         }
     });
 }
+
+// Cargar la primera página al iniciar
+document.addEventListener('DOMContentLoaded', () => {
+    cargarComentarios();
+});
+
 
 // Llamada inicial para cargar los comentarios
 $(document).ready(function () {
@@ -225,3 +277,95 @@ $(document).ready(function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const botonGenerarReporte = document.getElementById('generarReporte');
+    if (botonGenerarReporte) {
+        botonGenerarReporte.addEventListener('click', async () => {
+            const fechaDesde = document.getElementById('fechaDesde').value;
+            const fechaHasta = document.getElementById('fechaHasta').value;
+
+            if (!fechaDesde || !fechaHasta) {
+                alert("Por favor, selecciona las fechas.");
+                return;
+            }
+
+            try {
+                const response = await fetch('./gets/generar-reporte.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fechaDesde, fechaHasta }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Error al obtener los datos del servidor");
+                }
+
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    alert("No se encontraron datos para las fechas seleccionadas.");
+                    return;
+                }
+
+                const formatDate = (date) => {
+                    const [year, month, day] = date.split('-');
+                    return `${day}-${month}-${year}`;
+                };
+
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                let y = 20;
+
+                // Encabezado
+                pdf.setFontSize(16);
+                pdf.text("Reporte de Liquidación de Profesionales", pageWidth / 2, y, { align: 'center' });
+                y += 10;
+                pdf.setFontSize(12);
+                pdf.text(`Rango de fechas: ${formatDate(fechaDesde)} a ${formatDate(fechaHasta)}`, pageWidth / 2, y, { align: 'center' });
+                y += 20;
+
+                const headers = [["Nombre", "Cant. Nacional", "Total Nacional", "Cant. Internacional", "Total Internacional"]];
+                const rows = data.map(item => [
+                    item.nombre,
+                    item.cantidad_nacional,
+                    `$${item.total_nacional.toFixed(2)}`,
+                    item.cantidad_internacional,
+                    `$${item.total_internacional.toFixed(2)}`
+                ]);
+
+                pdf.autoTable({
+                    startY: y,
+                    head: headers,
+                    body: rows,
+                    theme: 'grid',
+                    styles: {
+                        fontSize: 10,
+                        halign: 'center',
+                    },
+                    headStyles: {
+                        fillColor: [0, 102, 204],
+                        textColor: [255, 255, 255],
+                        fontSize: 11,
+                    },
+                });
+
+
+                // Abrir en una nueva pestaña para vista previa
+                window.open(pdf.output('bloburl'));
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Hubo un problema al generar el reporte.");
+            }
+        });
+    } else {
+        console.error("El botón generarReporte no fue encontrado en el DOM.");
+    }
+});
+
+
+
+

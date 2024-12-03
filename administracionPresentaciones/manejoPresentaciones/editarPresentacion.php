@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telefono = $_POST['telefono'];
     $disponibilidad = $_POST['disponibilidad'];
     $valor = $_POST['valor'];
+    $valor_internacional = $_POST['valor_internacional'];
     $mail = $_POST['mail'];
     $whatsapp = $_POST['whatsapp'];
     $instagram = $_POST['instagram'];
@@ -63,7 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 descripcion = ?, 
                 telefono = ?, 
                 disponibilidad = ?, 
-                valor = ?, 
+                valor = ?,
+                valor_internacional = ?, 
                 mail = ?, 
                 whatsapp = ?, 
                 instagram = ?
@@ -72,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Preparar la declaración
         if ($stmt = $conexion->prepare($sql)) {
             // Enlazar los parámetros (s = string, i = integer)
-            $stmt->bind_param('ssssssssssssi', $rutaImagen, $nombre, $titulo, $matricula, $matriculaP, $descripcion, $telefono, $disponibilidad, $valor, $mail, $whatsapp, $instagram, $id);
+            $stmt->bind_param('sssssssssssssi', $rutaImagen, $nombre, $titulo, $matricula, $matriculaP, $descripcion, $telefono, $disponibilidad, $valor,$valor_internacional, $mail, $whatsapp, $instagram, $id);
 
             // Ejecutar la declaración
             if ($stmt->execute()) {

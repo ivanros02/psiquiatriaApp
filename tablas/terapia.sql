@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2024 a las 02:19:31
+-- Tiempo de generación: 03-12-2024 a las 15:04:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -43,6 +43,19 @@ INSERT INTO `administradores` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` int(11) NOT NULL,
+  `usuario_id_1` int(11) NOT NULL,
+  `usuario_id_2` int(11) NOT NULL,
+  `fecha_creacion` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `comentarios_presentaciones`
 --
 
@@ -52,15 +65,6 @@ CREATE TABLE `comentarios_presentaciones` (
   `comentario` varchar(255) NOT NULL,
   `nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `comentarios_presentaciones`
---
-
-INSERT INTO `comentarios_presentaciones` (`id`, `profesional_id`, `comentario`, `nombre`) VALUES
-(12, 30, 'La sesión de hoy me ayudó a ver las cosas desde una perspectiva diferente. Me siento más motivado para hacer cambios en mi vida.', 'Ivan'),
-(13, 30, 'La sesión de hoy me ayudó a ver las cosas desde una perspectiva diferente. Me siento más motivado para hacer cambios en mi vida.', 'Ivan'),
-(14, 30, 'La sesión de hoy me ayudó a ver las cosas desde una perspectiva diferente. Me siento más motivado para hacer cambios en mi vida.', 'AVOLIO ANDRES');
 
 -- --------------------------------------------------------
 
@@ -72,7 +76,9 @@ CREATE TABLE `datos_usuario` (
   `id` int(11) NOT NULL,
   `user` int(255) NOT NULL,
   `psychologist_id` int(200) NOT NULL,
-  `payment_id` int(255) NOT NULL
+  `payment_id` int(255) NOT NULL,
+  `pago_nacional` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -88,20 +94,6 @@ CREATE TABLE `disponibilidad_turnos` (
   `hora` time NOT NULL,
   `disponible` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `disponibilidad_turnos`
---
-
-INSERT INTO `disponibilidad_turnos` (`id`, `profesional_id`, `fecha`, `hora`, `disponible`) VALUES
-(9, 13, '2024-11-05', '11:30:00', 0),
-(10, 13, '2024-11-05', '12:00:00', 0),
-(11, 13, '2024-11-06', '10:00:00', 0),
-(12, 13, '2024-11-06', '10:30:00', 0),
-(13, 13, '2024-11-07', '11:30:00', 1),
-(14, 13, '2024-11-14', '11:30:00', 1),
-(15, 13, '2024-11-21', '11:30:00', 1),
-(16, 13, '2024-11-28', '11:30:00', 1);
 
 -- --------------------------------------------------------
 
@@ -143,6 +135,20 @@ INSERT INTO `especialidades` (`id`, `especi`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mensajes`
+--
+
+CREATE TABLE `mensajes` (
+  `id` int(11) NOT NULL,
+  `chat_id` int(11) NOT NULL,
+  `id_remitente` int(11) NOT NULL,
+  `mensaje` text NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `presentaciones`
 --
 
@@ -165,13 +171,6 @@ CREATE TABLE `presentaciones` (
   `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `presentaciones`
---
-
-INSERT INTO `presentaciones` (`id`, `rutaImagen`, `nombre`, `titulo`, `matricula`, `matriculaP`, `descripcion`, `telefono`, `disponibilidad`, `valor`, `valor_internacional`, `mail`, `whatsapp`, `instagram`, `aprobado`, `id_usuario`) VALUES
-(30, '../img/perfiles/temp.png', 'Diego', 'Lic. en informatica', 22, 22, 'test', '1139114579', 24, 222, 33, 'ivanrosendo1102@gmail.com', '1139114579', 'rosendo_ivann', 1, 13);
-
 -- --------------------------------------------------------
 
 --
@@ -182,13 +181,6 @@ CREATE TABLE `presentaciones_especialidades` (
   `presentacion_id` int(11) NOT NULL,
   `especialidad_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `presentaciones_especialidades`
---
-
-INSERT INTO `presentaciones_especialidades` (`presentacion_id`, `especialidad_id`) VALUES
-(30, 22);
 
 -- --------------------------------------------------------
 
@@ -202,17 +194,6 @@ CREATE TABLE `reservas_turnos` (
   `usuario_id` int(11) NOT NULL,
   `fecha_reserva` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `reservas_turnos`
---
-
-INSERT INTO `reservas_turnos` (`id`, `turno_id`, `usuario_id`, `fecha_reserva`) VALUES
-(11, 9, 14, '2024-11-05 14:25:55'),
-(12, 10, 14, '2024-11-06 23:10:13'),
-(13, 11, 14, '2024-11-07 14:28:50'),
-(14, 12, 14, '2024-11-07 14:29:29'),
-(15, 12, 14, '2024-11-07 14:30:22');
 
 -- --------------------------------------------------------
 
@@ -230,14 +211,6 @@ CREATE TABLE `usuarios` (
   `id_presentacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `telefono`, `fecha_registro`, `id_presentacion`) VALUES
-(13, 'Ivan', 'ivanrosendo1102@gmail.com', '$2y$10$9N7lRp/3iZHWBTeCClqFDO/hPU8IRI3Jhl4H5zecEWiM/StKscJ2q', '1139114579', '2024-11-05 11:23:28', 30),
-(14, 'test', 'test@gmail.com', '$2y$10$q41t7PtTDCHQj0JeCkMhaeq1hNJhFKUcvP4zBm8n/RI7h7lBEabCO', NULL, '2024-11-05 11:25:20', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -248,13 +221,6 @@ CREATE TABLE `usuario_profesional` (
   `usuario_id` int(255) NOT NULL,
   `profesional_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `usuario_profesional`
---
-
-INSERT INTO `usuario_profesional` (`usuario_id`, `profesional_id`) VALUES
-(14, 30);
 
 -- --------------------------------------------------------
 
@@ -268,8 +234,7 @@ CREATE TABLE `videollamadas` (
   `paciente_id` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL,
   `enlace` varchar(255) NOT NULL,
-  `fecha_creacion` datetime DEFAULT current_timestamp(),
-  `estado_pago` enum('pendiente','completado') DEFAULT 'pendiente'
+  `fecha_creacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -281,6 +246,14 @@ CREATE TABLE `videollamadas` (
 --
 ALTER TABLE `administradores`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_usuario_1` (`usuario_id_1`),
+  ADD KEY `fk_usuario_2` (`usuario_id_2`);
 
 --
 -- Indices de la tabla `comentarios_presentaciones`
@@ -309,6 +282,14 @@ ALTER TABLE `disponibilidad_turnos`
 --
 ALTER TABLE `especialidades`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `chat_id` (`chat_id`),
+  ADD KEY `id_remitente` (`id_remitente`);
 
 --
 -- Indices de la tabla `presentaciones`
@@ -352,6 +333,7 @@ ALTER TABLE `usuario_profesional`
 --
 ALTER TABLE `videollamadas`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unico_profesional_paciente` (`profesional_id`,`paciente_id`),
   ADD KEY `profesional_id` (`profesional_id`),
   ADD KEY `paciente_id` (`paciente_id`);
 
@@ -366,6 +348,12 @@ ALTER TABLE `administradores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `comentarios_presentaciones`
 --
 ALTER TABLE `comentarios_presentaciones`
@@ -375,13 +363,13 @@ ALTER TABLE `comentarios_presentaciones`
 -- AUTO_INCREMENT de la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `disponibilidad_turnos`
 --
 ALTER TABLE `disponibilidad_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidades`
@@ -390,32 +378,45 @@ ALTER TABLE `especialidades`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
+-- AUTO_INCREMENT de la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
 -- AUTO_INCREMENT de la tabla `presentaciones`
 --
 ALTER TABLE `presentaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `reservas_turnos`
 --
 ALTER TABLE `reservas_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `videollamadas`
 --
 ALTER TABLE `videollamadas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `chats`
+--
+ALTER TABLE `chats`
+  ADD CONSTRAINT `fk_usuario_1` FOREIGN KEY (`usuario_id_1`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `fk_usuario_2` FOREIGN KEY (`usuario_id_2`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `comentarios_presentaciones`
@@ -435,6 +436,13 @@ ALTER TABLE `datos_usuario`
 --
 ALTER TABLE `disponibilidad_turnos`
   ADD CONSTRAINT `fk_disponibilidad_usuario` FOREIGN KEY (`profesional_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Filtros para la tabla `mensajes`
+--
+ALTER TABLE `mensajes`
+  ADD CONSTRAINT `mensajes_ibfk_1` FOREIGN KEY (`chat_id`) REFERENCES `chats` (`id`),
+  ADD CONSTRAINT `mensajes_ibfk_2` FOREIGN KEY (`id_remitente`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `presentaciones`

@@ -17,12 +17,16 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     <title>Panel de Administración</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
 
     <script src="./js/admin.js"></script>
 
@@ -56,7 +60,42 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
             <a href="./manejoUsuario/logout.php" class="btn btn-danger">Cerrar sesión</a>
         </div>
 
-        <h2 class="mb-4">Listado de Presentaciones</h2>
+        <div class="container mt-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mb-4">Listado de Presentaciones</h2>
+                <button type="button" class="btn btn-primary btn-sm shadow-lg" data-bs-toggle="modal"
+                    data-bs-target="#reporteModal">
+                    <i class="bi bi-file-earmark-text" style="font-size: 20px; margin-right: 5px;"></i>
+                    Generar Reporte
+                </button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reporteModal" tabindex="-1" aria-labelledby="reporteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reporteModalLabel">Generar Reporte de Liquidación</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="reporteForm">
+                            <div class="mb-3">
+                                <label for="fechaDesde" class="form-label">Fecha Desde:</label>
+                                <input type="date" class="form-control" id="fechaDesde" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fechaHasta" class="form-label">Fecha Hasta:</label>
+                                <input type="date" class="form-control" id="fechaHasta" required>
+                            </div>
+                            <button type="button" id="generarReporte" class="btn btn-success w-100">Generar
+                                Reporte</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
                 <thead class="thead-dark">
@@ -76,6 +115,8 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                     <!-- Las filas de presentaciones se generarán aquí con JS -->
                 </tbody>
             </table>
+            <!-- Contenedor de Paginación -->
+            <div id="pagination" class="d-flex justify-content-center mt-3"></div>
         </div>
     </div>
 
@@ -227,6 +268,10 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
                         <div class="mb-3">
                             <label for="editarValor" class="form-label">Valor</label>
                             <input type="number" class="form-control" id="editarValor">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editarValorInternacional" class="form-label">Valor Internacional</label>
+                            <input type="number" class="form-control" id="editarValorInternacional">
                         </div>
                         <div class="mb-3">
                             <label for="editarMail" class="form-label">Mail</label>

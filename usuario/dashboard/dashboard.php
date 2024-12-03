@@ -7,7 +7,8 @@ if (!isset($_SESSION['user_id'])) { // Cambia esto
 
 include '../../php/conexion.php';
 
-$usuario_id = $_SESSION['user_id']; // Cambia esto también
+$usuario_id = $_SESSION['user_id'];  // ID del usuario logueado
+
 
 // Verificar si el usuario está logueado
 $usuarioLogueado = false;
@@ -143,17 +144,17 @@ if ($id_presentacion !== null) {
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../../estilos/headerYFooter.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/es.js"></script>
     <script src='https://meet.jit.si/external_api.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
-    
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat:wght@400;700&display=swap');
 
@@ -196,6 +197,82 @@ if ($id_presentacion !== null) {
         #modalDescription p {
             margin-bottom: 0.5rem;
             /* Espacio entre líneas */
+        }
+
+        #chat-box {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mensaje {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mensaje-enviado {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            /* Alinea a la derecha */
+            border-radius: 15px 15px 0 15px;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            text-align: left;
+        }
+
+        .mensaje-recibido {
+            background-color: #fff;
+            align-self: flex-start;
+            /* Alinea a la izquierda */
+            border-radius: 15px 15px 15px 0;
+            padding: 10px;
+            margin: 5px 0;
+            max-width: 70%;
+            text-align: left;
+        }
+
+        .mensaje small {
+            font-size: 0.75rem;
+            color: #777;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .modal-header {
+            background-color: #b6e6f6 !important;
+            /* !important asegura que sobrescriba cualquier otro estilo */
+            border: none !important;
+            /* Si deseas quitar bordes */
+            color: #000 !important;
+        }
+
+        #abrirModal {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #b6e6f6 !important;
+            border: none;
+            /* Si deseas quitar bordes */
+            color: #000;
+        }
+
+        #abrirModal:hover {
+            transform: scale(1.1);
+            /* Aumenta ligeramente el tamaño al pasar el mouse */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            /* Efecto de sombra al pasar el mouse */
+            background-color: #b6e6f6 !important;
+            border: none;
+            /* Si deseas quitar bordes */
+            color: #000;
+        }
+
+        #enviarMensaje {
+            background-color: #b6e6f6 !important;
+            border: none;
+            /* Si deseas quitar bordes */
+            color: #000;
         }
     </style>
 </head>
@@ -276,6 +353,8 @@ if ($id_presentacion !== null) {
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger ms-2" id="cancelarTurnoButton"
                         style="display:none;">Cancelar Turno</button>
+
+                    <div id="messageContainer" style="display: none; color: #f9b06c ; margin-top: 10px;"></div>
                     <button type="button" class="btn btn-primary" id="startChatButton">Crear enlace de
                         videollamada</button>
 
@@ -285,7 +364,6 @@ if ($id_presentacion !== null) {
         </div>
     </div>
 
-    <!-- Modal para la videollamada -->
     <!-- Modal para la videollamada -->
     <div class="modal fade" id="videoCallModal" tabindex="-1" aria-labelledby="videoCallModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 90%; /* Limita el ancho máximo */">
@@ -304,6 +382,58 @@ if ($id_presentacion !== null) {
             </div>
         </div>
     </div>
+
+    <!-- Modal para el chat flotante -->
+    <div class="modal" tabindex="-1" id="modalDestinatarios">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Seleccionar Destinatario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="listaDestinatarios" class="list-group">
+                        <!-- Lista de destinatarios generados dinámicamente -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor del chat flotante -->
+    <div id="chatContainer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="chatContainerLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h2 class="modal-title">Chat con <span id="nombreDestinatario"></span></h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <div id="chat-box" class="p-3" style="max-height: 400px; overflow-y: scroll;">
+                        <!-- Mensajes aquí -->
+                    </div>
+                </div>
+                <div class="modal-footer d-flex">
+                    <textarea id="mensaje" class="form-control me-2" placeholder="Escribe un mensaje"
+                        rows="1"></textarea>
+                    <button id="enviarMensaje" class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Botón flotante para abrir el modal de selección de destinatario -->
+    <button id="abrirModal" class="btn btn-primary shadow d-flex align-items-center justify-content-center"
+        style="position: fixed; bottom: 55px; right: 20px; width: 40px; height: 40px; border-radius: 50%; z-index: 1000;">
+        <i class="fas fa-comments fa-lg"></i>
+    </button>
+
+
+
 
     <!-- footer section starts  -->
 
@@ -339,14 +469,126 @@ if ($id_presentacion !== null) {
     <!-- footer section ends -->
 
     <script>
-        let nombreProf = null;
-        let valorN = null;
-        let valorInter = null;
-        let idPresentacion = null;
+        $(document).ready(function () {
+            let id_destinatario = null;
+            let chat_id = null;
+
+            // Al hacer clic en el botón flotante, mostrar el modal para elegir destinatario
+            $('#abrirModal').click(function () {
+                $('#modalDestinatarios').modal('show');
+
+                // Cargar la lista de destinatarios
+                $.ajax({
+                    url: './gets/cargar_destinatarios.php',
+                    method: 'GET',
+                    success: function (response) {
+                        $('#listaDestinatarios').html(response);
+                    }
+                });
+            });
+
+            let intervaloMensajes; // Variable para manejar el intervalo de actualización
+
+            function iniciarActualizacionMensajes(chat_id) {
+                detenerActualizacionMensajes(); // Por si ya había un intervalo activo
+                intervaloMensajes = setInterval(() => {
+                    cargarMensajes(chat_id);
+                }, 3000); // Intervalo de 3 segundos
+            }
+
+            function detenerActualizacionMensajes() {
+                if (intervaloMensajes) {
+                    clearInterval(intervaloMensajes);
+                }
+            }
+
+
+            $(document).on('click', '.destinatario', function () {
+                id_destinatario = $(this).data('id');
+
+                // Crear o cargar un chat con el destinatario seleccionado
+                $.ajax({
+                    url: './sets/crear_chat.php',
+                    method: 'POST',
+                    data: { id_destinatario: id_destinatario },
+                    success: function (response) {
+                        chat_id = response;
+                        cargarMensajes(chat_id); // Cargar los mensajes del chat
+                        iniciarActualizacionMensajes(chat_id); // Iniciar actualización automática
+                        $('#modalDestinatarios').modal('hide'); // Cerrar el modal de selección de destinatario
+                        $('#chatContainer').modal('show');
+                        $('#nombreDestinatario').text($(this).text()); // Actualizar el nombre del destinatario en el chat
+                    }
+                });
+            });
+
+            $('#chatContainer').on('hidden.bs.modal', function () {
+                detenerActualizacionMensajes();
+            });
+
+
+
+            let ultimoContenido = ''; // Variable para almacenar el último contenido cargado
+
+            function cargarMensajes(chat_id) {
+                $.ajax({
+                    url: './gets/cargar_mensajes.php',
+                    method: 'POST',
+                    data: { chat_id: chat_id },
+                    success: function (response) {
+                        const data = JSON.parse(response);
+                        const nuevoContenido = data.mensajes;
+
+                        if (nuevoContenido !== ultimoContenido) { // Solo actualiza si hay cambios
+                            $('#chat-box').html(nuevoContenido);
+                            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight); // Desplaza al último mensaje
+                            $('#nombreDestinatario').text(data.nombre_destinatario); // Actualiza el nombre
+                            ultimoContenido = nuevoContenido;
+                        }
+                    },
+                    error: function () {
+                        console.error('Error al cargar mensajes.');
+                    }
+                });
+            }
 
 
 
 
+
+            $(document).ready(function () {
+                // Enviar mensaje al presionar Enter
+                $('#mensaje').on('keypress', function (e) {
+                    if (e.which == 13) { // Enter key code
+                        e.preventDefault();
+                        $('#enviarMensaje').click(); // Simula clic en el botón enviar
+                    }
+                });
+
+                // Enviar mensaje con clic
+                $('#enviarMensaje').click(function () {
+                    let mensaje = $('#mensaje').val();
+                    if (mensaje && chat_id) {
+                        $.ajax({
+                            url: './sets/enviar_mensaje.php',
+                            method: 'POST',
+                            data: {
+                                mensaje: mensaje,
+                                chat_id: chat_id
+                            },
+                            success: function (response) {
+                                cargarMensajes(chat_id);
+                                $('#mensaje').val('');
+                            }
+                        });
+                    }
+                });
+            });
+
+        });
+
+
+        //fin mensajes
         let presentaciontId = null;
 
         let api; // Variable para almacenar la instancia de JitsiMeetExternalAPI
@@ -449,15 +691,16 @@ if ($id_presentacion !== null) {
                             // Lógica de profesionales: permite crear videollamadas
                             const usuarioId = event.usuarioId;
                             const profesionalId = <?= $usuario_id; ?>;
+
                             $('#startChatButton-paciente').hide();
                             // Verificar existencia de la videollamada
                             $.ajax({
                                 url: './gets/obtener_videollamada.php',
                                 type: 'POST',
-                                data: { profesional_id: profesionalId, paciente_id: usuarioId },
+                                data: { profesional_id: profesionalId, usuario_id: usuarioId },
                                 success: function (response) {
-                                    const resultado = response;
 
+                                    const resultado = typeof response === 'string' ? JSON.parse(response) : response;
                                     if (resultado.status === 'success') {
                                         $('#startChatButton').text('Iniciar videollamada');
                                         $('#startChatButton').off('click').on('click', function () {
@@ -468,7 +711,7 @@ if ($id_presentacion !== null) {
                                         $('#startChatButton').text('Crear enlace de videollamada');
                                         $('#startChatButton').off('click').on('click', function () {
                                             const enlaceVideoLlamada = generarEnlaceVideoLlamada();
-
+                                            console.log('Enlace generado:', enlaceVideoLlamada);
                                             $.ajax({
                                                 url: './sets/guardar_videollamada.php',
                                                 type: 'POST',
@@ -480,6 +723,7 @@ if ($id_presentacion !== null) {
                                                 },
                                                 success: function (response) {
                                                     const resultado = JSON.parse(response);
+                                                    console.log(response);
                                                     if (resultado.status === 'success') {
                                                         alert('Videollamada creada. Enlace: ' + enlaceVideoLlamada);
                                                         $('#videoCallModal').modal('show');
@@ -496,48 +740,61 @@ if ($id_presentacion !== null) {
                                         });
                                     }
                                 },
-                                error: function () {
+                                error: function (xhr, status, error) {
+                                    console.error('Error en obtener_videollamada.php:', {
+                                        status,
+                                        error,
+                                        responseText: xhr.responseText
+                                    });
                                     alert('Error al obtener el estado de la videollamada.');
                                 }
                             });
                         <?php else: ?>
-                            // Lógica de pacientes: verificar si existe una videollamada y si el pago está completado
-                            const usuarioId = <?= $usuario_id; ?>;
-                            const profesionalId = event.profesionalId;
+                            $(document).ready(function () {
+                                // Ocultar el botón inicialmente
+                                $('#startChatButton').hide();
 
-                            // Supongamos que 'event' es el evento seleccionado
-                            const descripcion = event.description;
+                                // Variables del usuario y profesional
+                                const usuarioId = <?= $usuario_id; ?>;
+                                const profesionalId = event.profesionalId;
 
-                            idPresentacion = event.presentaciontId;
-                            valorN = descripcion.match(/Valor Nacional: (\d+)/)?.[1];
-                            valorInter = descripcion.match(/Valor Internacional: (\d+)/)?.[1];
-                            nombreProf = descripcion.match(/Nombre Prof: (\d+)/)?.[1];
+                                // Consultar si existe una videollamada activa
+                                $.ajax({
+                                    url: './gets/obtener_videollamada_user.php',
+                                    type: 'POST',
+                                    data: { usuario_id: usuarioId, profesional_id: profesionalId },
+                                    success: function (response) {
+                                        // Parsear respuesta del servidor
+                                        try {
+                                            const resultado = response;
 
-                            // Verificar existencia de la videollamada y estado del pago
-                            $.ajax({
-                                url: './gets/obtener_videollamada_user.php',
-                                type: 'POST',
-                                data: { usuario_id: usuarioId, profesional_id: profesionalId },
-                                success: function (response) {
-                                    const resultado = response;
-
-                                    if (resultado.status === 'success' && resultado.enlace) {
-                                        $('#startChatButton').show();
-                                        $('#startChatButton').text('Unirse a videollamada');
-                                        $('#startChatButton').off('click').on('click', function () {
-                                            $('#videoCallModal').modal('show');
-                                            iniciarVideoLlamada(resultado.enlace);
-                                        });
-                                    } 
-                                },
-                                error: function () {
-                                    alert('Error al verificar la existencia de la videollamada.');
-                                    $('#startChatButton').hide();
-                                }
+                                            if (resultado.status === 'success' && resultado.enlace) {
+                                                // Mostrar botón y asignar evento de clic
+                                                $('#startChatButton').show();
+                                                $('#startChatButton').text('Unirse a videollamada');
+                                                $('#startChatButton').off('click').on('click', function () {
+                                                    $('#videoCallModal').modal('show');
+                                                    iniciarVideoLlamada(resultado.enlace);
+                                                });
+                                            } else if (resultado.status === 'no_call') {
+                                                // Mostrar un mensaje indicando que no hay videollamada
+                                                $('#messageContainer').text('Espera a que tu terapeuta cree la videollamada.').show();
+                                            } else {
+                                                $('#messageContainer').text('No se pudo obtener información sobre la videollamada.').show();
+                                            }
+                                        } catch (error) {
+                                            $('#messageContainer').text('Error al procesar la solicitud.').show();
+                                        }
+                                    },
+                                    error: function () {
+                                        console.error('Error en la comunicación con el servidor.');
+                                        $('#messageContainer').text('Error en la comunicación con el servidor.').show();
+                                    }
+                                });
                             });
 
-
                         <?php endif; ?>
+
 
 
                     }

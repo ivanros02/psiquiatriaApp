@@ -108,7 +108,7 @@ if (isset($_SESSION['user_id'])) {
                         <h2 class="card-title text-center mb-4"><i class="bi bi-person-circle"></i> Perfil de Usuario
                         </h2>
                         <!-- Formulario de perfil -->
-                        <form id="perfil-form" action="./abm/update_perfil.php" method="POST">
+                        <form id="perfil-form" action="" method="POST">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre"
@@ -135,6 +135,38 @@ if (isset($_SESSION['user_id'])) {
                                 <i class="bi bi-credit-card"></i> Suscribirse
                             </a>
                         <?php endif; ?>
+
+                        <!-- Modal para cambiar la contraseña -->
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="cambiarContrasenaModalLabel">Cambiar Contraseña</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="cambiarContrasenaForm">
+                                        <div class="mb-3">
+                                            <label for="contrasenaActual" class="form-label">Contraseña Actual</label>
+                                            <input type="password" class="form-control" id="contrasenaActual"
+                                                name="contrasenaActual" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
+                                            <input type="password" class="form-control" id="nuevaContrasena"
+                                                name="nuevaContrasena" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmarContrasena" class="form-label">Confirmar Nueva
+                                                Contraseña</label>
+                                            <input type="password" class="form-control" id="confirmarContrasena"
+                                                name="confirmarContrasena" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">Cambiar Contraseña</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
@@ -178,6 +210,8 @@ if (isset($_SESSION['user_id'])) {
                     </div>
                 </div>
             </div>
+
+
         </div>
 
 
@@ -260,6 +294,114 @@ if (isset($_SESSION['user_id'])) {
     </div>
 
     <script>
+        document.getElementById('cambiarContrasenaForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const contrasenaActual = document.getElementById('contrasenaActual').value;
+            const nuevaContrasena = document.getElementById('nuevaContrasena').value;
+            const confirmarContrasena = document.getElementById('confirmarContrasena').value;
+
+            // Validación de contraseñas
+            if (nuevaContrasena !== confirmarContrasena) {
+                alert('Las contraseñas no coinciden');
+                return;
+            }
+
+            // Verifica si las contraseñas no están vacías
+            if (!contrasenaActual || !nuevaContrasena || !confirmarContrasena) {
+                alert('Por favor, rellena todos los campos');
+                return;
+            }
+
+            // Log de depuración
+            console.log('Contraseña actual:', contrasenaActual);
+            console.log('Nueva contraseña:', nuevaContrasena);
+
+            // Enviar la solicitud AJAX para cambiar la contraseña
+            fetch('./abm/cambiar_contrasena.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contrasenaActual: contrasenaActual,
+                    nuevaContrasena: nuevaContrasena
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Verifica si la respuesta del servidor es correcta
+                    console.log(data);  // Log de la respuesta
+                    if (data.success) {
+                        alert('Contraseña cambiada con éxito');
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cambiar la contraseña:', error);
+                    alert('Hubo un problema al cambiar la contraseña.');
+                });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Realizar la solicitud AJAX para obtener los datos del perfil
+            fetch('./gets/get_user_data.php', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    // Log para depurar la respuesta antes de convertirla a JSON
+                    console.log(response);
+                    return response.json();
+                })
+                .then(data => {
+                    // Si no hay error, completar el formulario con los datos
+                    if (!data.error) {
+                        document.getElementById('nombre').value = data.nombre;
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('telefono').value = data.telefono;
+                    } else {
+                        alert(data.error); // Mostrar el error en caso de que no se pueda cargar el perfil
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los datos:', error);
+                    alert('Hubo un problema al cargar los datos del perfil.');
+                });
+        });
+
+        document.getElementById('perfil-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita que el formulario se envíe de la forma tradicional
+
+            // Crear el objeto con los datos del formulario
+            const formData = new FormData(this);
+
+            // Enviar la solicitud AJAX para actualizar los datos
+            fetch('./abm/update_perfil.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())  // Espera respuesta en texto
+                .then(data => {
+                    alert("Perfil actualizado");  // Muestra el mensaje que devuelve el servidor
+                })
+                .catch(error => {
+                    console.error('Error al actualizar los datos:', error);
+                    alert('Hubo un problema al actualizar los datos del perfil.');
+                });
+        });
+
+
+
         // Manejar el envío del formulario de edición
         document.getElementById('editarTurnoForm').addEventListener('submit', function (event) {
             event.preventDefault(); // Evita el envío del formulario normal

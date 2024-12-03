@@ -30,7 +30,7 @@ if (isset($datos['userId']) && isset($datos['detalles'])) {
         // Obtener el `id_usuario` de la tabla `presentaciones` usando el `psychologist_reference_id`
         $query = "SELECT id_usuario FROM presentaciones WHERE id = ?";
         $stmt = mysqli_prepare($conexion, $query);
-        
+
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, 'i', $psychologist_reference_id);
             mysqli_stmt_execute($stmt);
@@ -41,11 +41,12 @@ if (isset($datos['userId']) && isset($datos['detalles'])) {
             // Verificar si se encontró un `id_usuario`
             if ($psychologist_id !== null) {
                 // Insertar los datos de pago en la tabla `datos_usuario`
-                $insertQuery = "INSERT INTO datos_usuario (user, psychologist_id, payment_id) VALUES (?, ?, ?)";
+                $insertQuery = "INSERT INTO datos_usuario (user, psychologist_id, payment_id, pago_nacional) VALUES (?, ?, ?, ?)";
                 $insertStmt = mysqli_prepare($conexion, $insertQuery);
 
                 if ($insertStmt) {
-                    mysqli_stmt_bind_param($insertStmt, 'iis', $userId, $psychologist_id, $payment_id);
+                    $pago_nacional = 0; // False para PayPal
+                    mysqli_stmt_bind_param($insertStmt, 'iisi', $userId, $psychologist_id, $payment_id, $pago_nacional);
                     mysqli_stmt_execute($insertStmt);
 
                     if (mysqli_stmt_affected_rows($insertStmt) > 0) {

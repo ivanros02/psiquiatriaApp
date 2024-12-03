@@ -1,6 +1,13 @@
 <?php
-header('Content-Type: application/json'); // Establece el tipo de contenido como JSON
+header('Content-Type: application/json'); // Asegura que la respuesta sea JSON
 include '../../../php/conexion.php';
+
+// Verificar si los datos fueron enviados en la solicitud
+if (!isset($_POST['usuario_id']) || !isset($_POST['profesional_id'])) {
+    // Retorna un error JSON si los datos no están disponibles
+    echo json_encode(['status' => 'error', 'message' => 'Datos incompletos: usuario_id o profesional_id faltante']);
+    exit; // Detiene la ejecución del script
+}
 
 $usuario_id = $_POST['usuario_id'];
 $profesional_id = $_POST['profesional_id'];
@@ -16,7 +23,7 @@ if ($result_profesional->num_rows > 0) {
     $row_profesional = $result_profesional->fetch_assoc();
     $real_profesional_id = $row_profesional['id_usuario'];
 
-    // Obtener el enlace de la videollamada sin verificar el estado de pago
+    // Obtener el enlace de la videollamada
     $query_enlace = "SELECT enlace FROM videollamadas 
                      WHERE profesional_id = ? AND paciente_id = ? 
                      ORDER BY fecha_hora DESC LIMIT 1";
@@ -39,5 +46,6 @@ if ($result_profesional->num_rows > 0) {
 
 $stmt_profesional->close();
 $conexion->close();
+
 
 ?>

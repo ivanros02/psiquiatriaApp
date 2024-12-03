@@ -2,6 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const presentaciontId = urlParams.get('id');
 const valor = urlParams.get('valor');
 let turno_id = null;
+let variableValor = { local: null, internacional: null };
 $(document).ready(function () {
     if (presentaciontId) {
         $.ajax({
@@ -12,6 +13,10 @@ $(document).ready(function () {
                 const { presentaciones, comentarios } = data;
 
                 const psicologo = presentaciones[0];
+
+                variableValor.local = psicologo.valor;
+                variableValor.internacional = psicologo.valor_internacional;
+
                 if (psicologo) {
                     $('#cardContainer').empty();
 
@@ -328,9 +333,9 @@ function realizarReserva(turnoId, usuarioId) {
         console.error('Faltan datos: turnoId o usuarioId');
         return;
     }
-    
+
     console.log('Intentando realizar la reserva con:', { turnoId, usuarioId });
-    
+
     fetch('./sets/set_reserva_turno.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -360,7 +365,7 @@ $(document).on('click', '#checkout-btn', async () => {
     // Deshabilitar el botón para evitar múltiples clics
     $(this).prop('disabled', true);
     // Captura el valor del span
-    const valorSpan = document.querySelector('.tooltiptext').getAttribute('data-valor');
+    const valorSpan = variableValor.internacional;
     // PAYPAL
     if (!paypalButtonRendered) {
         paypal.Buttons({
@@ -440,7 +445,7 @@ $(document).on('click', '#checkout-btn', async () => {
             return;
         }
 
-        const precio = parseFloat(document.querySelector('.tooltiptext').getAttribute('data-valor'));
+        const precio = parseFloat(variableValor.local);
         const userId = document.getElementById("user-id").value.trim(); // Obtener el ID del usuario
 
         const formData = {
