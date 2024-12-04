@@ -68,7 +68,7 @@
 
     <div class="container mt-4 py-5">
 
-        <h1 class="text-center mb-4 display-4" style="color: #c1c700; margin-top: 5rem;">Panel de Carga</h1>
+        <h1 class="text-center mb-4 display-4" style="color: #c1c700; margin-top:10rem !important;">Panel de Carga</h1>
 
         <?php if (isset($_GET['status']) && isset($_GET['message'])): ?>
             <div class="alert <?php echo $_GET['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?> text-center">

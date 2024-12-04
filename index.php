@@ -215,11 +215,11 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- home section ends -->
 
-    <!--icono flotante whatsapp 
     <a href="https://api.whatsapp.com/send?phone=5491161536595" class="btn-wsp" target="_blank">
-        <i class="fa fa-whatsapp icono"></i>
+        <i class="fab fa-whatsapp"></i> <!-- Cambié 'fa' por 'fab' para Font Awesome Brands -->
     </a>
-    -->
+
+
 
     <!-- about section starts  -->
 
@@ -291,7 +291,8 @@ if (isset($_SESSION['user_id'])) {
                     <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <button id="next">></button>
-                <button id="prev"><</button>
+                <button id="prev">
+                    << /button>
             </div>
         </div>
     </section>
