@@ -92,6 +92,9 @@
                     <div class="text-center mt-3">
                         <a href="registrar.php">Crear una cuenta</a>
                     </div>
+                    <div class="text-center mt-3">
+                        <a href="./recuperar/recuperar.php">¿Olvidaste tu contraseña?</a>
+                    </div>
                 </div>
             </div>
         </div>
