@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Hola,</p>
             <p>Recibimos una solicitud para restablecer tu contraseña en Terapia Libre. Si no realizaste esta solicitud, puedes ignorar este mensaje.</p>
             <p>Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>
-            <p><a href='https://www.tusitio.com/restablecer_contraseña.php?token=$token'>Restablecer mi contraseña</a></p>
+            <p><a href='https://terapialibre.com.ar/usuario/recuperar/restablecer_contraseña.php?token=$token'>Restablecer mi contraseña</a></p>
             <p>Este enlace expirará en una hora.</p>
             <p>Si tienes algún problema, contáctanos a terapialibre@terapialibre.com.ar.</p>
             </body>

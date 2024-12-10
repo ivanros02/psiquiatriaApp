@@ -291,8 +291,7 @@ if (isset($_SESSION['user_id'])) {
                     <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
                 </div>
                 <button id="next">></button>
-                <button id="prev">
-                    << /button>
+                <button id="prev"><</button>
             </div>
         </div>
     </section>

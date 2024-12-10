@@ -22,6 +22,13 @@
     <link rel="stylesheet" href="../estilos/headerYFooter.css">
     <link rel="stylesheet" href="../estilos/style.css">
 
+    <!-- Enlazar los estilos de Cropper.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+
+    <!-- Enlazar el script de Cropper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+
     <!-- Agrega los scripts de Bootstrap y jQuery justo antes de cerrar la etiqueta </body> -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -32,6 +39,75 @@
 
     <!-- custom js file link  -->
     <script src="js/cargaProfes.js"></script>
+
+    <style>
+        /* Contenedor para imagen recortada */
+        /* General styles for the image preview container */
+        .preview-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dadea9;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Image container styles */
+        .img-container {
+            width: 100%;
+            max-width: 710px;
+            /* Limit size to 710px */
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            border: 2px dashed #dadea9;
+            padding: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        /* Image styling */
+        #cropper-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .img-container {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            .preview-container {
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .img-container {
+                padding: 10px;
+                border: 2px dashed #ccc;
+            }
+
+            #cropper-img {
+                border-radius: 8px;
+            }
+
+            .preview-container {
+                padding: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -80,10 +156,25 @@
             class="mx-auto shadow p-5 rounded-4 fs-3" style="max-width: 700px; background-color: #ffffff;">
 
 
+            <!-- Campo de carga de imagen -->
             <div class="mb-4">
                 <label for="imagen" class="form-label fw-bold">Foto de Perfil:</label>
-                <input class="form-control form-control-lg" id="imagen" name="imagen" type="file" required>
+                <input class="form-control form-control-lg" id="imagen" name="imagen" type="file" accept="image/*"
+                    required onchange="previsualizarImagen(event)">
             </div>
+
+            <!-- Previsualización de la imagen -->
+            <div id="preview-container" class="preview-container" style="display: none;">
+                <div class="img-container mb-3">
+                    <img id="cropper-img" src="#" alt="Imagen para recortar">
+                </div>
+                <div class="d-grid mb-3">
+                    <button type="button" class="btn btn-success fw-bold" onclick="guardarRecorte()">Guardar
+                        Imagen</button>
+                </div>
+            </div>
+
+
 
             <div class="mb-4">
                 <label for="nombre" class="form-label fw-bold">Nombre:</label>
@@ -147,8 +238,8 @@
 
             <div class="mb-4">
                 <label for="valor_internacional" class="form-label fw-bold">Valor Internacional:</label>
-                <input class="form-control form-control-lg" id="valor_internacional" name="valor_internacional" type="text"
-                    placeholder="Valor en Pesos"
+                <input class="form-control form-control-lg" id="valor_internacional" name="valor_internacional"
+                    type="text" placeholder="Valor en Pesos"
                     onkeypress="return event.charCode >= 48 && event.charCode <= 57 && event.charCode != 46;" required>
             </div>
 
@@ -215,7 +306,78 @@
 
     <!-- footer section ends -->
 
+    <script>
+        let cropper;
+        const imagenInput = document.getElementById("imagen");
+        const previewContainer = document.getElementById("preview-container");
+        const cropperImg = document.getElementById("cropper-img");
 
+        function previsualizarImagen(event) {
+            const archivo = event.target.files[0];
+
+            if (archivo) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Mostrar contenedor de previsualización
+                    previewContainer.style.display = "block";
+                    cropperImg.src = e.target.result;
+
+                    // Destruir cualquier instancia previa de Cropper.js
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+
+                    // Inicializar Cropper.js
+                    cropper = new Cropper(cropperImg, {
+                        aspectRatio: 1, // Relación 1:1
+                        viewMode: 1,
+                        minCropBoxWidth: 100,
+                        minCropBoxHeight: 100,
+                        responsive: true,
+                        autoCropArea: 0.8,
+                        dragMode: "move",
+                    });
+                };
+
+                reader.readAsDataURL(archivo);
+            }
+        }
+
+        function guardarRecorte() {
+            if (cropper) {
+                const canvas = cropper.getCroppedCanvas({
+                    width: 710,
+                    height: 710,
+                });
+
+                // Convertir el canvas a Blob (archivo de imagen)
+                canvas.toBlob(function (blob) {
+                    // Generar un nombre único para la imagen
+                    const timestamp = Date.now(); // Obtener la marca de tiempo actual
+                    const uniqueName = `imagen_${timestamp}.jpg`; // Crear un nombre único
+
+                    // Crear un nuevo archivo basado en el Blob
+                    const recortadoArchivo = new File([blob], uniqueName, {
+                        type: "image/jpeg",
+                    });
+
+                    // Reemplazar el archivo cargado en el input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(recortadoArchivo);
+                    imagenInput.files = dataTransfer.files;
+
+                    // Ocultar la previsualización y mostrar confirmación
+                    previewContainer.style.display = "none";
+                    alert(`La imagen "${uniqueName}" ha sido guardada. Puedes continuar con el formulario.`);
+                });
+
+            }
+        }
+
+
+
+    </script>
 
 </body>
 

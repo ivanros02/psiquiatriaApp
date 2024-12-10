@@ -10,6 +10,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <title>Inicio de Sesión</title>
+    <!--icono pestana-->
+    <link rel="icon" href="../img/Logo_transparente.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/Logo_transparente.png" type="image/x-icon">
     <style>
         :root {
             --blue: #b6e6f6;

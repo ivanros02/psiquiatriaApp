@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var cardHTML = `
             <div class="col-lg-3 col-md-4 mb-3 d-flex mt-5 justify-content-center">
                 <div class="card shadow-sm" data-id="${presentacion.id}" onclick="mostrarInformacion(this)">
-                    <img src="${presentacion.rutaImagen}" class="card-img-top custom-img" alt="${presentacion.nombre}">
+                    <img src="${presentacion.rutaImagen}" class="card-img-top custom-img" alt="${presentacion.nombre}" loading="lazy">
                     <div class="card-body d-flex flex-column">
                         <span class="tooltiptext" style="display: none;">$ ${valorMostrar}</span>
                         <h5 class="card-title">${presentacion.nombre}</h5>
