@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 09-01-2025 a las 15:58:22
+-- Tiempo de generación: 09-01-2025 a las 18:04:10
 -- Versión del servidor: 10.6.20-MariaDB-cll-lve-log
 -- Versión de PHP: 8.3.14
 
@@ -97,7 +97,10 @@ INSERT INTO `datos_usuario` (`id`, `user`, `psychologist_id`, `payment_id`, `pag
 (20, 21, 20, 2147483647, 1, '2024-12-03 12:34:00'),
 (21, 21, 20, 2147483647, 1, '2024-12-03 12:37:54'),
 (22, 21, 20, 2147483647, 1, '2024-12-21 14:03:00'),
-(23, 21, 20, 2147483647, 1, '2024-12-21 17:41:43');
+(23, 21, 20, 2147483647, 1, '2024-12-21 17:41:43'),
+(24, 21, 20, 2, 0, '2025-01-09 16:36:41'),
+(25, 21, 20, 8, 0, '2025-01-09 16:39:54'),
+(26, 21, 20, 13238987, 0, '2025-01-09 16:40:44');
 
 -- --------------------------------------------------------
 
@@ -122,7 +125,10 @@ INSERT INTO `disponibilidad_turnos` (`id`, `profesional_id`, `fecha`, `hora`, `d
 (37, 20, '2024-12-10', '12:30:00', 0),
 (38, 20, '2024-12-17', '12:30:00', 1),
 (39, 20, '2024-12-24', '12:30:00', 1),
-(40, 20, '2024-12-31', '12:30:00', 1);
+(40, 20, '2024-12-31', '12:30:00', 0),
+(41, 20, '2024-12-31', '16:00:00', 0),
+(42, 20, '2024-12-31', '15:00:00', 0),
+(44, 20, '2024-12-31', '17:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +268,10 @@ CREATE TABLE `reservas_turnos` (
 --
 
 INSERT INTO `reservas_turnos` (`id`, `turno_id`, `usuario_id`, `fecha_reserva`) VALUES
-(21, 37, 21, '2024-12-03 15:37:54');
+(21, 37, 21, '2024-12-03 15:37:54'),
+(22, 40, 21, '2025-01-09 19:36:41'),
+(23, 42, 21, '2025-01-09 19:39:54'),
+(24, 41, 21, '2025-01-09 19:40:44');
 
 -- --------------------------------------------------------
 
@@ -288,7 +297,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `telefono`, `fecha_registro`, `id_presentacion`, `reset_token`, `reset_token_expiry`) VALUES
 (20, 'Agustin Forbito', 'ivanrosendo1102@gmail.com', '$2y$10$fFTfAR/dXpT13VIgz/bvxen8Zdaotnjvksv8knXgHsBppYXPydvAq', '1139114579', '2024-12-03 11:48:21', 34, NULL, NULL),
-(21, 'Test', 'test@gmail.com', '$2y$10$NpnqImi3vrxTuw3lNyC5IO3KZK7dt4RVjJvO6/Ub3jxthrUVssQRS', NULL, '2024-12-03 12:31:49', NULL, NULL, NULL),
+(21, 'Test', 'test@gmail.com', '$2y$10$NpnqImi3vrxTuw3lNyC5IO3KZK7dt4RVjJvO6/Ub3jxthrUVssQRS', '1139114579', '2024-12-03 12:31:49', NULL, NULL, NULL),
 (22, 'test', 'paginaswebs2002@gmail.com', '$2y$10$e61/K..qbagVkV/7BpG42OsflXG46rOXsDnU3W8TZ8DqQzYGlal1m', '1139114579', '2024-12-10 19:45:23', 35, NULL, NULL),
 (23, 'Sergio Stupis', 'sergiostupis@gmail.com', '$2y$10$1PGCtHxHvzwzRsQ7mA0le.lBMNMPqGsIdbziwb72RkCUoUvcdXv3e', NULL, '2024-12-12 16:25:11', NULL, NULL, NULL);
 
@@ -451,13 +460,13 @@ ALTER TABLE `comentarios_presentaciones`
 -- AUTO_INCREMENT de la tabla `datos_usuario`
 --
 ALTER TABLE `datos_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `disponibilidad_turnos`
 --
 ALTER TABLE `disponibilidad_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidades`
@@ -481,7 +490,7 @@ ALTER TABLE `presentaciones`
 -- AUTO_INCREMENT de la tabla `reservas_turnos`
 --
 ALTER TABLE `reservas_turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
