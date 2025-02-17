@@ -7,7 +7,7 @@
 
 @font-face {
     font-family: 'Things'; /* Nombre de la fuente */
-    src: url('../fuente/things.otf') format('opentype'); /* Ruta del archivo normal */
+    src: url('../fuente/things-serif-font/things.otf') format('opentype'); /* Ruta del archivo normal */
     font-weight: normal; /* Peso de la fuente */
     font-style: normal; /* Estilo normal */
 }
@@ -61,19 +61,17 @@
 }
 
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Cambiado a center */
-    background: #fff;
-    box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 0.2rem 5rem;
-    width: 100%;
+.header {
+    background: rgba(255, 255, 255, 0.9); /* Blanco con opacidad al inicio */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
+
+.header.scrolled {
+    background: rgba(255, 255, 255, 0); /* Transparente al scrollear */
+    box-shadow: none; /* Eliminar la sombra al hacer scroll */
+}
+
 
 .logo {
     font-size: 2.5rem;

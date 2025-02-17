@@ -24,7 +24,7 @@ if ($result_profesional->num_rows > 0) {
     $real_profesional_id = $row_profesional['id_usuario'];
 
     // Obtener el enlace de la videollamada
-    $query_enlace = "SELECT enlace FROM videollamadas 
+    $query_enlace = "SELECT id,enlace FROM videollamadas 
                      WHERE profesional_id = ? AND paciente_id = ? 
                      ORDER BY fecha_hora DESC LIMIT 1";
     $stmt_enlace = $conexion->prepare($query_enlace);
@@ -34,7 +34,11 @@ if ($result_profesional->num_rows > 0) {
 
     if ($result_enlace->num_rows > 0) {
         $row_enlace = $result_enlace->fetch_assoc();
-        echo json_encode(['status' => 'success', 'enlace' => $row_enlace['enlace']]);
+        echo json_encode([
+            'status' => 'success',
+            'id' => $row_enlace['id'],  // Se agrega el ID de la videollamada
+            'enlace' => $row_enlace['enlace']
+        ]);
     } else {
         echo json_encode(['status' => 'no_call', 'message' => 'No se encontró un enlace de videollamada.']);
     }

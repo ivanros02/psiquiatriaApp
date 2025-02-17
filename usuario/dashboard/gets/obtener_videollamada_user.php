@@ -22,7 +22,11 @@ try {
 
     if ($result_enlace->num_rows > 0) {
         $row_enlace = $result_enlace->fetch_assoc();
-        echo json_encode(['status' => 'success', 'enlace' => $row_enlace['enlace']]);
+        echo json_encode([
+            'status' => 'success',
+            'id' => $row_enlace['id'],  // Se agrega el ID de la videollamada
+            'enlace' => $row_enlace['enlace']
+        ]);
     } else {
         echo json_encode(['status' => 'no_call', 'message' => 'No se encontró un enlace de videollamada.']);
     }

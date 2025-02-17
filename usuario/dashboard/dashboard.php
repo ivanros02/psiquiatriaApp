@@ -593,7 +593,8 @@ if ($id_presentacion !== null) {
 
         let api; // Variable para almacenar la instancia de JitsiMeetExternalAPI
 
-        function iniciarVideoLlamada(enlace) {
+        // Función para iniciar la videollamada
+        function iniciarVideoLlamada(enlace, idVideollamada) {
             const domain = 'meet.jit.si';
             const roomName = enlace.split('/').pop();
 
@@ -633,38 +634,40 @@ if ($id_presentacion !== null) {
             // Inicializar la API de Jitsi
             api = new JitsiMeetExternalAPI(domain, options);
 
-            // Evento cuando la videollamada termina
-            api.addEventListener('videoConferenceLeft', function () {
-                console.log('La videollamada ha terminado.');
+            $('#videoCallModal').on('hidden.bs.modal', function () {
+                if (idVideollamada) {
+                    console.log("ID de videollamada:", idVideollamada);
 
-                // Llamada AJAX para eliminar el registro de la videollamada
-                $.ajax({
-                    url: './sets/eliminar_videollamada.php', // Archivo PHP para eliminar
-                    type: 'POST',
-                    data: {
-                        profesional_id: profesionalId,  // Asegúrate de que estas variables estén definidas en el contexto global
-                        paciente_id: usuarioId
-                    },
-                    success: function (response) {
-                        const resultado = JSON.parse(response);
-                        if (resultado.status === 'success') {
-                            console.log('Registro de videollamada eliminado exitosamente.');
-                        } else {
-                            console.error('Error al eliminar la videollamada:', resultado.message);
+                    $.ajax({
+                        url: './sets/eliminar_videollamada.php',
+                        type: 'POST',
+                        data: { id: idVideollamada },
+                        success: function (response) {
+                            console.log("Respuesta del servidor:", response); // Verifica la respuesta completa
+
+                            if (response.status === 'success') {
+                                console.log("Registro de videollamada eliminado exitosamente.");
+                                sessionStorage.removeItem("id_videollamada");
+                            } else {
+                                console.error("Error al eliminar la videollamada:", response.message);
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error("Error en la solicitud para eliminar la videollamada.");
+                            console.log("Detalles del error:", jqXHR, textStatus, errorThrown); // Aquí verás detalles del error
                         }
-                    },
-                    error: function () {
-                        console.error('Error en la solicitud para eliminar la videollamada.');
-                    }
-                });
+                    });
+                } else {
+                    console.error("No se encontró el ID de la videollamada.");
+                }
             });
 
-            // Manejo de errores en la videollamada
-            api.addEventListener('videoConferenceFailed', function (error) {
-                console.log('Error en la videollamada:', error);
-                alert('Error al unirse a la videollamada: ' + error.message);
-            });
+
+
+
+
         }
+
 
 
 
@@ -705,7 +708,8 @@ if ($id_presentacion !== null) {
                                         $('#startChatButton').text('Iniciar videollamada');
                                         $('#startChatButton').off('click').on('click', function () {
                                             $('#videoCallModal').modal('show');
-                                            iniciarVideoLlamada(resultado.enlace);
+                                            console.log(resultado.id)
+                                            iniciarVideoLlamada(resultado.enlace, resultado.id);
                                         });
                                     } else {
                                         $('#startChatButton').text('Crear enlace de videollamada');
@@ -727,7 +731,8 @@ if ($id_presentacion !== null) {
                                                     if (resultado.status === 'success') {
                                                         alert('Videollamada creada. Enlace: ' + enlaceVideoLlamada);
                                                         $('#videoCallModal').modal('show');
-                                                        iniciarVideoLlamada(enlaceVideoLlamada);
+                                                        console.log(resultado.id)
+                                                        iniciarVideoLlamada(enlaceVideoLlamada, resultado.id);
                                                     } else {
                                                         alert('Error: ' + resultado.message); // Muestra el mensaje si ya existe
                                                     }
@@ -774,7 +779,8 @@ if ($id_presentacion !== null) {
                                                 $('#startChatButton').text('Unirse a videollamada');
                                                 $('#startChatButton').off('click').on('click', function () {
                                                     $('#videoCallModal').modal('show');
-                                                    iniciarVideoLlamada(resultado.enlace);
+                                                    console.log(resultado.id)
+                                                    iniciarVideoLlamada(resultado.enlace, resultado.id);
                                                 });
                                             } else if (resultado.status === 'no_call') {
                                                 // Mostrar un mensaje indicando que no hay videollamada

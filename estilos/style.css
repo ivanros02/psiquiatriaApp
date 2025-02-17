@@ -83,7 +83,7 @@ html {
     margin: 1rem 0;
     cursor: pointer;
     border: .2rem solid var(--green);
-    border-radius: 5px;
+    border-radius: 8px;
     text-decoration: none;
     outline: none;
     overflow: hidden;

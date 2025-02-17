@@ -93,7 +93,7 @@ if (isset($_SESSION['user_id'])) {
 
     <!-- header section starts  -->
 
-    <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
+    <header class="d-flex justify-content-between align-items-center  shadow fixed-top p-2">
         <a href="index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
             <img src="./img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
             <span>Terapia Libre</span>
@@ -257,38 +257,38 @@ if (isset($_SESSION['user_id'])) {
             </div>
         </div>
         <div class="container">
-            <h2 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h2>
+            <h3 class="heading wow animate__animated animate__backInLeft" data-wow-delay="0.6s">Comentarios</h3>
             <div class="slider">
                 <div class="item">
 
                     <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
                         sido fundamentales para mi bienestar emocional. ¡Gracias por tanto!</p>
-                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1" loading="lazy">
 
                 </div>
                 <div class="item">
                     <p>Quiero agradecer sinceramente por la atención psicológica recibida. Su apoyo ha sido fundamental
                         para mi bienestar emocional.</p>
-                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1" loading="lazy">
                 </div>
                 <div class="item">
                     <p>Agradezco mucho por la ayuda recibida durante nuestras sesiones. Su profesionalismo y apoyo han
                         sido fundamentales para mi bienestar emocional. Gracias!!</p>
-                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1" loading="lazy">
                 </div>
                 <div class="item">
                     <p>Quiero agradecer sinceramente por la atención y el apoyo recibidos. Su profesionalismo ha sido
                         fundamental para mí.</p>
-                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1" loading="lazy">
                 </div>
                 <div class="item">
                     <p>Quisiera expresar mi agradecimiento por las rápidas evoluciones terapéuticas que experimente.</p>
-                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1" loading="lazy">
                 </div>
                 <div class="item">
                     <p>Su apoyo y orientación han sido fundamentales en mi proceso de sanación y crecimiento personal.
                         ¡Gracias por hacer posible estos avances tan significativos!</p>
-                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1">
+                    <img src="./img/coments/coment1.jpg" class="imgCard" alt="Usuario 1" loading="lazy">
                 </div>
                 <button id="next">></button>
                 <button id="prev"><</button>

@@ -3,7 +3,7 @@
 include '../php/conexion.php';
 
 try {
-    // Recibir datos del formulario (valida antes si es necesario)
+    // Recibir datos del formulario
     $nombre = $_POST['nombre'] ?? '';
     $titulo = $_POST['titulo'] ?? '';
     $matricula = $_POST['matricula'] ?? 0;
@@ -17,6 +17,21 @@ try {
     $mail = $_POST['mail'] ?? '';
     $whatsapp = $_POST['whatsapp'] ?? '';
     $instagram = $_POST['instagram'] ?? '';
+
+    // Verificar si el correo ya está registrado
+    $sql_verificar = "SELECT id FROM usuarios WHERE email = ?";
+    $stmt = $conexion->prepare($sql_verificar);
+    $stmt->bind_param("s", $mail);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        // Si el correo ya existe, mostrar mensaje y detener el proceso
+        echo '<script>alert("El correo ya está registrado. Por favor, usa otro.");</script>';
+        echo '<script>window.location.href = "../index.php";</script>';
+        exit;
+    }
+    $stmt->close();
 
     // Procesar imagen (con validación)
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
@@ -33,46 +48,52 @@ try {
 
     // Crear un usuario con el mismo mail y contraseña
     $password = password_hash($mail, PASSWORD_DEFAULT); // Hasheamos la contraseña
-    $sql_usuario = "INSERT INTO usuarios (nombre, email, password, telefono) 
-                    VALUES ('$nombre', '$mail', '$password', '$telefono')";
+    $sql_usuario = "INSERT INTO usuarios (nombre, email, password, telefono) VALUES (?, ?, ?, ?)";
+    $stmt = $conexion->prepare($sql_usuario);
+    $stmt->bind_param("ssss", $nombre, $mail, $password, $telefono);
 
-    if (!$conexion->query($sql_usuario)) {
-        throw new Exception("Error al insertar en usuarios: " . $conexion->error);
+    if (!$stmt->execute()) {
+        throw new Exception("Error al insertar en usuarios: " . $stmt->error);
     }
-
-    // Obtener el ID del nuevo usuario
     $usuario_id = $conexion->insert_id;
+    $stmt->close();
 
-    // Consulta SQL para insertar en presentaciones
-    $sql = "INSERT INTO presentaciones (rutaImagen, nombre, titulo, matricula, matriculaP, descripcion, telefono, disponibilidad, valor, valor_internacional, mail, whatsapp, instagram, id_usuario) 
-            VALUES ('$rutaImagen', '$nombre', '$titulo', $matricula, $matriculaP, '$descripcion', '$telefono', $disponibilidad, $valor, $valor_internacional, '$mail', '$whatsapp', '$instagram', $usuario_id)";
+    // Insertar en presentaciones
+    $sql_presentacion = "INSERT INTO presentaciones (rutaImagen, nombre, titulo, matricula, matriculaP, descripcion, telefono, disponibilidad, valor, valor_internacional, mail, whatsapp, instagram, id_usuario) 
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conexion->prepare($sql_presentacion);
+    $stmt->bind_param("ssssssiidssssi", $rutaImagen, $nombre, $titulo, $matricula, $matriculaP, $descripcion, $telefono, $disponibilidad, $valor, $valor_internacional, $mail, $whatsapp, $instagram, $usuario_id);
 
-    if (!$conexion->query($sql)) {
-        throw new Exception("Error al insertar en presentaciones: " . $conexion->error);
+    if (!$stmt->execute()) {
+        throw new Exception("Error al insertar en presentaciones: " . $stmt->error);
     }
-
-    // Obtener el ID de la nueva presentación
     $presentacion_id = $conexion->insert_id;
+    $stmt->close();
 
-    // Actualizar el usuario para agregar el id_presentacion
-    $sql_actualizar_usuario = "UPDATE usuarios SET id_presentacion = $presentacion_id WHERE id = $usuario_id";
-    if (!$conexion->query($sql_actualizar_usuario)) {
-        throw new Exception("Error al actualizar el usuario con id_presentacion: " . $conexion->error);
+    // Actualizar el usuario con id_presentacion
+    $sql_actualizar_usuario = "UPDATE usuarios SET id_presentacion = ? WHERE id = ?";
+    $stmt = $conexion->prepare($sql_actualizar_usuario);
+    $stmt->bind_param("ii", $presentacion_id, $usuario_id);
+
+    if (!$stmt->execute()) {
+        throw new Exception("Error al actualizar el usuario con id_presentacion: " . $stmt->error);
     }
+    $stmt->close();
 
     // Insertar especialidades seleccionadas
     if (is_array($especialidades_id) && !empty($especialidades_id)) {
         foreach ($especialidades_id as $especialidad_id) {
-            $especialidad_id = mysqli_real_escape_string($conexion, $especialidad_id);
-            $sql_especialidades = "INSERT INTO presentaciones_especialidades (presentacion_id, especialidad_id) VALUES ($presentacion_id, $especialidad_id)";
+            $sql_especialidades = "INSERT INTO presentaciones_especialidades (presentacion_id, especialidad_id) VALUES (?, ?)";
+            $stmt = $conexion->prepare($sql_especialidades);
+            $stmt->bind_param("ii", $presentacion_id, $especialidad_id);
 
-            if (!$conexion->query($sql_especialidades)) {
-                throw new Exception("Error al insertar especialidad con ID $especialidad_id: " . $conexion->error);
+            if (!$stmt->execute()) {
+                throw new Exception("Error al insertar especialidad con ID $especialidad_id: " . $stmt->error);
             }
+            $stmt->close();
         }
     }
 
-    
     // Enviar correo de confirmación
     $to = $mail;
     $subject = 'Registro exitoso en Terapia Libre';
@@ -103,8 +124,6 @@ try {
     if (!mail($to, $subject, $message, $headers)) {
         throw new Exception("Error al enviar el correo electrónico.");
     }
-    
-    
 
     // Confirmar la transacción
     $conexion->commit();
@@ -115,7 +134,14 @@ try {
 } catch (Exception $e) {
     // Si ocurre un error, revertir la transacción
     $conexion->rollback();
-    echo '<div class="alert alert-danger">Ocurrió un error: ' . $e->getMessage() . '</div>';
+    
+    // Mostrar un mensaje de error más amigable
+    if (strpos($e->getMessage(), "Duplicate entry") !== false) {
+        echo '<script>alert("El correo ya está registrado. Intenta con otro.");</script>';
+        echo '<script>window.location.href = "../index.php";</script>';
+    } else {
+        echo '<div class="alert alert-danger">Ocurrió un error: ' . $e->getMessage() . '</div>';
+    }
 } finally {
     // Cerrar conexión
     $conexion->close();

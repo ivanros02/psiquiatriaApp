@@ -24,7 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_insert->bind_param("iiss", $profesional_id, $paciente_id, $fecha_hora, $enlace);
 
         if ($stmt_insert->execute()) {
-            echo json_encode(['status' => 'success']);
+            // Obtener el ID de la última videollamada insertada
+            $id_videollamada = $conexion->insert_id;
+            echo json_encode(['status' => 'success', 'id' => $id_videollamada, 'enlace' => $enlace]);
         } else {
             echo json_encode(['status' => 'error', 'message' => $conexion->error]);
         }
