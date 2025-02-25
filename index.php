@@ -52,7 +52,6 @@ if (isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -87,13 +86,20 @@ if (isset($_SESSION['user_id'])) {
     </script>
     <!-- End Google Analytics 4 -->
 
+    <link href="https://chat.godixital.com/chat/css/chat.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://chat.godixital.com/chat/js/index.php"></script>
+
+    <script type="text/javascript" src="https://leads.godixital.com/js/whatsapp_button/whatsapp_button.php"></script>
+
+    <script type="text/javascript" src="https://leads.godixital.com/js/leads_form_trigger.js"></script>
 </head>
 
 <body>
 
     <!-- header section starts  -->
 
-    <header class="d-flex justify-content-between align-items-center  shadow fixed-top p-2">
+    <header class="d-flex justify-content-between align-items-center bg-white shadow fixed-top p-2">
         <a href="index.php" class="logo d-flex align-items-center text-decoration-none text-success mx-auto mx-lg-0">
             <img src="./img/Logo_transparente.png" alt="Logo de Terapia Libre" class="mr-2" style="width: 7rem;">
             <span>Terapia Libre</span>
@@ -202,9 +208,8 @@ if (isset($_SESSION['user_id'])) {
             <h1 class="wow animate__animated animate__zoomIn">ENCUENTRA DE INMEDIATO <br> EL PROFESIONAL PARA <br>
                 INICIAR TU
                 TRATAMIENTO.</h1>
-            <p class="wow animate__animated animate__zoomIn">Elegí entre más de 1000 especialistas,<br>
-                tu asistencia terapéutica de forma <br> inmediata
-                con turnos a partir de 24 hs.
+            <p class="wow animate__animated animate__zoomIn">Elegí entre 1.000+ especialistas y<br>
+                obtené asistencia terapéutica en 24 horas
             </p>
             <a href="./psicologos/psicologosOnline.php"><button class="btn wow animate__animated animate__zoomIn">BUSCAR
                     UN PROFESIONAL</button></a>

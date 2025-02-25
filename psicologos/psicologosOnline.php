@@ -201,6 +201,8 @@ if (isset($_SESSION['user_id'])) {
       <div class="row d-flex" id="cardContainer" style="display: none;">
         <!-- Las tarjetas se llenarán dinámicamente mediante AJAX -->
       </div>
+      <div id="paginacion" class="text-center mt-4"></div>
+
 
 
     </div>

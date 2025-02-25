@@ -2,14 +2,18 @@
 
 :root {
     --green: #c1c700;
-    --font : #000;
+    --font: #000;
 }
 
 @font-face {
-    font-family: 'Things'; /* Nombre de la fuente */
-    src: url('../fuente/things-serif-font/things.otf') format('opentype'); /* Ruta del archivo normal */
-    font-weight: normal; /* Peso de la fuente */
-    font-style: normal; /* Estilo normal */
+    font-family: 'Things';
+    /* Nombre de la fuente */
+    src: url('../fuente/things-serif-font/things.otf') format('opentype');
+    /* Ruta del archivo normal */
+    font-weight: normal;
+    /* Peso de la fuente */
+    font-style: normal;
+    /* Estilo normal */
 }
 
 * {
@@ -52,33 +56,44 @@
 }
 
 .mobile-navbar i {
-    font-size: 18px !important; /* Ajusta este valor según el tamaño deseado */
-    margin-bottom: 5px !important; /* Espaciado inferior para separar el ícono del texto */
+    font-size: 18px !important;
+    /* Ajusta este valor según el tamaño deseado */
+    margin-bottom: 5px !important;
+    /* Espaciado inferior para separar el ícono del texto */
 }
 
 .mobile-navbar p {
-    font-size: 12px !important; /* Ajusta el tamaño del texto si es necesario */
+    font-size: 12px !important;
+    /* Ajusta el tamaño del texto si es necesario */
 }
 
 
 .header {
-    background: rgba(255, 255, 255, 0.9); /* Blanco con opacidad al inicio */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Cambiado a center */
+    background: #fff;
+    box-shadow: 0 .1rem .3rem rgba(0, 0, 0, .3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 0.2rem 5rem;
+    width: 100%;
 }
 
-.header.scrolled {
-    background: rgba(255, 255, 255, 0); /* Transparente al scrollear */
-    box-shadow: none; /* Eliminar la sombra al hacer scroll */
-}
 
 
 .logo {
     font-size: 2.5rem;
     font-weight: bold;
-    text-align: center; /* Alineación centrada */
-    display: flex; /* Para centrar imagen y texto */
-    align-items: center; /* Centra verticalmente */
+    text-align: center;
+    /* Alineación centrada */
+    display: flex;
+    /* Para centrar imagen y texto */
+    align-items: center;
+    /* Centra verticalmente */
 }
 
 
@@ -208,7 +223,7 @@ header .navbar ul li a:hover {
 .footer .box-container .box {
     margin: 0.5rem;
     flex: 1 1 25rem;
-    
+
 }
 
 .footer .box-container .box .logo {
@@ -267,7 +282,7 @@ header .navbar ul li a:hover {
         font-size: 55%;
     }
 
-    
+
     .home .content h1 {
         font-size: 5rem;
     }
@@ -297,7 +312,7 @@ header .navbar ul li a:hover {
 }
 
 @media only screen and (min-width:320px) and (max-width:768px) {
-    
+
     .btn-wsp {
         width: 63px;
         height: 63px;

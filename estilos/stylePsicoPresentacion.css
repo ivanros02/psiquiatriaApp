@@ -98,6 +98,11 @@ html {
   }
 }
 
+#wallet_container * {
+  outline: none !important;
+  overflow: hidden !important;
+}
+
 
 .custom-img {
   width: 100%;

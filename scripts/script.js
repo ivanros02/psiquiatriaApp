@@ -90,16 +90,3 @@ function handleGesture() {
         loadShow();
     }
 }
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    var header = document.querySelector(".header");
-
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 50) { 
-            header.classList.add("scrolled"); // Se vuelve transparente
-        } else { 
-            header.classList.remove("scrolled"); // Mantiene el fondo blanco al estar arriba
-        }
-    });
-});

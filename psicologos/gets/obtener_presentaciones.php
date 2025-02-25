@@ -3,52 +3,57 @@ include '../../php/conexion.php';
 
 header('Content-Type: application/json');
 
-// Inicializa la consulta base
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 30; // Cantidad de registros por página (30 por defecto)
+$offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0; // Offset para la paginación
+
 $query = "SELECT p.*, e.especi, pE.especialidad_id 
           FROM presentaciones p 
           JOIN presentaciones_especialidades pE ON p.id=pE.presentacion_id 
           LEFT JOIN especialidades e ON e.id=pE.especialidad_id
-          ";
+          WHERE p.aprobado = 1";
 
-// Agregar la condición para traer solo los registros con aprobado = 1
-$conditions[] = "aprobado = 1";
-
-// Comprueba si se han enviado parámetros de filtro
+// Filtrar por especialidad si se pasa un filtro
 if (!empty($_GET['especialidadFilter'])) {
     $especialidad = $conexion->real_escape_string($_GET['especialidadFilter']);
-    $conditions[] = "pE.especialidad_id  = '$especialidad'"; // Filtra por especialidad
+    $query .= " AND pE.especialidad_id = '$especialidad'";
 }
 
+// Filtrar por disponibilidad si se pasa un filtro
 if (!empty($_GET['disponibilidadFilter'])) {
     $disponibilidad = $conexion->real_escape_string($_GET['disponibilidadFilter']);
-    $conditions[] = "p.disponibilidad = '$disponibilidad'"; // Filtra por disponibilidad
+    $query .= " AND p.disponibilidad = '$disponibilidad'";
 }
 
-// Si hay condiciones, las añadimos a la consulta
-if (count($conditions) > 0) {
-    $query .= " WHERE " . implode(' AND ', $conditions);
-}
-
-// Comprueba si se ha enviado un parámetro para ordenar
+// Ordenar si se pasa un orden específico
 if (isset($_GET['ordenar_valor']) && ($_GET['ordenar_valor'] === 'ASC' || $_GET['ordenar_valor'] === 'DESC')) {
     $ordenar_valor = $conexion->real_escape_string($_GET['ordenar_valor']);
-    $query .= " ORDER BY p.valor $ordenar_valor"; // Ordena por valor
+    $query .= " ORDER BY p.valor $ordenar_valor";
 } else {
-    // Opción por defecto si no se especifica un valor de ordenación válido
-    $query .= " ORDER BY p.valor ASC"; // O puedes quitar esta línea si no deseas un orden por defecto
+    $query .= " ORDER BY p.valor ASC";
 }
 
-
-
+// Aplicar paginación
+$query .= " LIMIT $limit OFFSET $offset";
 
 $result = $conexion->query($query);
 
 $presentaciones = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $presentaciones[] = $row; // Almacena cada fila en el array
+        $presentaciones[] = $row;
     }
 }
 
-echo json_encode($presentaciones); // Devuelve los resultados como JSON
+// Obtener el total de registros sin paginación para saber cuántas páginas hay
+$totalQuery = "SELECT COUNT(*) as total FROM presentaciones WHERE aprobado = 1";
+$totalResult = $conexion->query($totalQuery);
+$totalRow = $totalResult->fetch_assoc();
+$totalRegistros = $totalRow['total'];
+
+$response = [
+    "presentaciones" => $presentaciones,
+    "total" => $totalRegistros
+];
+
+echo json_encode($response);
 ?>

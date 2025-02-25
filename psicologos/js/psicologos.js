@@ -60,55 +60,57 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // PRESENTACIONES
 document.addEventListener("DOMContentLoaded", function () {
-    var valorSeleccionado = 'local'; // Valor por defecto (local)
+    var valorSeleccionado = 'local';
+    var paginaActual = 1;
+    var presentacionesPorPagina = 30;
+    var totalPresentaciones = 0;
 
-    // Mostrar modal de selección de región
     var regionModal = new bootstrap.Modal(document.getElementById('regionModal'));
-    regionModal.show(); // Mostrar modal al cargar la página
+    regionModal.show();
 
-    // Función para cargar las presentaciones
-    function cargarPresentaciones() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', './gets/obtener_presentaciones.php', true);
-        xhr.onload = function () {
-            if (this.status == 200) {
-                var presentaciones = JSON.parse(this.responseText);
-                mostrarPresentaciones(presentaciones, valorSeleccionado);
-            } else {
-                console.error('Error al obtener las presentaciones');
-            }
-        };
-        xhr.send();
+    // Modificar `cargarPresentaciones` para usar filtros activos si están definidos
+    function cargarPresentaciones(pagina = 1) {
+        if (document.getElementById('especialidadFilter').value || document.getElementById('disponibilidadFilter').value) {
+            aplicarFiltros(pagina); // Usar los filtros si están activos
+        } else {
+            var offset = (pagina - 1) * presentacionesPorPagina;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', `./gets/obtener_presentaciones.php?limit=${presentacionesPorPagina}&offset=${offset}`, true);
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    var response = JSON.parse(this.responseText);
+                    totalPresentaciones = response.total;
+                    mostrarPresentaciones(response.presentaciones, valorSeleccionado);
+                    actualizarBotonesPaginacion(pagina);
+                } else {
+                    console.error('Error al obtener las presentaciones');
+                }
+            };
+            xhr.send();
+        }
     }
 
-    // Función para mostrar las presentaciones en tarjetas
     function mostrarPresentaciones(presentaciones, tipoValor) {
         var cardContainer = document.getElementById('cardContainer');
-        cardContainer.innerHTML = ''; // Limpia el contenedor antes de agregar tarjetas
+        cardContainer.innerHTML = '';
 
         if (presentaciones.length === 0) {
             cardContainer.innerHTML = '<div class="no-results-message">No hay psicólogos disponibles.</div>';
             return;
         }
 
-        // Agrupamos especialidades por id de presentación respetando el orden
         var presentacionesMap = [];
         presentaciones.forEach(function (presentacion) {
-            var presentacionExistente = presentacionesMap.find(function (p) {
-                return p.id === presentacion.id;
-            });
+            var presentacionExistente = presentacionesMap.find(p => p.id === presentacion.id);
 
             if (!presentacionExistente) {
-                presentacionesMap.push({
-                    ...presentacion,
-                    especialidades: [presentacion.especi]
-                });
+                presentacionesMap.push({ ...presentacion, especialidades: [presentacion.especi] });
             } else {
                 presentacionExistente.especialidades.push(presentacion.especi);
             }
         });
 
-        // Ahora creamos las tarjetas respetando el orden del JSON original
         presentacionesMap.forEach(function (presentacion) {
             var especialidadesHTML = presentacion.especialidades.join(', ');
             var valorMostrar = (tipoValor === 'local') ? presentacion.valor : presentacion.valor_internacional;
@@ -132,9 +134,29 @@ document.addEventListener("DOMContentLoaded", function () {
             cardContainer.insertAdjacentHTML('beforeend', cardHTML);
         });
 
-        // Mostrar el contenedor de tarjetas
         cardContainer.style.display = 'block';
     }
+
+    // Modificar `actualizarBotonesPaginacion` para mantener los filtros al cambiar de página
+    function actualizarBotonesPaginacion(paginaSeleccionada) {
+        var paginacionContainer = document.getElementById('paginacion');
+        paginacionContainer.innerHTML = '';
+
+        var totalPaginas = Math.ceil(totalPresentaciones / presentacionesPorPagina);
+
+        for (let i = 1; i <= totalPaginas; i++) {
+            var button = document.createElement('button');
+            button.className = `btn ${i === paginaSeleccionada ? 'btn-primary' : 'btn-outline-primary'} mx-1`;
+            button.innerText = i;
+            button.onclick = function () {
+                paginaActual = i;
+                aplicarFiltros(i); // Aplicar filtros con la nueva página
+            };
+            paginacionContainer.appendChild(button);
+        }
+    }
+
+    cargarPresentaciones();
 
     // Manejar la selección de la región
     document.getElementById('btnArgentina').addEventListener('click', function () {
@@ -150,29 +172,29 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Evento para el envío del formulario
-    var filterForm = document.getElementById('filterForm');
-    if (filterForm) {
-        filterForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Evitar el envío del formulario
-            aplicarFiltros(); // Llamar a la función para aplicar filtros
-        });
-    } else {
-        console.error('El formulario de filtros no se encontró en el DOM');
-    }
+    // Asegurar que la paginación funcione con filtros
+    document.getElementById('filterForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        paginaActual = 1; // Reiniciar a la primera página al filtrar
+        aplicarFiltros(1);
+    });
 
     // Función para aplicar filtros
-    function aplicarFiltros() {
+    function aplicarFiltros(pagina = 1) {
         var especialidad = document.getElementById('especialidadFilter').value;
         var disponibilidad = document.getElementById('disponibilidadFilter').value;
         var ordenar = document.getElementById('ordenar').value;
 
-        // Realizar la petición AJAX para obtener las presentaciones filtradas
+        var offset = (pagina - 1) * presentacionesPorPagina;
+
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', `./gets/obtener_presentaciones.php?especialidadFilter=${especialidad}&disponibilidadFilter=${disponibilidad}&ordenar_valor=${ordenar}`, true);
+        xhr.open('GET', `./gets/obtener_presentaciones.php?especialidadFilter=${especialidad}&disponibilidadFilter=${disponibilidad}&ordenar_valor=${ordenar}&limit=${presentacionesPorPagina}&offset=${offset}`, true);
         xhr.onload = function () {
             if (this.status == 200) {
-                var presentaciones = JSON.parse(this.responseText);
-                mostrarPresentaciones(presentaciones, valorSeleccionado); // Pasar el valor seleccionado
+                var response = JSON.parse(this.responseText);
+                totalPresentaciones = response.total; // Actualizar el total
+                mostrarPresentaciones(response.presentaciones, valorSeleccionado);
+                actualizarBotonesPaginacion(pagina); // Asegurar que la paginación se actualiza
             } else {
                 console.error('Error al obtener las presentaciones filtradas');
             }
